@@ -32,6 +32,7 @@
   }
 }
 
+
 @import "reset";
 @import "functions";
 @import "responsive";
@@ -39,5 +40,10 @@
 @import "typography";
 @import "layouts";
 @import "components/components";
+@import "components/form";
 
+
+
+//Pages
+@import "pages/auth";
 

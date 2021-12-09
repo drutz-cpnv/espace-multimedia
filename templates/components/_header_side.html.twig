@@ -8,10 +8,10 @@
         </li>
     {% else %}
         <li class="header-side__auth">
-            <a href="{{ path('app_register') }}" {{ menu_active('r') }}>{{ icon('person_outline') }} Se
+            <a href="{{ path('app.login') }}" {{ menu_active('login') }}>{{ icon('person_outline') }} Se
                 connecter</a>
             <span class="text-muted">•</span>
-            <a href="{{ path('app_register') }}" {{ menu_active('profil') }}>S'inscrire</a>
+            <a href="{{ path('app_register') }}" {{ menu_active('register') }}>S'inscrire</a>
         </li>
     {% endif %}
 </ul>
