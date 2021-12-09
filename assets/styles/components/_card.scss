@@ -1,0 +1,21 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__link {
+  display: block;
+  position: absolute!important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2!important;
+  border: 1px solid transparent;
+  transition: .3s;
+  border-radius: 3px;
+  cursor: pointer;
+}

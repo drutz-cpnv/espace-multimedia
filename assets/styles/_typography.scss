@@ -1,0 +1,67 @@
+body, input, button{
+  font-family: 'Inter', sans-serif;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+  transition: color .3s;
+}
+
+.small-text, small{
+  font-size: .9rem;
+}
+
+.text-left {
+  text-align: left!important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-inversed {
+  color: var(--color-inversed);
+}
+.normal {
+  font-weight: normal;
+}
+.bold {
+  font-weight: bold;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.underline {
+  text-decoration: underline;
+}
+a.underline:hover {
+  text-decoration: none;
+}
+.reader-only {
+  display: none;
+}
+.text-danger {
+  color: var(--red);
+}
+.text-muted {
+  color: var(--color-light);
+}
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-big {
+  font-size: 1.1em;
+}
+.ignore-br br {
+  display: none;
+}
+.link {
+  transition: color .3s;
+}
+.link:hover {
+  color: var(--contrast);
+  text-decoration: underline;
+}

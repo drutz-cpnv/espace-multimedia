@@ -1,0 +1,27 @@
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.flex-start{
+    justify-content: flex-start;
+  }
+
+  &.flex-end{
+    justify-content: flex-end;
+  }
+}
+
+.flex-md {
+  @include up(500) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.w100 {
+  width: 100%;
+}
+
+// Margin

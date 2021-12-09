@@ -1,0 +1,126 @@
+nav.header {
+  @extend %container;
+  position: relative;
+  padding-top: calc(6 * var(--space));
+  padding-bottom: calc(3 * var(--space));
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  --border-header: var(--border);
+  font-weight: 500;
+  line-height: 1;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--border-header);
+    max-width: var(--container-width);
+    height: 1px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.header .icon {
+  font-size: 16px;
+  height: 100%;
+  display: block;
+  margin-right: space(1);
+}
+
+.header .header__home {
+  display: flex;
+  align-items: center;
+  height: 16px;
+  justify-content: flex-start;
+  border-right: 1px solid var(--border-header);
+  margin-right: space(2);
+  padding-right: space(1);
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  a {
+    height: 26px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.header__home .icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.header-light .header {
+  background-color: var(--background-light);
+}
+
+.header-nav {
+  height: 26px;
+  margin-top: -5px;
+  margin-bottom: -5px;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.header-nav li {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  white-space: nowrap;
+}
+
+.header-nav > * + * {
+  margin-left: space(6);
+}
+
+.header__home + li {
+  margin-left: 0;
+}
+
+.header-nav li[hidden] {
+  display: none;
+}
+
+.header-nav small {
+  font-weight: normal;
+}
+
+.header-nav li a {
+  display: flex;
+  align-items: center;
+}
+
+.header_side .icon {
+  display: inline;
+}
+
+.header_side a {
+  display: flex;
+  align-items: center;
+}
+
+.header-side__auth {
+  display: flex;
+
+  .text-muted {
+    margin: auto space(1);
+  }
+}
+
+.header a:hover,
+.header button:hover,
+.header a[aria-current] {
+  color: var(--contrast);
+}
