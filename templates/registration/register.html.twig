@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}S'inscrire{% endblock %}
+
+{% block bodyAttributes %}data-turbo="false"{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('auth') }}
+{% endblock %}
 
 {% block body %}
     <div class="auth-container">
@@ -14,7 +20,6 @@
             {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
             {{ form_rest(registrationForm) }}
             <button type="submit" class="btn">S'inscrire</button>
             {{ form_end(registrationForm) }}

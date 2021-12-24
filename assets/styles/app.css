@@ -529,6 +529,9 @@ nav.header ul {
 .header-side__auth {
   display: flex;
 }
+.header-side__auth a {
+  white-space: nowrap;
+}
 .header-side__auth .text-muted {
   margin: auto calc(1 * var(--space));
 }
@@ -648,7 +651,7 @@ input:disabled {
   transition: transform 0.2s;
   content: "";
   position: absolute;
-  top: calc(50% - 9px);
+  top: calc(50% - 7px);
   left: 4px;
   width: 10px;
   height: 10px;
@@ -819,6 +822,27 @@ button:not([class]):hover .icon-delete {
   background: var(--contrast);
 }
 
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: calc(1.6 * var(--space)) calc(2 * var(--space));
+  background-color: var(--primary);
+  color: #FFF;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px #bec6cd;
+  font-size: 0.9rem;
+  border: none;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: var(--contrast);
+}
+.btn:active, .btn:focus {
+  box-shadow: 0 0 0 3px #F9666955;
+}
+
 label {
   text-transform: uppercase;
   font-weight: 300;
@@ -904,7 +928,7 @@ input:disabled {
   transition: transform 0.2s;
   content: "";
   position: absolute;
-  top: calc(50% - 9px);
+  top: calc(50% - 7px);
   left: 4px;
   width: 10px;
   height: 10px;
@@ -1076,6 +1100,7 @@ button:not([class]):hover .icon-delete {
 }
 
 .auth-container {
+  margin-top: calc(9 * var(--space));
   margin-left: auto;
   margin-right: auto;
   width: calc(100% - var(--container-padding) * 2);
@@ -1090,12 +1115,32 @@ button:not([class]):hover .icon-delete {
 }
 
 .auth-title {
+  margin-bottom: calc(2 * var(--space));
   font-size: 1.3em;
   font-weight: 600;
 }
 
 .auth-form {
   padding: calc(3 * var(--space));
+}
+.auth-form form {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, clamp(350px, 100%, 800px));
+  /*grid-template-row: repeat(auto-fill, 1fr);*/
+  margin: 0 auto;
+}
+@media screen and (max-width: 800px) {
+  .auth-form form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+  }
+}
+.auth-form form .full-width {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .auth-form > * + * {

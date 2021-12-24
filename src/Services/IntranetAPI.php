@@ -150,11 +150,11 @@ class IntranetAPI
     }
 
     /**
-     * @param string $friendly_id
+     * @param string $user
      * @param bool[] $extra
      * @return Student
      */
-    public function student(string $friendly_id, array $extra = ['CLASS' => true]): Student
+    public function student(string $user, array $extra = ['CLASS' => true]): Student
     {
         $extra = new ArrayCollection($extra);
         if($extra->contains(true)) {
@@ -166,10 +166,31 @@ class IntranetAPI
             $this->query['alter[extra]'] = $extras;
         }
 
+        if(filter_var($user, FILTER_VALIDATE_EMAIL)) {
+            $friendly_id = $this->studentEmailToFriendlyID($user);
+        }
+        else{
+            $friendly_id = strtolower($user);
+        }
+
         $query = self::BASE_URI . self::STUDENT_ENDPOINT . "/" . $friendly_id . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
 
         $student = new Student();
         return $this->studentToEntity($student, $this->fetch($query));
+    }
+
+    private function studentFromEmail(string $email)
+    {
+        $f_id = $this->studentEmailToFriendlyID($email);
+        return $this->student($f_id);
+    }
+
+    public function studentEmailToFriendlyID(string $email): string
+    {
+        $email = strtolower($email);
+        $toReplace = ['@cpnv.ch', '.'];
+        $replaceBy = ['', '_'];
+        return str_replace($toReplace, $replaceBy, $email);
     }
 
     public function searchStudent(string $value, $scope = null, $field = 'email')

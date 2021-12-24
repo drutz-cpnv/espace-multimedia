@@ -21,16 +21,8 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Adresse E-mail'
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'label' => "Accepter les conditions générales d'utilisations",
-                'constraints' => [
-                    new IsTrue([
-                        'message' => "Merci d'accepter nos conditions générales d'utilisations",
-                    ]),
-                ],
-            ])
             ->add('plainPassword', PasswordType::class, [
+                'label' => 'Mot de passe',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

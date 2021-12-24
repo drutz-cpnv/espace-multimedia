@@ -114,6 +114,10 @@ nav.header {
 .header-side__auth {
   display: flex;
 
+  a{
+    white-space: nowrap;
+  }
+
   .text-muted {
     margin: auto space(1);
   }

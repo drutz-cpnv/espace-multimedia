@@ -1,0 +1,23 @@
+.btn{
+  display: inline-block;
+  text-decoration: none;
+  padding: space(1.6) space(2);
+  background-color: var(--primary);
+  color: #FFF;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px #bec6cd;
+  font-size: .9rem;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+
+  &:hover{
+    background-color: var(--contrast);
+  }
+
+  &:active, &:focus{
+    box-shadow: 0 0 0 3px #F9666955;
+  }
+
+}

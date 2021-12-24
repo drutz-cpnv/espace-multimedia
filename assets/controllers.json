@@ -7,5 +7,11 @@
             }
         }
     },
-    "entrypoints": []
+    "entrypoints": {
+        "auth": {
+            "js": [
+                "auth.js"
+            ]
+        }
+    }
 }
