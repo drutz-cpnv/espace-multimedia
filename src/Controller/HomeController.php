@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\UserType;
 use App\Repository\UserRepository;
 use App\Services\IntranetAPI;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('', name: 'home')]
-    public function index(IntranetAPI $API, UserRepository $repository): Response
+    public function index(IntranetAPI $API): Response
     {
         dd($API->student('Gaston.MBA@cpnv.ch'));
         return $this->render('pages/index.html.twig', [

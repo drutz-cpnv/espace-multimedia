@@ -417,6 +417,10 @@ body {
   background-color: var(--background-light);
 }
 
+.no-visible {
+  display: none !important;
+}
+
 nav.header {
   position: relative;
   padding-top: calc(6 * var(--space));
@@ -843,6 +847,46 @@ button:not([class]):hover .icon-delete {
   box-shadow: 0 0 0 3px #F9666955;
 }
 
+.spinner {
+  --size: 20px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner span {
+  display: block;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  position: relative;
+}
+.spinner span::after {
+  content: "";
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  border-bottom: 2px solid var(--contrast);
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-top: 2px solid transparent;
+  animation: 1s spinner-border linear infinite;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+}
+
+@keyframes spinner-border {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 label {
   text-transform: uppercase;
   font-weight: 300;

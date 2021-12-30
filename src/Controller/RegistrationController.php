@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserTypeRepository;
 use App\Security\EmailVerifier;
 use App\Services\IntranetAPI;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -25,7 +26,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, IntranetAPI $intranetAPI): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, IntranetAPI $intranetAPI): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -47,9 +48,18 @@ class RegistrationController extends AbstractController
             $user->setFamilyName($student->getLastname());
             $user->setGivenName($student->getFirstname());
 
+            if($student->getType() === "Cpnv::CurrentStudent") {
+                $userType = $userTypeRepository->findOneBySlug("student");
+            }
+            else {
+                $userType = $userTypeRepository->findOneBySlug("teacher");
+            }
+
+            $user->setType($userType);
+
             $entityManager = $this->getDoctrine()->getManager();
-            //$entityManager->persist($user);
-            //$entityManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -60,8 +70,15 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('home');
+            return $this->json([
+                'type' => 'success'
+            ]);
+            //return $this->redirectToRoute('home');
+        } elseif ($form->isSubmitted() && !$form->isValid()){
+            return $this->json([
+                'type' => 'error',
+                'error' => $form->getErrors()
+            ]);
         }
 
         return $this->render('registration/register.html.twig', [

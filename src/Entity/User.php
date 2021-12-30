@@ -71,6 +71,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ]
     private $email;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=UserType::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTimeImmutable());
@@ -234,6 +240,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getType(): ?UserType
+    {
+        return $this->type;
+    }
+
+    public function setType(?UserType $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

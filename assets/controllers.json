@@ -6,12 +6,5 @@
                 "fetch": "eager"
             }
         }
-    },
-    "entrypoints": {
-        "auth": {
-            "js": [
-                "auth.js"
-            ]
-        }
     }
 }

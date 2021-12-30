@@ -19,6 +19,9 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'attr' => [
+                    'data-tooltip' => "Lors de la connexion avec un compte enseignant, veuillez utiliser l'adresse email avec l'acronyme."
+                ],
                 'label' => 'Adresse E-mail'
             ])
             ->add('plainPassword', PasswordType::class, [

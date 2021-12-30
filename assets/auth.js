@@ -1,2 +1,3 @@
-import {registerForm} from 'modules/auth'
+import registerForm from "./modules/auth";
+
 registerForm()
