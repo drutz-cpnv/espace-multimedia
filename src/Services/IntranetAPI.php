@@ -187,10 +187,13 @@ class IntranetAPI
 
     public function studentEmailToFriendlyID(string $email): string
     {
-        $email = strtolower($email);
-        $toReplace = ['@cpnv.ch', '.'];
-        $replaceBy = ['', '_'];
-        return str_replace($toReplace, $replaceBy, $email);
+        if(str_contains($email, '.')) {
+            $email = strtolower($email);
+            $toReplace = ['@cpnv.ch', '.'];
+            $replaceBy = ['', '_'];
+            return str_replace($toReplace, $replaceBy, $email);
+        }
+        return false;
     }
 
     public function searchStudent(string $value, $scope = null, $field = 'email')

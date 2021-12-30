@@ -66,7 +66,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@multimedia.mediamatique.ch', 'Espace Multimédia'))
                     ->to($user->getEmail())
-                    ->subject('Veuillez confirmer votre adresse e-mail')
+                    ->subject('Confirmation de votre compte')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email

@@ -14,7 +14,6 @@ class HomeController extends AbstractController
     #[Route('', name: 'home')]
     public function index(IntranetAPI $API): Response
     {
-        dd($API->student('Gaston.MBA@cpnv.ch'));
         return $this->render('pages/index.html.twig', [
             'menu' => 'home'
         ]);
