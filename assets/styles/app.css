@@ -18,6 +18,10 @@
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
+  --success: #38ce35;
+  --error: #e01313;
+  --pending: #ce7535;
+  --passed: #1c6fe1;
   --space: 8px;
   --border: #d5e3ec;
   --shadow: #d8e1e8;
@@ -256,6 +260,10 @@ a {
   font-size: 0.9rem;
 }
 
+.text-success {
+  color: var(--success);
+}
+
 .text-left {
   text-align: left !important;
 }
@@ -297,11 +305,11 @@ a.underline:hover {
 }
 
 .text-danger {
-  color: var(--red);
+  color: var(--error);
 }
 
 .text-muted {
-  color: var(--color-light);
+  color: #a7b0d5;
 }
 
 .text-truncate {
@@ -1149,6 +1157,17 @@ button:not([class]):hover .icon-delete {
   margin-right: auto;
   width: calc(100% - var(--container-padding) * 2);
   max-width: 400px;
+}
+.auth-container .success, .auth-container .error {
+  margin-bottom: calc(2 * var(--space));
+}
+.auth-container .success span, .auth-container .error span {
+  font-size: 4rem;
+}
+.auth-container h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: calc(1 * var(--space));
 }
 
 .auth-form a {

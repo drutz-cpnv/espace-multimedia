@@ -8,7 +8,7 @@
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
 
-        <h1 class="auth-title">S'inscrire</h1>
+        <h1 class="auth-title">Se connecter</h1>
 
         <div class="auth-form">
             <form method="post">
@@ -17,12 +17,12 @@
                 {% endif %}
 
                 <div class="form-group">
-                    <label for="inputEmail">Email</label>
+                    <label for="inputEmail">Adresse e-mail</label>
                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
                            autocomplete="email" required autofocus>
                 </div>
                 <div class="form-group">
-                <label for="inputPassword">Password</label>
+                <label for="inputPassword">Mot de passe</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password"
                        required>
                 </div>

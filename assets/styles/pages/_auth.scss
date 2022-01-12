@@ -4,6 +4,19 @@
   margin-right: auto;
   width: calc(100% - var(--container-padding) * 2);
   max-width: 400px;
+
+  .success, .error {
+    margin-bottom: space(2);
+    span {
+      font-size: 4rem;
+    }
+  }
+
+  h3{
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: space(1);
+  }
 }
 .auth-form a {
   text-decoration: underline;
@@ -12,6 +25,9 @@
     text-decoration: none;
   }
 }
+
+
+
 .auth-title{
   margin-bottom: space(2);
   font-size: 1.3em;

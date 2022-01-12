@@ -12,6 +12,10 @@ a{
   font-size: .9rem;
 }
 
+.text-success {
+  color: var(--success);
+}
+
 .text-left {
   text-align: left!important;
 }
@@ -43,10 +47,10 @@ a.underline:hover {
   display: none;
 }
 .text-danger {
-  color: var(--red);
+  color: var(--error);
 }
 .text-muted {
-  color: var(--color-light);
+  color: #a7b0d5;
 }
 .text-truncate {
   overflow: hidden;

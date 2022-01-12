@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Repository\UserTypeRepository;
 use App\Security\EmailVerifier;
 use App\Services\IntranetAPI;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +28,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, IntranetAPI $intranetAPI): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, UserRepository $userRepository, IntranetAPI $intranetAPI): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -35,6 +37,13 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $student = $intranetAPI->student($form->get('email')->getData());
+
+            if(!is_null($userRepository->findOneBy(['email' => $student->getEmail()]))){
+                return $this->json([
+                    'type' => 'error',
+                    'error' => "Une erreur est survenue."
+                ]);
+            }
 
             // encode the plain password
             $user->setPassword(
@@ -58,8 +67,12 @@ class RegistrationController extends AbstractController
             $user->setType($userType);
 
             $entityManager = $this->getDoctrine()->getManager();
+
+
             $entityManager->persist($user);
             $entityManager->flush();
+
+
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
