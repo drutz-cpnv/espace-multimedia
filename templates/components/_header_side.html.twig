@@ -1,10 +1,10 @@
 <ul class="header_side">
     {% if app.user %}
         <li class="header__account">
-            <a href="{{ path('user.profil') }}" {{ menu_active('profil') }}>{{ icon('person_outline') }} Username</a>
+            <a href="{{ path('user.profil') }}" {{ menu_active('profil') }}>{{ icon('person_outline') }} {{ app.user.givenName }}</a>
         </li>
         <li class="header__logout">
-            <a href="{{ path('app.logout') }}">{{ icon('logout') }} <span>Se deconnecter</span></a>
+            <a href="{{ path('app.logout') }}">{{ icon('logout') }}</a>
         </li>
     {% else %}
         <li class="header-side__auth">

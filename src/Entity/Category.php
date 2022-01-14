@@ -8,46 +8,44 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @Vich\Uploadable()
- */
+#[
+    Vich\Uploadable(),
+    ORM\Entity(repositoryClass: CategoryRepository::class)
+]
 class Category
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[
+        ORM\Id,
+        ORM\GeneratedValue,
+        ORM\Column(type:"integer")
+    ]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
+    #[ORM\Column(type: "datetime_immutable")]
     private $updatedAt;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: "string", length: 255)]
     private $filename;
 
     /**
      * @var File|null
-     * @Vich\UploadableField(mapping="brand_logo", fileNameProperty="filename")
      */
+    #[
+        Assert\Image(mimeTypes: "image/png"),
+        Vich\UploadableField(mapping: "brand_logo", fileNameProperty: "filename")
+    ]
     private $imageFile;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Equipment::class, mappedBy="categories")
-     */
+    #[ORM\ManyToMany(targetEntity: Equipment::class, mappedBy: "categories")]
     private $equipment;
 
     public function __construct()
