@@ -1,6 +1,10 @@
+$primary: #f96669;
+
 :root {
   --primary: #f96669;
-  --primary-light: #ffaeaf;
+  --primary-light: lighten(var(--primary), 10%);
+  --primary-dark: darken(var(--primary), 60%);
+  //--primary-light: #ffaeaf;
   --color-light: #f9666999;
   --secondary: #f7fafd;
   --contrast: #ff242a;

@@ -82,11 +82,6 @@ class Equipment
     private $brand;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $type;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $enabled;
@@ -95,6 +90,12 @@ class Equipment
      * @ORM\OneToMany(targetEntity=Item::class, mappedBy="equipment", orphanRemoval=true)
      */
     private $items;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=EquipmentType::class, inversedBy="equipments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
 
     public function __construct()
     {
@@ -215,18 +216,6 @@ class Equipment
         return $this;
     }
 
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    public function setType(int $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getEnabled(): ?bool
     {
         return $this->enabled;
@@ -311,6 +300,18 @@ class Equipment
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getType(): ?EquipmentType
+    {
+        return $this->type;
+    }
+
+    public function setType(?EquipmentType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
 

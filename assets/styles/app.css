@@ -1,6 +1,7 @@
 :root {
   --primary: #f96669;
-  --primary-light: #ffaeaf;
+  --primary-light: lighten(var(--primary), 10%);
+  --primary-dark: darken(var(--primary), 60%);
   --color-light: #f9666999;
   --secondary: #f7fafd;
   --contrast: #ff242a;
@@ -895,6 +896,130 @@ button:not([class]):hover .icon-delete {
     transform: rotate(360deg);
   }
 }
+.table {
+  width: 100%;
+  line-height: 1.2;
+  border-collapse: collapse;
+  color: var(--primary-dark);
+}
+.table .action-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.table .action-container .action-btn, .table .action-container button {
+  border: none;
+  background: none;
+  text-decoration: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+.table .action-container .action-btn .icon, .table .action-container button .icon {
+  color: #bbbbbe;
+}
+.table .action-container .action-btn:hover .icon, .table .action-container button:hover .icon {
+  color: #000;
+}
+.table a {
+  text-decoration: none;
+  color: var(--primary-dark);
+}
+.table a:hover {
+  color: var(--primary);
+}
+
+.table img {
+  height: 45px;
+}
+
+.table thead th {
+  font-weight: 400;
+  text-transform: uppercase;
+  opacity: 0.6;
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.table thead th svg {
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.table .desc svg {
+  transform: scaleY(-1);
+}
+
+.table thead th:last-child {
+  text-align: right;
+}
+
+.table td {
+  vertical-align: middle;
+  padding: 16px 16px 16px 0;
+}
+
+.table td:last-child {
+  text-align: right;
+  padding-right: 0;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.table a:not([class^=btn]) svg, .table button:not([class^=btn]) svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  opacity: 0.15;
+  transition: 0.3s;
+}
+.table a:not([class^=btn]) svg:hover, .table button:not([class^=btn]) svg:hover {
+  opacity: 1;
+}
+
+.table a:not([class^=btn]):hover {
+  color: #f96669;
+}
+
+.table tbody > a {
+  display: table-row;
+  text-decoration: none;
+  color: var(--primary-dark);
+}
+.table tbody > a:hover {
+  color: var(--primary);
+}
+
+.table .checkbox label {
+  display: flex;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.table .checkbox label span {
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: 15px;
+  height: 15px;
+  font-size: 15px;
+}
+.table .checkbox input:checked ~ label {
+  background-color: var(--primary);
+}
+.table .checkbox input:checked ~ label span {
+  display: block;
+  color: #FFF;
+}
+
 label {
   text-transform: uppercase;
   font-weight: 300;
