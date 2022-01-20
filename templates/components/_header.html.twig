@@ -1,7 +1,7 @@
 <nav class="header" style="--color-light: #8491c7;">
     <ul class="header-nav">
         <li class="header__home">
-            <a href="{{ path('home') }}" {{ menu_active('home') }} title="Accueil">
+            <a href="{{ path('app.home') }}" {{ menu_active('home') }} title="Accueil">
                 {{ icon('home') }}
             </a>
         </li>
@@ -10,7 +10,7 @@
         <li><a href="{{ path('orders.user') }}" {{ menu_active('myOrder') }}>{{ icon('receipt_long') }} Mes
                 commandes</a>
         </li>
-        <li><a href="{{ path('support') }}" {{ menu_active('support') }}>{{ icon('help_outline') }} Support</a></li>
+        <li><a href="{{ path('app.support') }}" {{ menu_active('support') }}>{{ icon('help_outline') }} Support</a></li>
     </ul>
     {{ include('components/_header_side.html.twig') }}
 </nav>

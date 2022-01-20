@@ -23,7 +23,7 @@ security:
             provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
             logout:
-                path: app_logout
+                path: app.logout
             remember_me:
                 secret: '%kernel.secret%'
                 path: /
@@ -39,5 +39,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/se-connecter, roles: PUBLIC_ACCESS }
+        - { path: ^/inscription, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_USER }
+        # - { path: ^/, roles: ROLE_USER, allow_if: "'app.login' == request.attributes.all()['_route'] or 'app_register' == request.attributes.all()['_route']" }
         # - { path: ^/profile, roles: ROLE_USER }

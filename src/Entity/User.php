@@ -16,6 +16,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    public const ROLES = [
+        'ROLE_USER' => "Utilisateur",
+        'ROLE_TEACHER' => "Enseignant",
+        'ROLE_EDITOR' => "Editeur",
+        'ROLE_ADMIN' => "Administrateur",
+        'ROLE_WEBMASTER' => "Webmaster"
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -83,6 +92,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="client")
      */
     private $orders;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Teacher::class, mappedBy="userTeacher", cascade={"persist", "remove"})
+     */
+    private $teacher;
 
     public function __construct()
     {
@@ -302,5 +316,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->getFullname();
+    }
+
+    public function getRoleName()
+    {
+        $roles = new ArrayCollection($this->getRoles());
+        return self::ROLES[$roles->last()];
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($teacher === null && $this->teacher !== null) {
+            $this->teacher->setUserTeacher(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($teacher !== null && $teacher->getUserTeacher() !== $this) {
+            $teacher->setUserTeacher($this);
+        }
+
+        $this->teacher = $teacher;
+
+        return $this;
     }
 }

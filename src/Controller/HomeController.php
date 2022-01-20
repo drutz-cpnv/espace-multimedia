@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('', name: 'home')]
+    #[Route('', name: 'app.home')]
     public function index(IntranetAPI $API): Response
     {
         return $this->render('pages/index.html.twig', [
@@ -19,7 +19,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/aide', name: 'support')]
+    #[Route('/aide', name: 'app.support')]
     public function support(): Response
     {
         return $this->render('pages/index.html.twig', [

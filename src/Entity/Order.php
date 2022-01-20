@@ -47,7 +47,7 @@ class Order
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderState::class, mappedBy="order_id")
+     * @ORM\OneToMany(targetEntity=OrderState::class, mappedBy="order")
      */
     private $orderStates;
 
@@ -55,6 +55,11 @@ class Order
      * @ORM\OneToMany(targetEntity=OrderDocument::class, mappedBy="documet_order")
      */
     private $documents;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="orders")
+     */
+    private $teacher;
 
     public function __construct()
     {
@@ -203,5 +208,17 @@ class Order
     public function __toString(): string
     {
         return $this->getClient() . " - " . $this->getCreatedAt()->format("d.m.Y H:i");
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
+
+        return $this;
     }
 }

@@ -53,9 +53,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setEmail($student->getEmail());
-            $user->setFamilyName($student->getLastname());
-            $user->setGivenName($student->getFirstname());
+            $user
+                ->setEmail($student->getEmail())
+                ->setFamilyName($student->getLastname())
+                ->setGivenName($student->getFirstname());
 
             if($student->getType() === "Cpnv::CurrentStudent") {
                 $userType = $userTypeRepository->findOneBySlug("student");
