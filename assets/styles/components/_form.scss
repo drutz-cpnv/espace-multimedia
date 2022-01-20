@@ -16,6 +16,13 @@ input:disabled {
   display: none!important;
 }
 
+form{
+  & > div:not(.form-content) .form-group{
+    margin-bottom: space(3);
+  }
+}
+
+
 // Champs texte
 // ==================
 .form-group input,
@@ -30,7 +37,10 @@ input:disabled {
   display: block;
   width: 100%;
   outline: none;
-  min-height: 48px;
+  //min-height: 48px;
+}
+.ts-control input {
+  width: auto;
 }
 .form-group textarea {
   min-height: 150px;
@@ -47,7 +57,6 @@ input:disabled {
   background-size: 12px 12px;
   background-position: center right 20px;
   background-repeat: no-repeat;
-
 }
 
 // Checkbox
@@ -70,7 +79,9 @@ input:disabled {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  margin: 0 !important;
 }
+
 .form-check label::before {
   content: '';
   display: inline-block;
@@ -79,6 +90,7 @@ input:disabled {
   margin-top: -3px;
   border: 1px solid var(--border);
   background: var(--background);
+  margin: 0;
   margin-right: space(1);
 }
 .form-check label::after {
@@ -89,6 +101,7 @@ input:disabled {
   left: 4px;
   width: 10px;
   height: 10px;
+  margin: 0;
   background: var(--contrast);
   transform: scale(0);
 }
@@ -97,6 +110,10 @@ input:disabled {
 }
 .form-check input::after {
   content: '';
+}
+
+.form-check-label{
+  margin-bottom: 0;
 }
 
 // Switch
@@ -119,7 +136,7 @@ input:disabled {
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
-    margin-bottom: 0 !important;
+    margin-bottom: unset !important;
   }
 }
 .switch {

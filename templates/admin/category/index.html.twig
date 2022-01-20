@@ -1,0 +1,46 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <div class="title">
+            <span class="icon material-icons-round">
+                manage_accounts
+            </span>
+                <h1>Utilisateurs</h1>
+            </div>
+        </div>
+        <div class="content">
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Dernière mise à jour</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ category.filename }}</td>
+                        <td>
+                            <a class="small-btn" href="{{ path('admin.category.show', {'id': category.id}) }}">Afficher</a>
+                            <a class="small-btn" href="{{ path('admin.category.edit', {'id': category.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucune catégories enregistrée</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

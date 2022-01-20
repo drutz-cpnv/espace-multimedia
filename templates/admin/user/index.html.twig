@@ -1,0 +1,41 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <div class="title">
+            <span class="icon material-icons-round">
+                manage_accounts
+            </span>
+                <h1>Utilisateurs</h1>
+            </div>
+        </div>
+        <div class="content">
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom complet</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td class="js-search-result">{{ user }}</td>
+                    <td class="js-search-result">{{ user.type.name }}</td>
+                    <td>
+                        <a href="{{ path('admin.user.edit', {'id': user.id}) }}" class="small-btn">Modifier</a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

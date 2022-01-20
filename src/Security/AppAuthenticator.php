@@ -20,7 +20,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'app.login';
 
     private UrlGeneratorInterface $urlGenerator;
 
@@ -49,7 +49,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        return new RedirectResponse($this->urlGenerator->generate('app.index'));
+        return new RedirectResponse($this->urlGenerator->generate('app.login'));
     }
 
     protected function getLoginUrl(Request $request): string
