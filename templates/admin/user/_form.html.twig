@@ -1,4 +1,29 @@
-{{ form_start(form) }}
-  {{ form_widget(form) }}
-  <button type="submit" class="btn">Enregistrer</button>
+{{ form_start(form, {attr: {class: 'stacked'}}) }}
+<section class="stack-large">
+    <section>
+        <div class="section-title">
+            Informations générales
+        </div>
+        <div class="grid">
+            {{ form_row(form.family_name) }}
+            {{ form_row(form.given_name) }}
+            {{ form_row(form.email) }}
+        </div>
+    </section>
+    <section>
+        <div class="section-title">
+            Accès
+        </div>
+        <div class="grid">
+            {{ form_row(form.status) }}
+            {{ form_row(form.roles) }}
+        </div>
+    </section>
+    <section>
+        {{ form_row(form.isVerified) }}
+    </section>
+    <section>
+        <button type="submit" class="btn-gradient">Enregistrer</button>
+    </section>
+</section>
 {{ form_end(form) }}
