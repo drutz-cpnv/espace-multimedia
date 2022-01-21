@@ -17,9 +17,12 @@ class AdminUserType extends AbstractType
             ->add('family_name')
             ->add('given_name')
             ->add('email')
+            ->add('status', ChoiceType::class, [
+                'choices' => $this->getChoices(User::STATUS)
+            ])
             ->add('isVerified')
             ->add('roles', ChoiceType::class, [
-                'choices' => $this->getChoices(),
+                'choices' => $this->getChoices(User::ROLES),
                 'multiple' => true
             ])
             ->setAttribute('class', 'form')
@@ -33,13 +36,8 @@ class AdminUserType extends AbstractType
         ]);
     }
 
-    private function getChoices()
+    private function getChoices($choices)
     {
-        $choices = User::ROLES;
-        $newChoices = [];
-        foreach ($choices as $key => $choice) {
-            $newChoices[$choice] = $key;
-        }
-        return $newChoices;
+        return array_flip($choices);
     }
 }

@@ -25,6 +25,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'ROLE_WEBMASTER' => "Webmaster"
     ];
 
+    public const STATUS = [
+        "En attente de confirmation",
+        "Activé",
+        "Suspendu",
+        "Désactivé"
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

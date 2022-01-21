@@ -1,42 +1,4 @@
-:root {
-    --primary: #f96669;
-    --primary-light: lighten(var(--primary), 10%);
-    --primary-dark: darken(var(--primary), 60%);
-    //--primary-light: #ffaeaf;
-    --color-light: #f9666999;
-    --secondary: #f7fafd;
-    --contrast: #ff242a;
-    --background-light: #FFFFFF;
-    --color-inversed60: #effbec99;
-    --background: #f7fafb;
-    --gray: #6c757d;
-    --gray-dark: #343a40;
-    --gray-100: #f8f9fa;
-    --gray-200: #e9ecef;
-    --gray-300: #dee2e6;
-    --gray-400: #ced4da;
-    --gray-500: #adb5bd;
-    --gray-600: #6c757d;
-    --gray-700: #495057;
-    --gray-800: #343a40;
-    --gray-900: #212529;
-    --success: #38ce35;
-    --error: #e01313;
-    --pending: #ce7535;
-    --passed: #1c6fe1;
-
-    --space: 8px;
-    --border: #d5e3ec;
-    --shadow: #d8e1e8;
-
-
-    --container-padding: 20px;
-    --container-width: calc(100vw - var(--container-padding) * 2);
-
-    @media only screen and (min-width: 1370px) {
-        --container-width: 1330px;
-    }
-}
+@import "vars";
 
 @import "reset";
 @import "functions";
