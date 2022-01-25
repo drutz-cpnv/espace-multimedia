@@ -103,6 +103,7 @@
 .h5 {
   font-family: $font-alt;
   font-weight: bold;
+  line-height: auto;
 }
 
 small, .text-small {
@@ -175,6 +176,11 @@ a{
   text-decoration: none;
   color: inherit;
   transition: color .3s;
+}
+
+p{
+  font-size: 1rem;
+  line-height: 25.6px;
 }
 
 .small-text, small{

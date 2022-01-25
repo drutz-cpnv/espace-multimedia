@@ -33,7 +33,7 @@ class AdminUserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->flush();
-            $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/user/edit.html.twig', [

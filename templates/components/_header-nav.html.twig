@@ -1,4 +1,4 @@
-<nav class="header" style="--color-light: #8491c7;">
+<nav class="header {% if lightBody is defined %}header-light{% endif %}" style="--color-light: #8491c7;">
     <ul class="header-nav">
         <li class="header__home">
             <a href="{{ path('app.home') }}" {{ menu_active('home') }} title="Accueil">
@@ -12,5 +12,5 @@
         </li>
         <li><a href="{{ path('app.support') }}" {{ menu_active('support') }}>{{ icon('help_outline') }} Support</a></li>
     </ul>
-    {{ include('components/_header_side.html.twig') }}
+    {{ include('components/_header-nav_side.html.twig') }}
 </nav>

@@ -332,6 +332,18 @@
   }
 }
 
+.page-header{
+  background-color: var(--background-light);
+  padding-bottom: space(6);
+  padding-top: space(6);
+  border-bottom: 1px solid var(--border);
+
+  @include up(1370) {
+   padding-left: calc(50% - var(--container-width)/ 2);
+   padding-right: calc(50% - var(--container-width)/ 2);
+  }
+}
+
 body{
   background-color: var(--background-light);
 }

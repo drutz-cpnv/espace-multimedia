@@ -14,14 +14,18 @@
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
 
-        <h1 class="auth-title">S'inscrire</h1>
+        <h1 class="auth-title hero-title">S'inscrire</h1>
 
         <div class="auth-form">
             {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword) }}
-            {{ form_rest(registrationForm) }}
-            <button type="submit" class="btn">S'inscrire</button>
+            <section>
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                {{ form_rest(registrationForm) }}
+            </section>
+            <div class="mt2 text-right">
+                <button type="submit" class="btn-primary">S'inscrire</button>
+            </div>
             {{ form_end(registrationForm) }}
         </div>
     </div>

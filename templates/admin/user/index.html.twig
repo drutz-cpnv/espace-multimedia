@@ -2,14 +2,10 @@
 
 {% block body %}
     <div class="container">
-        <div class="page-header">
-            <div class="title">
-            <span class="icon material-icons-round">
-                manage_accounts
-            </span>
-                <h1>Utilisateurs</h1>
-            </div>
-        </div>
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'manage_accounts',
+            title: 'Utilisateurs',
+        } %}
         <div class="content">
             <table class="table js-search-table" style="margin: 20px 0">
                 <thead>

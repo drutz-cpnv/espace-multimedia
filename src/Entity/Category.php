@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @Vich\Uploadable()
+ * @ORM\HasLifecycleCallbacks
  */
 class Category
 {
@@ -36,7 +37,7 @@ class Category
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
@@ -57,6 +58,15 @@ class Category
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->setUpdatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int

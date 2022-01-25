@@ -1125,28 +1125,28 @@ body.admin-page main.main-content .content.info-container h4 {
 body.admin-page main.main-content .content.info-container span {
     color: #697fbf;
 }
-body.admin-page .page-header {
+body.admin-page .admi-page__page-header {
     width: 100%;
     display: flex;
     margin-bottom: 15px;
 }
-body.admin-page .page-header .title {
+body.admin-page .admi-page__page-header .title {
     display: flex;
     align-items: center;
 }
-body.admin-page .page-header .title .icon {
+body.admin-page .admi-page__page-header .title .icon {
     color: #f96669;
     margin-right: 3px;
 }
-body.admin-page .page-header .title h1 {
+body.admin-page .admi-page__page-header .title h1 {
     font-size: 1.5rem;
     font-weight: 700;
     color: #2b0203;
 }
-body.admin-page .page-header .header-actions {
+body.admin-page .admi-page__page-header .header-actions {
     margin-left: auto;
 }
-body.admin-page .page-header .header-actions a {
+body.admin-page .admi-page__page-header .header-actions a {
     display: block;
     text-decoration: none;
     padding: 12.8px 16px;
@@ -1157,10 +1157,10 @@ body.admin-page .page-header .header-actions a {
     box-shadow: 0 2px 4px #bec6cd;
     font-size: 0.9rem;
 }
-body.admin-page .page-header .header-actions a:hover {
+body.admin-page .admi-page__page-header .header-actions a:hover {
     background-color: #f97073;
 }
-body.admin-page .page-header .header-actions a:active {
+body.admin-page .admi-page__page-header .header-actions a:active {
     box-shadow: 0 0 0 3px #F9666955;
 }
 

@@ -3,11 +3,11 @@
 {% block body %}
     <div class="container">
         {% include 'admin/_admin-page_header.html.twig' with {
-            icon: 'tag',
-            title: 'Catégories',
+            icon: 'copyright',
+            title: 'Marques',
             button: {
-                path: 'admin.category.new',
-                label: 'Nouvelle catégorie'
+                path: 'admin.brand.new',
+                label: 'Ajouter une marque'
             }
         } %}
         <div class="content">
@@ -16,19 +16,21 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
+                    <th>Lien</th>
                     <th>Dernière mise à jour</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for category in categories %}
+                {% for brand in brands %}
                     <tr>
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
-                        <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ brand.id }}</td>
+                        <td>{{ brand.name }}</td>
+                        <td><a href="{{ brand.link }}" class="link">{{ brand.link }}</a></td>
+                        <td>{{ brand.updatedAt ? brand.updatedAt|date('d.m.Y H:i:s') : '' }}</td>
                         <td>
-                            <a class="small-btn" href="{{ path('admin.category.edit', {'id': category.id}) }}">Modifier</a>
+                            <a class="small-btn" href="{{ path('admin.brand.edit', {'id': brand.id}) }}">Modifier</a>
                         </td>
                     </tr>
                 {% else %}

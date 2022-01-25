@@ -29,9 +29,7 @@
 
 
 .auth-title{
-  margin-bottom: space(2);
-  font-size: 1.3em;
-  font-weight: 600;
+  margin-bottom: space(4);
 }
 .auth-form {
   @extend %card;
@@ -39,29 +37,29 @@
 
 
   form{
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, clamp(350px, 100%, 800px));
-    /*grid-template-row: repeat(auto-fill, 1fr);*/
-    margin: 0 auto;
+    section{
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(auto-fill, clamp(350px, 100%, 800px));
+      /*grid-template-row: repeat(auto-fill, 1fr);*/
+      margin: 0 auto;
 
-    @media screen and (max-width: 800px){
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      margin: 20px 0;
-    }
+      @media screen and (max-width: 800px){
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0;
+      }
 
-    .full-width{
-      grid-column-start: 1;
-      grid-column-end: 3;
+      .full-width{
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
     }
 
   }
 }
-.auth-form > * + * {
-  margin-top: space(3);
-}
+
 .auth-password-forgot {
   opacity: 0.4;
 }

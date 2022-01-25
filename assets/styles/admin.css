@@ -2,7 +2,7 @@
   --primary: #f96669;
   --primary-light: lighten(var(--primary), 10%);
   --primary-dark: darken(var(--primary), 60%);
-  --color-light: #f9666999;
+  --color-light: #8491c7;
   --secondary: #f7fafd;
   --contrast: #ff242a;
   --background-light: #FFFFFF;
@@ -330,6 +330,7 @@ hr {
 .h5 {
   font-family: "Inter", sans-serif;
   font-weight: bold;
+  line-height: auto;
 }
 
 small, .text-small {
@@ -414,6 +415,11 @@ a {
   text-decoration: none;
   color: inherit;
   transition: color 0.3s;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 25.6px;
 }
 
 .small-text, small {
@@ -993,6 +999,19 @@ body .ml5 {
   }
 }
 
+.page-header {
+  background-color: var(--background-light);
+  padding-bottom: calc(6 * var(--space));
+  padding-top: calc(6 * var(--space));
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 1370px) {
+  .page-header {
+    padding-left: calc(50% - var(--container-width) / 2);
+    padding-right: calc(50% - var(--container-width) / 2);
+  }
+}
+
 body {
   background-color: var(--background-light);
 }
@@ -1031,6 +1050,7 @@ input:disabled {
   display: block;
   width: 100%;
   outline: none;
+  min-height: 48px;
 }
 
 .ts-control input {
@@ -1275,27 +1295,29 @@ button:not([class]):hover .icon-delete {
   background: var(--contrast);
 }
 
-.btn {
+/*.btn{
   display: inline-block;
   text-decoration: none;
-  padding: calc(1.6 * var(--space)) calc(2 * var(--space));
+  padding: space(1.6) space(2);
   background-color: var(--primary);
   color: #FFF;
   font-weight: 700;
   border-radius: 4px;
   box-shadow: 0 2px 4px #bec6cd;
-  font-size: 0.9rem;
+  font-size: .9rem;
   border: none;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
-}
-.btn:hover {
-  background-color: var(--contrast);
-}
-.btn:active, .btn:focus {
-  box-shadow: 0 0 0 3px #F9666955;
-}
 
+  &:hover{
+    background-color: var(--contrast);
+  }
+
+  &:active, &:focus{
+    box-shadow: 0 0 0 3px #F9666955;
+  }
+
+}*/
 .btn-discord, .btn-social, .btn-secondary, .btn-danger, .btn-white-outlined, .btn-primary-outlined, .btn-primary, .btn-gradient {
   text-decoration: none !important;
   padding: 9px 16px;
@@ -2754,33 +2776,33 @@ body.admin-page main.main-content .content.info-container span {
   color: #697fbf;
 }
 
-body.admin-page .page-header {
+body.admin-page .admi-page__page-header {
   width: 100%;
   display: flex;
   margin-bottom: 15px;
 }
 
-body.admin-page .page-header .title {
+body.admin-page .admi-page__page-header .title {
   display: flex;
   align-items: center;
 }
 
-body.admin-page .page-header .title .icon {
+body.admin-page .admi-page__page-header .title .icon {
   color: #f96669;
   margin-right: 3px;
 }
 
-body.admin-page .page-header .title h1 {
+body.admin-page .admi-page__page-header .title h1 {
   font-size: 1.5rem;
   font-weight: 700;
   color: #2b0203;
 }
 
-body.admin-page .page-header .header-actions {
+body.admin-page .admi-page__page-header .header-actions {
   margin-left: auto;
 }
 
-body.admin-page .page-header .header-actions a {
+body.admin-page .admi-page__page-header .header-actions a {
   display: block;
   text-decoration: none;
   padding: 12.8px 16px;
@@ -2792,11 +2814,11 @@ body.admin-page .page-header .header-actions a {
   font-size: 0.9rem;
 }
 
-body.admin-page .page-header .header-actions a:hover {
+body.admin-page .admi-page__page-header .header-actions a:hover {
   background-color: #f97073;
 }
 
-body.admin-page .page-header .header-actions a:active {
+body.admin-page .admi-page__page-header .header-actions a:active {
   box-shadow: 0 0 0 3px #F9666955;
 }
 

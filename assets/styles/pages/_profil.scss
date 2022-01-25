@@ -1,0 +1,36 @@
+.profil-header{
+  text-align: center;
+
+  .profil-header__body p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-light);
+  }
+
+  .profil-header__avatar{
+    width: 110px;
+    height: 110px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@include up(600) {
+  .profil-header {
+    text-align: left;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    grid-gap: space(2);
+
+    .profil-header__avatar {
+      margin-left: 0;
+    }
+    .profil-header__body p {
+      justify-content: flex-start;
+    }
+  }
+
+}

@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=BrandRepository::class)
  * @Vich\Uploadable()
+ * @ORM\HasLifecycleCallbacks
  */
 class Brand
 {
@@ -40,7 +41,7 @@ class Brand
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
@@ -58,6 +59,15 @@ class Brand
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->setUpdatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int

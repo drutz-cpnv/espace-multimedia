@@ -1,6 +1,94 @@
 {% extends 'base.html.twig' %}
 
+{% set lightBody = true %}
+{% set headerLight = true %}
+
 {% block body %}
+    <div class="page-header container">
+        <div class="profil-header">
+            <div class="profil-header__avatar">
+
+            </div>
+            <div class="profil-header__body">
+                <h1 class="h1">Mon compte</h1>
+                <p class="hstack" style="--gap: 1">
+                    <span class="pill small pill-darkgrey">{{ app.user.roleName }}</span>
+                    <small>
+                        Inscrit depuis le {{ app.user.createdAt | date('d.m.Y') }}
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="layout-sidebar py5" style="--gap: 5">
+        <main class="stack-large">
+            {{ form_start(form, {attr: {class: 'stack-large stacked'}}) }}
+            <div class="stack">
+                <h2 class="h3"><span class="material-icons-round">person</span> Mes informations</h2>
+                <div class="card p3 grid">
+                    {{ form_row(form.family_name) }}
+                    {{ form_row(form.given_name) }}
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn-primary">Mettre à jour</button>
+                </div>
+            </div>
+            {#<div class="stack">
+                <div class="card p3 grid">
+                    <section>
+                        <div class="section-title">
+                            Informations générales
+                        </div>
+                        <div class="grid">
+                            {{ form_row(form.family_name) }}
+                            {{ form_row(form.given_name) }}
+                        </div>
+                    </section>
+                    <section>
+                        <div class="section-title">
+                            Autre (non modifiable)
+                        </div>
+                        <div class="grid">
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.createdAt) }}
+                        </div>
+                    </section>
+                    <section>
+
+                    </section>
+                </div>
+            </div>#}
+            {{ form_end(form) }}
+        </main>
+        <aside class="stack">
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Changement de l'adresse e-mail
+                    </h2>
+                    <p>L'adresse e-mail ne peut être modifiée. Dans le cas où votre adresse venait à changer, veuillez vous adresser à un administrateur.</p>
+                </div>
+            </div>
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Votre adresse e-mail
+                    </h2>
+                    <p>{{ app.user.email }}</p>
+                </div>
+            </div>
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Informations
+                    </h2>
+                    <p><span class="bold">Créé le : </span>{{ app.user.createdAt | date('d.m.Y à H:i') }}</p>
+                    <p><span class="bold">Modifié le : </span>{{ app.user.updatedAt | date('d.m.Y à H:i') }}</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
 
 {% endblock %}
 

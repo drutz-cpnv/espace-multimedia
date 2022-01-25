@@ -2,14 +2,10 @@
 
 {% block body %}
     <div class="container">
-        <div class="page-header">
-            <div class="title">
-            <span class="icon material-icons-round">
-                manage_accounts
-            </span>
-                <h1>Modification de {{ user.fullname }}</h1>
-            </div>
-        </div>
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'manage_accounts',
+            title: 'Modification de ' ~ user.fullname,
+        } %}
         <div class="content">
             {{ include('admin/user/_form.html.twig') }}
         </div>

@@ -18,10 +18,10 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body>
-<div class="page-warper" {% block bodyAttributes %}{% endblock %}>
-    {{ include('components/_header.html.twig') }}
-    {% block body %}{% endblock %}
-</div>
+<body class="{% if lightBody is defined %}bodyLight{% endif %} {% if headerLight is defined %}header-light{% endif %}" {% block bodyAttributes %}{% endblock %}>
+    <div class="page-warper">
+        {{ include('components/_header-nav.html.twig') }}
+        {% block body %}{% endblock %}
+    </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
-use App\Form\CategoryType;
+use App\Form\AdminType\AdminCategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +18,7 @@ class AdminCategoryController extends AbstractController
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('admin/category/index.html.twig', [
+            'menu' => 'admin.category',
             'categories' => $categoryRepository->findAll(),
         ]);
     }
@@ -26,7 +27,7 @@ class AdminCategoryController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(AdminCategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -37,6 +38,7 @@ class AdminCategoryController extends AbstractController
         }
 
         return $this->renderForm('admin/category/new.html.twig', [
+            'menu' => 'admin.category',
             'category' => $category,
             'form' => $form,
         ]);
@@ -46,6 +48,7 @@ class AdminCategoryController extends AbstractController
     public function show(Category $category): Response
     {
         return $this->render('admin/category/show.html.twig', [
+            'menu' => 'admin.category',
             'category' => $category,
         ]);
     }
@@ -53,7 +56,7 @@ class AdminCategoryController extends AbstractController
     #[Route('/{id}/edit', name: 'admin.category.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(AdminCategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,7 +65,8 @@ class AdminCategoryController extends AbstractController
             return $this->redirectToRoute('admin.category.index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin_category/edit.html.twig', [
+        return $this->renderForm('admin/category/edit.html.twig', [
+            'menu' => 'admin.category',
             'category' => $category,
             'form' => $form,
         ]);

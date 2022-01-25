@@ -1,15 +1,13 @@
 {% extends 'admin_base.html.twig' %}
 
-{% block title %}Modification de la catégorie{% endblock %}
-
 {% block body %}
     <div class="container">
         {% include 'admin/_admin-page_header.html.twig' with {
-            icon: 'tag',
-            title: 'Modification de la catégorie',
+            icon: 'copyright',
+            title: 'Modification de la marque',
         } %}
         <div class="content">
-            {{ include('admin/category/_form.html.twig') }}
+            {{ include('admin/brand/_form.html.twig') }}
         </div>
     </div>
 {% endblock %}

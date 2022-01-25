@@ -1,0 +1,11 @@
+<div class="admi-page__page-header">
+    <div class="title">
+        {{ icon(icon) }}
+        <h1>{{ title }}</h1>
+    </div>
+    {% if button is defined %}
+    <div class="header-actions">
+        <a href="{{ path(button.path) }}" class="btn">{{ button.label }}</a>
+    </div>
+    {% endif %}
+</div>

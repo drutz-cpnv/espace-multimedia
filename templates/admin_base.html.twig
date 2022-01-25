@@ -52,11 +52,11 @@
                 <span class="icon material-icons-round">camera_alt</span>
                 <span class="text">Matériel</span>
             </a>
-            <a href="#" class="nav-btn">
+            <a href="{{ path('admin.brand.index') }}" class="nav-btn" {{ menu_active('admin.brand') }}>
                 <span class="icon material-icons-round">copyright</span>
                 <span class="text">Marques</span>
             </a>
-            <a href="#" class="nav-btn">
+            <a href="{{ path('admin.category.index') }}" class="nav-btn" {{ menu_active('admin.brand')}}>
                 <span class="icon material-icons-round">tag</span>
                 <span class="text">Catégories</span>
             </a>

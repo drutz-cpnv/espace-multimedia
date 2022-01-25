@@ -11,7 +11,16 @@
 @import "components/components";
 @import "components/form";
 
-
 //Pages
 @import "pages/auth";
+@import "pages/profil";
+
+body{
+  height: 100vh;
+  background-color: var(--background);
+  word-break: break-word;
+}
+
+.bodyLight{
+}
 
