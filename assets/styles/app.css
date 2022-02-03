@@ -1343,8 +1343,16 @@ input:disabled {
   min-height: 48px;
 }
 
+.ts-control {
+  padding: calc(1.5 * var(--space)) calc(1 * var(--space)) !important;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
 .ts-control input {
   width: auto;
+  font-size: 1rem !important;
+  line-height: normal !important;
 }
 
 .form-group textarea {
@@ -2124,8 +2132,16 @@ input:disabled {
   min-height: 48px;
 }
 
+.ts-control {
+  padding: calc(1.5 * var(--space)) calc(1 * var(--space)) !important;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
 .ts-control input {
   width: auto;
+  font-size: 1rem !important;
+  line-height: normal !important;
 }
 
 .form-group textarea {

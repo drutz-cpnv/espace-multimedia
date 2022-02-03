@@ -18,7 +18,7 @@
         {{ encore_entry_script_tags('admin') }}
     {% endblock %}
 </head>
-<body class="admin-page">
+<body class="admin-page" {% block bodyAttributes %}{% endblock %}>
 
 <header class="admin-header">
     <div class="container">
@@ -39,7 +39,7 @@
 <aside>
     <nav>
         <section>
-            <a href="#" class="nav-btn" {{ menu_active('home') }}>
+            <a href="{{ path("admin.index") }}" class="nav-btn" {{ menu_active('home') }}>
                 <span class="icon material-icons-round">dashboard</span>
                 <span class="text">Dashboard</span>
             </a>
@@ -48,17 +48,21 @@
             <div class="section-title">
                 <span>Objets</span>
             </div>
-            <a href="#" class="nav-btn">
+            <a href="{{ path('admin.equipment.index') }}" class="nav-btn" {{ menu_active('admin.equipment')}}>
                 <span class="icon material-icons-round">camera_alt</span>
-                <span class="text">Matériel</span>
+                <span class="text">Équipement</span>
             </a>
             <a href="{{ path('admin.brand.index') }}" class="nav-btn" {{ menu_active('admin.brand') }}>
                 <span class="icon material-icons-round">copyright</span>
                 <span class="text">Marques</span>
             </a>
-            <a href="{{ path('admin.category.index') }}" class="nav-btn" {{ menu_active('admin.brand')}}>
+            <a href="{{ path('admin.category.index') }}" class="nav-btn" {{ menu_active('admin.category')}}>
                 <span class="icon material-icons-round">tag</span>
                 <span class="text">Catégories</span>
+            </a>
+            <a href="{{ path('admin.type.index') }}" class="nav-btn" {{ menu_active('admin.type')}}>
+                <span class="icon material-icons-round">bookmark</span>
+                <span class="text">Types</span>
             </a>
         </section>
         <section>

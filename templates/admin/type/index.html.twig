@@ -3,11 +3,11 @@
 {% block body %}
     <div class="container">
         {% include 'admin/_admin-page_header.html.twig' with {
-            icon: 'copyright',
-            title: 'Marques',
+            icon: 'bookmark',
+            title: 'Type d\'équipement',
             button: {
-                path: 'admin.brand.new',
-                label: 'Ajouter une marque'
+                path: 'admin.type.new',
+                label: 'Ajouter un type d\'équipement'
             }
         } %}
         <div class="content">
@@ -16,25 +16,23 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
-                    <th>Dernière mise à jour</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for brand in brands %}
+                {% for type in types %}
                     <tr>
-                        <td>{{ brand.id }}</td>
-                        <td>{{ brand.name }}</td>
-                        <td>{{ brand.updatedAt ? brand.updatedAt|date('d.m.Y H:i:s') : '' }}</td>
+                        <td>{{ type.id }}</td>
+                        <td>{{ type.name }}</td>
                         <td>
-                            <a class="small-btn" href="{{ path('admin.brand.edit', {'id': brand.id}) }}">Modifier</a>
-                            {{ include('admin/brand/_delete_form.html.twig') }}
+                            <a class="small-btn" href="{{ path('admin.type.edit', {'id': type.id}) }}">Modifier</a>
+                            {{ include('admin/type/_delete_form.html.twig') }}
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5">Aucune marque enregistrée</td>
+                        <td colspan="3">Aucun type enregistré</td>
                     </tr>
                 {% endfor %}
 

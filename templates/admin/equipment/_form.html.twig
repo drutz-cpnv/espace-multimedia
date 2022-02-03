@@ -6,8 +6,23 @@
         </div>
         <div class="grid">
             {{ form_row(form.name) }}
+            {{ form_row(form.categories) }}
+            {{ form_row(form.type) }}
             {{ form_row(form.imageFile) }}
+            {{ form_row(form.brand) }}
         </div>
+    </section>
+    <section>
+        <div class="section-title">
+            Description
+        </div>
+        {{ form_row(form.description) }}
+    </section>
+    <section>
+        <div class="section-title">
+            Paramètre d'affichage
+        </div>
+        {{ form_row(form.enabled) }}
     </section>
     <section>
         <button type="submit" class="btn-gradient">Enregistrer</button>

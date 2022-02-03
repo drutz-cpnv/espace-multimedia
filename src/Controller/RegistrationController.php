@@ -36,14 +36,36 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $student = $intranetAPI->student($form->get('email')->getData());
+            if(strlen(explode('@', $form->get("email")->getData())[0]) === 3){
+                $teacher = $intranetAPI->teacher($form->get("email")->getData());
 
-            if(!is_null($userRepository->findOneBy(['email' => $student->getEmail()]))){
-                return $this->json([
-                    'type' => 'error',
-                    'error' => "Une erreur est survenue."
-                ]);
+                $user
+                    ->setEmail($teacher->getEmail())
+                    ->setFamilyName($teacher->getLastname())
+                    ->setGivenName($teacher->getFirstname());
+
+                $userType = $userTypeRepository->findOneBySlug("teacher");
+
             }
+            else{
+                $student = $intranetAPI->student($form->get('email')->getData());
+
+                if(!is_null($userRepository->findOneBy(['email' => $student->getEmail()]))){
+                    return $this->json([
+                        'type' => 'error',
+                        'error' => "Une erreur est survenue."
+                    ]);
+                }
+
+                $user
+                    ->setEmail($student->getEmail())
+                    ->setFamilyName($student->getLastname())
+                    ->setGivenName($student->getFirstname());
+
+                $userType = $userTypeRepository->findOneBySlug("student");
+            }
+
+
 
             // encode the plain password
             $user->setPassword(
@@ -53,22 +75,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user
-                ->setEmail($student->getEmail())
-                ->setFamilyName($student->getLastname())
-                ->setGivenName($student->getFirstname());
 
-            if($student->getType() === "Cpnv::CurrentStudent") {
-                $userType = $userTypeRepository->findOneBySlug("student");
-            }
-            else {
-                $userType = $userTypeRepository->findOneBySlug("teacher");
-            }
+
 
             $user->setType($userType);
 
             $entityManager = $this->getDoctrine()->getManager();
-
 
             $entityManager->persist($user);
             $entityManager->flush();

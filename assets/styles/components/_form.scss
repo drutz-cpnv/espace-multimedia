@@ -38,8 +38,17 @@ input:disabled {
   outline: none;
   min-height: 48px;
 }
+
+.ts-control{
+  padding: space(1.5) space(1) !important;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
 .ts-control input {
   width: auto;
+  font-size: 1rem !important;
+  line-height: normal !important;
 }
 .form-group textarea {
   min-height: 150px;

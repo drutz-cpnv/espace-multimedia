@@ -30,11 +30,6 @@ class Brand
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $link;
-
-    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $updatedAt;
@@ -83,18 +78,6 @@ class Brand
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLink(): ?string
-    {
-        return $this->link;
-    }
-
-    public function setLink(string $link): self
-    {
-        $this->link = $link;
 
         return $this;
     }

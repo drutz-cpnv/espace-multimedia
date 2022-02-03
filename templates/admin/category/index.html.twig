@@ -26,9 +26,10 @@
                     <tr>
                         <td>{{ category.id }}</td>
                         <td>{{ category.name }}</td>
-                        <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ category.updatedAt ? category.updatedAt|date('d.m.Y H:i:s') : '' }}</td>
                         <td>
                             <a class="small-btn" href="{{ path('admin.category.edit', {'id': category.id}) }}">Modifier</a>
+                            {{ include('admin/category/_delete_form.html.twig') }}
                         </td>
                     </tr>
                 {% else %}

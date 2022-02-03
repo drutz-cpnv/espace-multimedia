@@ -26,6 +26,9 @@ services:
             $api_secret: '%env(API_SECRET)%'
             $api_key: '%env(API_KEY)%'
 
+    update_teacher:
+        class: App\Services\Tasks\UpdateTeachers
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

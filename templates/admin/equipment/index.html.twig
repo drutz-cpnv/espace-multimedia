@@ -1,0 +1,50 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'camera_alt',
+            title: 'Équipement',
+            button: {
+                path: 'admin.equipment.new',
+                label: 'Ajouter du matériel'
+            }
+        } %}
+        <div class="content">
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Marque</th>
+                    <th>Dernière mise à jour</th>
+                    <th>Ajouté par</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for equipment in equipments %}
+                    <tr>
+                        <td>{{ equipment.id }}</td>
+                        <td>{{ equipment.name }}</td>
+                        <td>{{ equipment.brand.name }}</td>
+                        <td>{{ equipment.updatedAt ? equipment.updatedAt|date('d.m.Y H:i:s') : '' }}</td>
+                        <td>{{ equipment.createdBy.fullname }}</td>
+                        <td>
+                            <a class="small-btn" href="{{ path('admin.equipment.show', {'id': equipment.id}) }}">Afficher</a>
+                            <a class="small-btn" href="{{ path('admin.equipment.edit', {'id': equipment.id}) }}">Modifier</a>
+                            {{ include('admin/equipment/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucun équipement enregistré</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Nouveau matériel{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'bookmark',
+            title: 'Nouveau type d\'equipment',
+        } %}
+        <div class="content">
+            {{ include('admin/type/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

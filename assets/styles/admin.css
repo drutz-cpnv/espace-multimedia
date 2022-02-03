@@ -1053,8 +1053,16 @@ input:disabled {
   min-height: 48px;
 }
 
+.ts-control {
+  padding: calc(1.5 * var(--space)) calc(1 * var(--space)) !important;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
 .ts-control input {
   width: auto;
+  font-size: 1rem !important;
+  line-height: normal !important;
 }
 
 .form-group textarea {
@@ -1787,7 +1795,8 @@ button:not([class]):hover .icon-delete {
 }
 
 /* Buttons */
-.small-btn {
+.small-btn,
+.small-btn-danger {
   padding: 5px 10px;
   color: #121c42;
   font-size: 12.8px;
@@ -1801,14 +1810,39 @@ button:not([class]):hover .icon-delete {
   height: fit-content;
 }
 
-.small-btn:hover {
+.small-btn:hover, .small-btn-danger:hover {
   border: 1px solid #FFF;
 }
 
-.small-btn:active, .small-btn:focus {
+.small-btn:active, .small-btn:focus,
+.small-btn-danger:active, .small-btn-danger:focus {
   border: 1px solid #f96669;
 }
 
+.form-button {
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.small-btn-danger {
+  color: var(--error) !important;
+  box-shadow: 0 1px 2px rgba(141, 36, 36, 0.4) !important;
+  border: 1px solid #ecd5d5 !important;
+}
+.small-btn-danger.icon-btn {
+  display: inline-block;
+}
+.small-btn-danger.icon-btn span {
+  font-size: 0.8rem;
+}
+.small-btn-danger:hover {
+  background-color: var(--error);
+  border: 1px solid var(--error) !important;
+  color: #FFF !important;
+}
 .classic-btn {
   color: #121c42;
   font-weight: 300;
@@ -3061,8 +3095,36 @@ body.admin-page .admi-page__page-header .header-actions a:active {
   background-color: #FFF;
   border-radius: 30px;
   padding: 32px;
-  max-width: 250px;
+  width: fit-content;
   box-shadow: 0 10px 30px rgba(51, 51, 51, 0.1);
+  position: relative;
+}
+
+.admin-order-modal .modal-content .close-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  height: 28px;
+  width: 28px;
+  padding: 2.5px;
+  background-color: var(--border);
+  display: flex;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.admin-order-modal .modal-content .close-btn::before {
+  content: "";
+  height: 18px;
+  width: 2px;
+  background-color: var(--gray-100);
+  transform: translateX(10.5px) translateY(3px) rotate(45deg);
+}
+.admin-order-modal .modal-content .close-btn::after {
+  content: "";
+  height: 18px;
+  width: 2px;
+  background-color: var(--gray-100);
+  transform: translateX(8.5px) translateY(3px) rotate(-45deg);
 }
 
 .admin-order-modal p {
@@ -3084,6 +3146,14 @@ body.admin-page .admi-page__page-header .header-actions a:active {
 .admin-order-modal .icon span {
   font-size: 5rem;
   color: #F4511E;
+}
+
+.container > section {
+  margin-bottom: calc(6 * var(--space));
+}
+
+.admin-item-thumb {
+  height: 100px;
 }
 
 /*# sourceMappingURL=admin.css.map */

@@ -6,12 +6,25 @@ use App\Repository\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ItemRepository::class)
  */
 class Item
 {
+
+    public const STATES = [
+        0 => "Neuf",
+        1 => "En bon état",
+        2 => "Dommage esthétique",
+        3 => "Dommage de fonctionnement",
+        4 => "Innutilisable",
+        5 => "En réparation",
+        6 => "Épave"
+
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -65,6 +78,8 @@ class Item
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->setUpdatedAt(new \DateTimeImmutable());
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int
@@ -87,6 +102,11 @@ class Item
     public function getState(): ?int
     {
         return $this->state;
+    }
+
+    public function getStateText(): string
+    {
+        return self::STATES[$this->state];
     }
 
     public function setState(int $state): self
@@ -120,24 +140,24 @@ class Item
         return $this;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): User|UserInterface
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(User|UserInterface $createdBy): self
     {
         $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getUpdatedBy(): ?User
+    public function getUpdatedBy(): User|UserInterface
     {
         return $this->updatedBy;
     }
 
-    public function setUpdatedBy(?User $updatedBy): self
+    public function setUpdatedBy(User|UserInterface $updatedBy): self
     {
         $this->updatedBy = $updatedBy;
 

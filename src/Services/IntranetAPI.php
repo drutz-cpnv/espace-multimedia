@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entity\Intranet\Classes;
 use App\Entity\Intranet\Student;
+use App\Entity\Intranet\Teacher;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use JetBrains\PhpStorm\Pure;
@@ -18,6 +19,7 @@ class IntranetAPI
 
     const CLASS_ENDPOINT = "/classes";
     const STUDENT_ENDPOINT = "/current_students";
+    const TEACHERS_ENDPOINT = "/teachers";
 
     const RESPONSE_FORMAT = ".json";
 
@@ -102,10 +104,11 @@ class IntranetAPI
 
     /**
      * @param bool[] $extra
+     * @return Teacher[]
      */
-    public function teachers(array $extra = ['SECTION' => true, 'CURRENT_CLASS_MASTERIES' => true])
+    public function teachers(array $extra = ['SECTION' => true, 'CURRENT_CLASS_MASTERIES' => true]): array
     {
-        $extra = new ArrayCollection($extra);
+        /*$extra = new ArrayCollection($extra);
 
         if($extra->contains(true)) {
             $extras = "";
@@ -118,7 +121,18 @@ class IntranetAPI
             }
 
             $this->query['alter[extra]'] = $extras;
+        }*/
+
+        $query = self::BASE_URI . self::TEACHERS_ENDPOINT . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
+
+        $teachers = [];
+
+        foreach ($this->fetch($query) as $teacher) {
+            $t = new Teacher();
+            $teachers[] = $this->teacherToEntity($t, $teacher);
         }
+
+        return $teachers;
 
     }
 
@@ -179,6 +193,41 @@ class IntranetAPI
         return $this->studentToEntity($student, $this->fetch($query));
     }
 
+    /**
+     * @param string $user
+     * @param bool[] $extra
+     * @return Teacher
+     */
+    public function teacher(string $user, array $extra = ['SECTION' => true, 'CURRENT_CLASS_MASTERIES' => true]): Teacher
+    {
+        $extra = new ArrayCollection($extra);
+
+        if($extra->contains(true)) {
+            $extras = "";
+
+            if ($extra->get('SECTION')) {
+                $extras .= "section";
+            }
+            if ($extra->get('CURRENT_CLASS_MASTERIES')) {
+                $extras .= ",current_class_masteries";
+            }
+
+            $this->query['alter[extra]'] = $extras;
+        }
+
+        if(filter_var($user, FILTER_VALIDATE_EMAIL)) {
+            $friendly_id = $this->teacherEmailToFriendlyID($user);
+        }
+        else{
+            $friendly_id = strtolower($user);
+        }
+
+        $query = self::BASE_URI . self::TEACHERS_ENDPOINT . "/" . $friendly_id . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
+
+        $teacher = new Teacher();
+        return $this->teacherToEntity($teacher, $this->fetch($query));
+    }
+
     private function studentFromEmail(string $email)
     {
         $f_id = $this->studentEmailToFriendlyID($email);
@@ -194,6 +243,14 @@ class IntranetAPI
             return str_replace($toReplace, $replaceBy, $email);
         }
         return false;
+    }
+
+    public function teacherEmailToFriendlyID(string $email): string
+    {
+        $email = strtolower($email);
+        $toReplace = ['@cpnv.ch', '.'];
+        $replaceBy = ['', '_'];
+        return str_replace($toReplace, $replaceBy, $email);
     }
 
     public function searchStudent(string $value, $scope = null, $field = 'email')
@@ -223,6 +280,20 @@ class IntranetAPI
         $entity->getClass()->setId($student->current_class->link->id ?? null);
         $entity->getClass()->setType($student->current_class->link->type ?? null);
         $entity->getClass()->setName($student->current_class->link->name ?? null);
+        return $entity;
+    }
+
+    public function teacherToEntity(Teacher $entity, $teacher): Teacher
+    {
+        $entity->setFriendlyId($teacher->friendly_id ?? null);
+        $entity->setType($teacher->type ?? null);
+        $entity->setId($teacher->id ?? null);
+        $entity->setFirstname($teacher->firstname ?? null);
+        $entity->setLastname($teacher->lastname ?? null);
+        $entity->setEmail($teacher->email ?? null);
+        $entity->setExternalUuid((int)$teacher->external_uuid ?? null);
+        $entity->setAcronym($teacher->acronym ?? null);
+
         return $entity;
     }
 

@@ -41,6 +41,6 @@ security:
     access_control:
         - { path: ^/se-connecter, roles: PUBLIC_ACCESS }
         - { path: ^/inscription, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/utilisateurs, roles: [ROLE_ADMIN, ROLE_WEBMASTER] }
+        - { path: ^/admin, roles: [ROLE_EDITOR, ROLE_ADMIN, ROLE_WEBMASTER] }
         - { path: ^/, roles: ROLE_USER }
-        # - { path: ^/, roles: ROLE_USER, allow_if: "'app.login' == request.attributes.all()['_route'] or 'app_register' == request.attributes.all()['_route']" }
-        # - { path: ^/profile, roles: ROLE_USER }

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -36,14 +37,14 @@ class Equipment
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
     /**
      * @var File|null
      * @Assert\Image(
-     *     mimeTypes="image/png"
+     *     mimeTypes={"image/png", "image/jpg", "image/jpeg"}
      * )
      * @Vich\UploadableField(mapping="equipment_image", fileNameProperty="filename")
      */
@@ -101,6 +102,9 @@ class Equipment
     {
         $this->categories = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->setUpdatedAt(new \DateTimeImmutable());
+        $this->setCreatedAt(new \DateTimeImmutable());
+        $this->setEnabled(false);
     }
 
     public function getId(): ?int
@@ -156,24 +160,24 @@ class Equipment
         return $this;
     }
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): User|UserInterface
     {
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(User|UserInterface $createdBy): self
     {
         $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getUpdatedBy(): ?User
+    public function getUpdatedBy(): User|UserInterface
     {
         return $this->updatedBy;
     }
 
-    public function setUpdatedBy(?User $updatedBy): self
+    public function setUpdatedBy(User|UserInterface $updatedBy): self
     {
         $this->updatedBy = $updatedBy;
 
