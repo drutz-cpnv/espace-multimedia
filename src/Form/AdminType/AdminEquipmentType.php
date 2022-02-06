@@ -23,6 +23,7 @@ class AdminEquipmentType extends AbstractType
                 'required' => false
             ])
             ->add('brand')
+            ->add('cabinet')
         ;
     }
 

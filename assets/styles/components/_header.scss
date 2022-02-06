@@ -125,6 +125,33 @@ nav.header {
   }
 }
 
+.cart-btn{
+  position: relative;
+  &[data-is-filled]{
+    &::before{
+      content: '';
+      position: absolute;
+      top: -3px;
+      right: 3px;
+      height: 11px;
+      width: 11px;
+      border-radius: 10px;
+      background-color: var(--contrast);
+      border: 2px solid #FFF;
+    }
+  }
+}
+
+.cart-container{
+
+}
+
+.header__account{
+  padding-left: space(1.5);
+  margin-left: space(1);
+  border-left: 1px solid var(--border-header);
+}
+
 .header a:hover,
 .header button:hover,
 .header a[aria-current] {

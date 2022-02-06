@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -97,6 +98,11 @@ class Equipment
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $cabinet;
 
     public function __construct()
     {
@@ -316,6 +322,58 @@ class Equipment
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getSlug(): string
+    {
+        $slugger = new AsciiSlugger();
+        return strtolower($slugger->slug($this->getName()));
+    }
+
+    public function getCategoriesCS()
+    {
+        $string = "";
+        $last = $this->categories->count() - 1;
+        /** @var Category $category */
+        foreach ($this->categories as $key => $category){
+            if($key === $last){
+                $string .= $category->getName();
+            }
+            elseif($key === $last-1) {
+                $string .= $category->getName() . " et ";
+            }
+            else{
+                $string .= $category->getName() . ", ";
+            }
+        }
+        return $string;
+    }
+
+    public function getCabinet(): ?string
+    {
+        return $this->cabinet;
+    }
+
+    public function setCabinet(?string $cabinet): self
+    {
+        $this->cabinet = $cabinet;
+
+        return $this;
+    }
+
+    public function getSimilar(): ArrayCollection
+    {
+        $similar = new ArrayCollection();
+        /** @var Category $category */
+        foreach ($this->categories as $category){
+            foreach ($category->getEquipment() as $equipment) {
+                if(!$similar->contains($equipment) && $equipment !== $this){
+                    $similar->add($equipment);
+                }
+            }
+        }
+
+        return $similar;
     }
 
 

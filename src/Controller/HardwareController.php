@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Equipment;
+use App\Repository\EquipmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,12 +12,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class HardwareController extends AbstractController
 {
 
-    #[Route("", name: "hardware")]
-    public function index(): Response
+    #[Route("", name: "equipment")]
+    public function index(EquipmentRepository $equipmentRepository): Response
     {
-
         return $this->render('pages/hardware.html.twig', [
-            'menu' => 'hardware'
+            'menu' => 'hardware',
+            'equipments' => $equipmentRepository->findAllEnabled()
+        ]);
+    }
+
+    #[Route("/{slug<[a-z0-9A-Z\-]+>}-{id<\d+>}", name: "equipment.show", priority: 10)]
+    public function show(Equipment $equipment, string $slug, EquipmentRepository $equipmentRepository): Response
+    {
+        if ($equipment->getSlug() !== $slug){
+            return $this->redirectToRoute("equipment.show", [
+                'slug' => $equipment->getSlug(),
+                'id' => $equipment->getId()
+            ]);
+        }
+
+        return $this->render("pages/equipment_show.html.twig", [
+            'menu' => 'hardware',
+            'equipment' => $equipment
         ]);
     }
 

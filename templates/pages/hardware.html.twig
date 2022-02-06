@@ -2,5 +2,21 @@
 
 
 {% block body %}
-    <h1>Matériel</h1>
+    <div class="container py5">
+        <div class="hardware">
+            <div class="equipment-hero">
+                <h1 class="hero-title">
+                    Tous <strong>l'équipement.</strong>
+                </h1>
+                <p class="hero-text">
+                    Photo, vidéo, enregistrement audio, etc...<br>Tous ce dont vous avez besoins, se trouve ici.
+                </p>
+            </div>
+            {% for equipment in equipments %}
+                {{ include('components/_equipment_card.html.twig') }}
+            {% else %}
+                <h1 class="h1">Aucun équipement n'est actuellment disponible.</h1>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

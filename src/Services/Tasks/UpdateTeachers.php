@@ -7,7 +7,7 @@ use App\Services\IntranetAPI;
 class UpdateTeachers
 {
 
-    private $intranetAPI;
+    private IntranetAPI $intranetAPI;
 
     public function __construct(IntranetAPI $intranetAPI)
     {

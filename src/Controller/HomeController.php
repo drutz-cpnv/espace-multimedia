@@ -22,7 +22,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/aide', name: 'app.support')]
+    #[Route('/support', name: 'app.support')]
     public function support(): Response
     {
         return $this->render('pages/index.html.twig', [

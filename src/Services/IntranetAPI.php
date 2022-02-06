@@ -26,9 +26,15 @@ class IntranetAPI
     private string $queryString;
 
     private array $requests = [];
+    private string $api_secret;
+    private string $api_key;
 
-    public function __construct(private string $api_secret, private string $api_key, private HttpClientInterface $httpClient)
+
+    public function __construct(string $api_secret, string $api_key, private HttpClientInterface $httpClient)
     {
+        $this->api_secret = $api_secret;
+        $this->api_key = $api_key;
+
     }
 
     #[Pure] public function getRequest(): ArrayCollection

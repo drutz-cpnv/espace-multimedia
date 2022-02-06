@@ -1,0 +1,13 @@
+.breadcrumb{
+  height: space(6);
+  color: var(--color-light);
+  font-size: .8em;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  .icon{
+    font-size: 1em;
+  }
+}

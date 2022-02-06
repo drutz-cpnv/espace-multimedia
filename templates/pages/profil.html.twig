@@ -24,7 +24,7 @@
         <main class="stack-large">
             {{ form_start(form, {attr: {class: 'stack-large stacked'}}) }}
             <div class="stack">
-                <h2 class="h3"><span class="material-icons-round">person</span> Mes informations</h2>
+                <h2 class="h3 align-center-y"><span class="material-icons-round">person</span> Mes informations</h2>
                 <div class="card p3 grid">
                     {{ form_row(form.family_name) }}
                     {{ form_row(form.given_name) }}
@@ -33,31 +33,6 @@
                     <button type="submit" class="btn-primary">Mettre à jour</button>
                 </div>
             </div>
-            {#<div class="stack">
-                <div class="card p3 grid">
-                    <section>
-                        <div class="section-title">
-                            Informations générales
-                        </div>
-                        <div class="grid">
-                            {{ form_row(form.family_name) }}
-                            {{ form_row(form.given_name) }}
-                        </div>
-                    </section>
-                    <section>
-                        <div class="section-title">
-                            Autre (non modifiable)
-                        </div>
-                        <div class="grid">
-                            {{ form_row(form.email) }}
-                            {{ form_row(form.createdAt) }}
-                        </div>
-                    </section>
-                    <section>
-
-                    </section>
-                </div>
-            </div>#}
             {{ form_end(form) }}
         </main>
         <aside class="stack">

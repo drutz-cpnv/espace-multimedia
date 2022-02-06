@@ -3,6 +3,7 @@
 namespace App\Form\AdminType;
 
 use App\Entity\User;
+use App\Form\FieldType\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -20,7 +21,7 @@ class AdminUserType extends AbstractType
             ->add('status', ChoiceType::class, [
                 'choices' => $this->getChoices(User::STATUS)
             ])
-            ->add('isVerified')
+            ->add('isVerified', SwitchType::class)
             ->add('roles', ChoiceType::class, [
                 'choices' => $this->getChoices(User::ROLES),
                 'multiple' => true

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ path('equipment') }}" class="link">Équipement</a> {{ icon('chevron_right') }} <a href="#" class="link">{{ equipment.type.name }}</a> {{ icon('chevron_right') }} <a href="{{ path('equipment.show', {id: equipment.id, slug: equipment.slug}) }}" class="link">{{ equipment.name }}</a>
+        </div>
+    </div>
+    <div class="equipment py5" style="--gap: 5">
+        <main class="stack-large">
+            <div class="card p3">
+                <img src="{{ vich_uploader_asset(equipment) }}" alt="{{ equipment.name }}">
+            </div>
+        </main>
+        <aside class="stack">
+            <div class="container mb3 flex">
+                <div>
+                    <h1 class="h1">{{ equipment.name }}</h1>
+                    <h3 class="hero-text">{{ equipment.type.name }}</h3>
+                </div>
+                {% if app.user.cart.contains(equipment) %}
+                    <form action="{{ path("user.cart.remove", {id: equipment.id}) }}" method="POST" class="form-button">
+                        <button class="btn-gradient btn-big">{{ icon('remove_shopping_cart') }}Retirer du panier</button>
+                    </form>
+                {% else %}
+                    <form action="{{ path("user.cart.add", {id: equipment.id}) }}" method="POST" class="form-button">
+                        <button class="btn-gradient btn-big">{{ icon('shopping_cart') }}Ajouter au panier</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="card p3">
+                <div class="mb2">
+                    <div>
+                        <h2 class="h5 mb2">Description
+                        </h2>
+                        <p>{{ equipment.description }}</p>
+                    </div>
+                </div>
+                <div class="mb2">
+                    <div>
+                        <h2 class="h5 mb2">Marque</h2>
+                        <p>{{ equipment.brand.name }}</p>
+                    </div>
+                </div>
+                <div class="mb2">
+                    <div>
+                        <h2 class="h5 mb2">Catégorie(s)</h2>
+                        <p>{{ equipment.categoriesCS }}</p>
+                    </div>
+                </div>
+                <div class="mb2">
+                    <div>
+                        <h2 class="h5 mb2">
+                            Informations
+                        </h2>
+                        <p><span class="bold">Ajouté le </span>{{ equipment.createdAt | date('d.m.Y à H:i') }}</p>
+                        <p><span class="bold">Ajouté par </span>{{ equipment.createdBy.fullname }}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <div class="equipment-page">
+        <div class="container py5">
+            <div class="stack">
+                <div class="h2">Équipement similaire</div>
+                <div class="grid">
+                    {% for equipment in equipment.similar %}
+                        {{ include('components/_equipment_card.html.twig') }}
+                    {% else %}
+                        <div class="card p3">
+                            <h4 class="text-muted">Aucun équipement similaire trouvé.</h4>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

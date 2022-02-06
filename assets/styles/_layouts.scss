@@ -77,6 +77,11 @@
   }
 }
 
+.align-center-y{
+  display: flex;
+  align-items: center;
+}
+
 .end {
   justify-content: flex-end;
 }

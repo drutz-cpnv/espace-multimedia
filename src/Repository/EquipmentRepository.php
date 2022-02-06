@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Equipment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,22 +21,24 @@ class EquipmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipment::class);
     }
 
-    // /**
-    //  * @return Equipment[] Returns an array of Equipment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Equipment[] Returns an array of Equipment objects
+    */
+    public function findAllEnabled()
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->findVisibleQuery()
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
+
+    private function findVisibleQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.enabled = :val')
+            ->setParameter('val', true);
+    }
 
     /*
     public function findOneBySomeField($value): ?Equipment

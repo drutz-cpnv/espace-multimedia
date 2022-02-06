@@ -1,0 +1,48 @@
+.hardware{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+  grid-gap: space(4);
+  grid-auto-flow: dense;
+}
+
+.equipment-hero{
+  grid-column: 1/3;
+
+  &>*+*{
+    margin-top: 20px;
+  }
+}
+
+.equipment__icon{
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+
+  img{
+    display: block;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+}
+
+.equipment{
+  @extend %container;
+  --gap: 5;
+  display: grid;
+  grid-gap: calc(var(--gap) * var(--space));
+  grid-template-columns: 1fr;
+
+  & > * {
+    min-width: 0;
+  }
+
+  @include up(1100) {
+    grid-template-columns: 600px 1fr;
+  }
+}
+
+.equipment-page{
+  background-color: var(--background-light);
+  border-top: 1px solid var(--border) ;
+}

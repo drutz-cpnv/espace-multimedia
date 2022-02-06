@@ -22,11 +22,15 @@ services:
 
     App\Services\IntranetAPI:
         arguments:
-            $api_secret: '%env(API_SECRET)%'
-            $api_key: '%env(API_KEY)%'
+            - $api_secret: '%env(API_SECRET)%'
+            - $api_key: '%env(API_KEY)%'
 
-    update_teacher:
+    tasks.teachers_update:
         class: App\Services\Tasks\UpdateTeachers
+
+    image_resizer:
+        class: App\Services\ImageResizer
+        arguments: ['%env(IMAGE_RESIZE_KEY)%']
 
 
     # add more service definitions when explicit configuration is needed
