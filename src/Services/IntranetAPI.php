@@ -134,8 +134,7 @@ class IntranetAPI
         $teachers = [];
 
         foreach ($this->fetch($query) as $teacher) {
-            $t = new Teacher();
-            $teachers[] = $this->teacherToEntity($t, $teacher);
+            $teachers[] = $this->teacherToEntity($teacher);
         }
 
         return $teachers;
@@ -202,9 +201,9 @@ class IntranetAPI
     /**
      * @param string $user
      * @param bool[] $extra
-     * @return Teacher
+     * @return \App\Entity\Teacher
      */
-    public function teacher(string $user, array $extra = ['SECTION' => true, 'CURRENT_CLASS_MASTERIES' => true]): Teacher
+    public function teacher(string $user, array $extra = ['SECTION' => true, 'CURRENT_CLASS_MASTERIES' => true]): \App\Entity\Teacher
     {
         $extra = new ArrayCollection($extra);
 
@@ -230,8 +229,7 @@ class IntranetAPI
 
         $query = self::BASE_URI . self::TEACHERS_ENDPOINT . "/" . $friendly_id . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
 
-        $teacher = new Teacher();
-        return $this->teacherToEntity($teacher, $this->fetch($query));
+        return $this->teacherToEntity($this->fetch($query));
     }
 
     private function studentFromEmail(string $email)
@@ -289,15 +287,12 @@ class IntranetAPI
         return $entity;
     }
 
-    public function teacherToEntity(Teacher $entity, $teacher): Teacher
+    public function teacherToEntity($teacher): \App\Entity\Teacher
     {
+        $entity = new \App\Entity\Teacher();
         $entity->setFriendlyId($teacher->friendly_id ?? null);
-        $entity->setType($teacher->type ?? null);
-        $entity->setId($teacher->id ?? null);
-        $entity->setFirstname($teacher->firstname ?? null);
-        $entity->setLastname($teacher->lastname ?? null);
+        $entity->setFullname($teacher->firstname . " " . $teacher->lastname);
         $entity->setEmail($teacher->email ?? null);
-        $entity->setExternalUuid((int)$teacher->external_uuid ?? null);
         $entity->setAcronym($teacher->acronym ?? null);
 
         return $entity;

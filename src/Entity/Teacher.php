@@ -62,6 +62,8 @@ class Teacher
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable());
+        $this->setUpdatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int

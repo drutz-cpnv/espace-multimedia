@@ -11,9 +11,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TasksController extends AbstractController
 {
 
+    #[Route("/update-teachers", name: "tasks.update.teachers")]
     public function updateTeachers(UpdateTeachers $teachers): Response
     {
-
+        $teachers->update();
+        return $this->redirectToRoute('admin.index', [], Response::HTTP_SEE_OTHER);
     }
 
 }

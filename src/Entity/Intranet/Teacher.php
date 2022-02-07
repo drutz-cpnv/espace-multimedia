@@ -121,9 +121,9 @@ class Teacher extends RootEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getFriendlyId(): mixed
+    public function getFriendlyId(): string
     {
         return $this->friendly_id;
     }
