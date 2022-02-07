@@ -18,4 +18,10 @@ class OrderController extends AbstractController
         ]);
     }
 
+    #[Route("/nouvelle-commande", name: "order.new")]
+    public function new(): Response
+    {
+
+    }
+
 }
