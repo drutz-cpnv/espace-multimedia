@@ -1,7 +1,7 @@
 <ul class="header_side">
     {% if app.user %}
         <li class="header__cart">
-            <a href="#" class="cart-btn js-cart-toggle" {% if app.user.cartCount > 0 %}data-is-filled{% endif %}>{{ icon('shopping_cart') }}</a>
+            {{ include('components/_cart.html.twig') }}
         </li>
         <li class="header__account">
             <a href="{{ path('user.profil') }}" {{ menu_active('profil') }}>{{ icon('person_outline') }} {{ app.user }}</a>

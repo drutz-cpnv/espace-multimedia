@@ -1,5 +1,6 @@
 import TomSelect from "tom-select";
 import ModalForm from "./modules/modalForm";
+import {Cart} from "./modules/cart";
 
 
 
@@ -10,6 +11,12 @@ document.documentElement.addEventListener("turbo:load", evt => {
         multiselect.map(v => {
             new TomSelect(v, {})
         })
+    }
+
+    const cartContainer = document.querySelector(".header__cart")
+
+    if(cartContainer) {
+        let cart = new Cart(cartContainer)
     }
 
     let modalButtons = document.querySelectorAll(".js-modal-btn")

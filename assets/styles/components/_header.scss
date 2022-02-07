@@ -108,7 +108,7 @@ nav.header {
   display: inline;
 }
 
-.header_side a {
+.header_side li > a {
   display: flex;
   align-items: center;
 }
@@ -152,7 +152,7 @@ nav.header {
   border-left: 1px solid var(--border-header);
 }
 
-.header a:hover,
+.header li > a:hover,
 .header button:hover,
 .header a[aria-current] {
   color: var(--contrast);

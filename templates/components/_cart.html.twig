@@ -1,0 +1,32 @@
+<a href="#" class="cart-btn js-cart-toggle" {% if app.user.cartCount > 0 %}data-is-filled{% endif %}>{{ icon('shopping_cart') }}</a>
+<div class="cart js-cart-container">
+    <div>
+        <div class="cart__header">
+            <div class="cart__title">
+                <span>Mon panier</span>
+            </div>
+        </div>
+        <div class="cart__body">
+            {% if app.user.cart.count > 0 %}
+                {% for cartEquipment in app.user.cart %}
+                    <a href="{{ path('equipment.show', {id: cartEquipment.id, slug: cartEquipment.slug}) }}" class="cart-item">
+                        <div>
+                            {{ cartEquipment.categoriesCS }} <br>
+                            <strong>{{ cartEquipment.name }}</strong>
+                            <strong> ({{ cartEquipment.type.name }})</strong>
+                        </div>
+                        <small class="text-muted">{{ cartEquipment.brand.name }}</small>
+                    </a>
+                {% endfor %}
+                <div class="cart-item text-center">
+                    <a href="{{ path('equipment') }}" class="btn-gradient">Confirmer le panier</a>
+                </div>
+            {% else %}
+                <div class="cart-item">Aucun équipement n'a été ajouté au panier !</div>
+                <div class="cart-item text-center">
+                    <a href="{{ path('equipment') }}" class="btn-gradient">Découvrer l'équipement disponible</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
