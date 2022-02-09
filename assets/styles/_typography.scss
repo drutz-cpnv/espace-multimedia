@@ -230,6 +230,7 @@ a.underline:hover {
 .text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
 }
 .text-big {
   font-size: 1.1em;

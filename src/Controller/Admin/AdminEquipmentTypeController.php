@@ -32,7 +32,7 @@ class AdminEquipmentTypeController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
+            $equipmentType->setSlug();
             $entityManager->flush();
             return $this->redirectToRoute('admin.type.index', [], Response::HTTP_SEE_OTHER);
         }
@@ -52,6 +52,7 @@ class AdminEquipmentTypeController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $type->setSlug();
             $entityManager->persist($type);
             $entityManager->flush();
             return $this->redirectToRoute('admin.type.index', [], Response::HTTP_SEE_OTHER);

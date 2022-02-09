@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerLight = true %}
+
+{% block body %}
+    <div class="page-header container type-header">
+        <div class="stack w100">
+            <h1 class="h1">{{ type.name }}</h1>
+        </div>
+    </div>
+    <div class="layout-sidebar py5" style="--gap: 5">
+        <main class="stack-large">
+            <div class="hardware">
+                {% for equipment in type.equipments %}
+                    {{ include('components/_equipment_card.html.twig') }}
+                {% else %}
+                    <div class="card">
+                        <div class="card__body stack">
+                            <h2 class="card__title">
+                                Aucun équipement n'est actuellment disponible.
+                            </h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+        <aside class="stack">
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Autres types d'équipement
+                    </h2>
+                    <div class="list-group">
+                        {% for typeL in types %}
+                            <a href="{{ path('equipment.type.show', {slug: typeL.slug}) }}">{{ typeL.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+
+{% endblock %}
+

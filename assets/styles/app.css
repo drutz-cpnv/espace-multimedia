@@ -485,6 +485,7 @@ a.underline:hover {
 .text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
 }
 
 .text-big {
@@ -1360,13 +1361,16 @@ nav.header ul {
 .card__footer span.icon {
   display: inline;
   margin-right: 4px;
+  width: 12px !important;
+  overflow: hidden;
+  padding: 2px 0;
+  max-width: 12px;
 }
 .card__footer > * {
   margin-right: calc(2 * var(--space));
   color: var(--color-light);
   white-space: nowrap;
-  display: flex;
-  align-items: center;
+  display: block;
 }
 .card__footer > :last-child {
   margin-right: 0 !important;
@@ -2282,6 +2286,21 @@ a.pill:hover::after {
 
 .header__cart {
   position: relative;
+}
+
+.list-group > :first-child {
+  border-top: 1px solid var(--border);
+}
+.list-group > * {
+  position: relative;
+  display: block;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: 0.2s;
+}
+.list-group > *:hover {
+  background-color: var(--background-light);
+  padding-left: calc(1 * var(--space));
 }
 
 label {

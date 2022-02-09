@@ -6,6 +6,7 @@ use App\Repository\EquipmentTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
  * @ORM\Entity(repositoryClass=EquipmentTypeRepository::class)
@@ -28,6 +29,11 @@ class EquipmentType
      * @ORM\OneToMany(targetEntity=Equipment::class, mappedBy="type")
      */
     private $equipments;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -84,5 +90,22 @@ class EquipmentType
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug = null): self
+    {
+        $slugger = new AsciiSlugger();
+        if($slug === null) {
+            $this->slug = strtolower($slugger->slug($this->getName()));
+        }
+        else{
+            $this->slug = strtolower($slugger->slug($slug));
+        }
+        return $this;
     }
 }

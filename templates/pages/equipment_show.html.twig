@@ -4,7 +4,7 @@
 {% block body %}
     <div class="container">
         <div class="breadcrumb">
-            <a href="{{ path('equipment') }}" class="link">Équipement</a> {{ icon('chevron_right') }} <a href="#" class="link">{{ equipment.type.name }}</a> {{ icon('chevron_right') }} <a href="{{ path('equipment.show', {id: equipment.id, slug: equipment.slug}) }}" class="link">{{ equipment.name }}</a>
+            <a href="{{ path('equipment') }}" class="link">Équipement</a> {{ icon('chevron_right') }} <a href="{{ path('equipment.type.show', {slug: equipment.type.slug}) }}" class="link">{{ equipment.type.name }}</a> {{ icon('chevron_right') }} <a href="{{ path('equipment.show', {id: equipment.id, slug: equipment.slug}) }}" class="link"><strong class="bold">{{ equipment.name }}</strong></a>
         </div>
     </div>
     <div class="equipment py5" style="--gap: 5">

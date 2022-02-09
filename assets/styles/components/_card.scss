@@ -46,14 +46,18 @@
   span.icon{
     display: inline;
     margin-right: 4px;
+    width: 12px !important;
+    overflow: hidden;
+    padding: 2px 0;
+    max-width: 12px;
+
   }
 
   &>*{
     margin-right: space(2);
     color: var(--color-light);
     white-space: nowrap;
-    display: flex;
-    align-items: center;
+    display: block;
   }
 
   &>:last-child{

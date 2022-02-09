@@ -15,7 +15,13 @@
             {% for equipment in equipments %}
                 {{ include('components/_equipment_card.html.twig') }}
             {% else %}
-                <h1 class="h1">Aucun équipement n'est actuellment disponible.</h1>
+                <div class="card">
+                    <div class="card__body stack">
+                        <h2 class="card__title">
+                            <a href="#">Aucun équipement n'est actuellment disponible.</a>
+                        </h2>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>

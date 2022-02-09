@@ -1,0 +1,18 @@
+.list-group {
+  &>:first-child{
+    border-top: 1px solid var(--border);
+  }
+  &>*{
+    position: relative;
+    display: block;
+    padding: .75rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: .2s;
+
+    &:hover{
+      background-color: var(--background-light);
+      padding-left: space(1);
+    }
+  }
+
+}
