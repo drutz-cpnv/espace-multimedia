@@ -13,7 +13,7 @@
         <li><a href="{{ path('app.support') }}" {{ menu_active('support') }}>{{ icon('help_outline') }} Support</a></li>
         {% if app.user.id is defined %}
             {% if app.user.isAdmin %}
-            <li><a href="{{ path('admin.index') }}">{{ icon('admin_panel_settings') }} Administration</a></li>
+            <li><a href="{{ path('admin.index') }}">{{ icon('tune') }} Administration</a></li>
             {% endif %}
         {% endif %}
     </ul>

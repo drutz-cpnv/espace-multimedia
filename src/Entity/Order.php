@@ -52,7 +52,7 @@ class Order
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderState::class, mappedBy="order")
+     * @ORM\OneToMany(targetEntity=OrderState::class, mappedBy="order", cascade={"persist"})
      */
     private $orderStates;
 
