@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -28,16 +31,18 @@ class Order
 
     /**
      * @ORM\Column(type="date_immutable")
+     * @Assert\GreaterThan("today")
      */
     private $start;
 
     /**
      * @ORM\Column(type="date_immutable")
+     * @Assert\GreaterThanOrEqual(propertyPath="start")
      */
     private $end;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Item::class, inversedBy="orders")
+     * @ORM\ManyToMany(targetEntity=Item::class, inversedBy="orders", orphanRemoval=false)
      */
     private $items;
 
@@ -71,11 +76,18 @@ class Order
      */
     private $title;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Equipment::class, inversedBy="orders")
+     */
+    private $equipment;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
         $this->orderStates = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable());
+        $this->equipment = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,38 +95,39 @@ class Order
         return $this->id;
     }
 
-    public function getClient(): ?User
+    public function getClient(): User|UserInterface
     {
         return $this->client;
     }
 
-    public function setClient(?User $client): self
+    public function setClient(User|UserInterface $client): self
     {
         $this->client = $client;
 
         return $this;
     }
 
-    public function getStart(): ?\DateTimeImmutable
+    public function getStart(): ?DateTimeImmutable
     {
         return $this->start;
     }
 
-    public function setStart(\DateTimeImmutable $start): self
+    public function setStart(\DateTime $start): self
     {
-        $this->start = $start;
+        $this->start = DateTimeImmutable::createFromMutable($start);
 
         return $this;
     }
 
-    public function getEnd(): ?\DateTimeImmutable
+    public function getEnd(): ?DateTimeImmutable
     {
         return $this->end;
     }
 
-    public function setEnd(\DateTimeImmutable $end): self
+    public function setEnd(\DateTime $end): self
     {
-        $this->end = $end;
+
+        $this->end = DateTimeImmutable::createFromMutable($end);
 
         return $this;
     }
@@ -167,7 +180,7 @@ class Order
     {
         if (!$this->orderStates->contains($orderState)) {
             $this->orderStates[] = $orderState;
-            $orderState->setOrderId($this);
+            $orderState->setOrder($this);
         }
 
         return $this;
@@ -177,8 +190,8 @@ class Order
     {
         if ($this->orderStates->removeElement($orderState)) {
             // set the owning side to null (unless already changed)
-            if ($orderState->getOrderId() === $this) {
-                $orderState->setOrderId(null);
+            if ($orderState->getOrder() === $this) {
+                $orderState->setOrder(null);
             }
         }
 
@@ -254,5 +267,48 @@ class Order
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Equipment[]
+     */
+    public function getEquipment(): Collection
+    {
+        return $this->equipment;
+    }
+
+    /**
+     * @param Equipment[]|Collection $equipments
+     * @return Order
+     */
+    public function setEquipment(mixed $equipments)
+    {
+        foreach ($equipments as $equipment) {
+            $this->addEquipment($equipment);
+        }
+        return $this;
+    }
+
+    public function addEquipment(Equipment $equipment): self
+    {
+        if (!$this->equipment->contains($equipment)) {
+            $this->equipment[] = $equipment;
+        }
+
+        return $this;
+    }
+
+    public function removeEquipment(Equipment $equipment): self
+    {
+        $this->equipment->removeElement($equipment);
+
+        return $this;
+    }
+
+    public function isConfilct(DateTimeImmutable $start, DateTimeImmutable $end)
+    {
+        $thisStart = $this->getStart()->getTimestamp();
+        $thisEnd = $this->getEnd()->getTimestamp();
+        return ($start->getTimestamp() >= $thisStart && $end->getTimestamp() <= $thisEnd) || ($start->getTimestamp() <= $thisEnd && $start->getTimestamp() >= $thisStart) || ($end->getTimestamp() >= $thisStart && $end->getTimestamp() <= $thisEnd) || ($start->getTimestamp() <= $thisStart && $end->getTimestamp() >= $thisEnd);
     }
 }

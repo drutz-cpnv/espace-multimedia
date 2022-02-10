@@ -53,7 +53,6 @@
                 <table class="table js-search-table" style="margin: 20px 0">
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Tag</th>
                         <th>État</th>
                         <th>Dernière mise à jour</th>
@@ -64,7 +63,6 @@
 
                     {% for item in equipment.items %}
                         <tr>
-                            <td>{{ item.id }}</td>
                             <td>{{ item.tag }}</td>
                             <td>{{ item.stateText }}</td>
                             <td>{{ item.updatedAt | date("d.m.Y H:i") }}</td>

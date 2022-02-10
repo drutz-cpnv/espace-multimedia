@@ -2,8 +2,6 @@ import TomSelect from "tom-select";
 import ModalForm from "./modules/modalForm";
 import {Cart} from "./modules/cart";
 
-
-
 document.documentElement.addEventListener("turbo:load", evt => {
     let multiselect = Array.from(document.querySelectorAll("select[multiple]"))
 

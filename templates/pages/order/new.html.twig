@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerLight = true %}
+
+{% block body %}
+    <div class="page-header container">
+        <div class="stack w100">
+            <h1 class="h1">Informations générales</h1>
+        </div>
+    </div>
+    <div class="layout-sidebar py5" style="--gap: 5">
+        <main class="stack-large">
+            {{ include('pages/order/_new_order_form.html.twig') }}
+        </main>
+        <aside class="stack">
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Étape suivante
+                    </h2>
+                    <p>Vérifier la disponibilité</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+
+{% endblock %}
+

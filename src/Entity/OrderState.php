@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderStateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=OrderStateRepository::class)
@@ -38,6 +39,16 @@ class OrderState
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $createdBy;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+    }
 
     public function getId(): ?int
     {
@@ -85,7 +96,7 @@ class OrderState
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(User|UserInterface $createdBy): self
     {
         $this->createdBy = $createdBy;
 
@@ -95,5 +106,17 @@ class OrderState
     public function __toString(): string
     {
         return $this->getState();
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }

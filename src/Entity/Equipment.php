@@ -104,6 +104,11 @@ class Equipment
      */
     private $cabinet;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="equipment")
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -111,6 +116,7 @@ class Equipment
         $this->setUpdatedAt(new \DateTimeImmutable());
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->setEnabled(false);
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -307,6 +313,11 @@ class Equipment
         return $this;
     }
 
+    public function getItemCount()
+    {
+        return $this->getItems()->count();
+    }
+
     public function __toString(): string
     {
         return $this->getName();
@@ -374,6 +385,33 @@ class Equipment
         }
 
         return $similar;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->addEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            $order->removeEquipment($this);
+        }
+
+        return $this;
     }
 
 

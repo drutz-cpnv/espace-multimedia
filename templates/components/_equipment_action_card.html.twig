@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card__body stack">
+        <h2 class="card__title">
+            <a href="#">{{ equipment.name }}</a>
+        </h2>
+        <div class="card__image">
+            <img src="{{ vich_uploader_asset(equipment) }}" alt="">
+        </div>
+    </div>
+    <footer class="card__footer text-small">
+        <div class="text-truncate">
+            {{ icon('bookmark_border') }} {{ equipment.categoriesCS }}
+        </div>
+        <div>
+            {{ icon('copyright') }} {{ equipment.brand.name }}
+        </div>
+    </footer>
+    <div class="card__actions">
+        <form action="{{ path("user.cart.remove", {id: equipment.id}) }}" method="POST" class="form-button">
+            <button class="card__action-btn btn-primary-outlined btn-small">{{ icon('remove_shopping_cart') }}</button>
+        </form>
+    </div>
+    <a class="card__link" href="{{ path('equipment.show', {id: equipment.id, slug: equipment.slug}) }}"></a>
+</div>

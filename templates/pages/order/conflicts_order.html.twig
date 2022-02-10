@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerLight = true %}
+
+{% block body %}
+    <div class="page-header container">
+        <div class="stack w100">
+            <h1 class="h1">Equipment indisponible</h1>
+        </div>
+    </div>
+    <div class="layout-sidebar py5" style="--gap: 5">
+        <main class="stack-large">
+            <div class="card p3">
+                <p>Malheursement, l'équipement que vous avez séléctionné n'est pas disponible aux dates indiquées.</p>
+            </div>
+        </main>
+        <aside class="stack">
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Équipement indisponible
+                    </h2>
+                    <div class="list-group">
+                        {% for conflict in conflicts %}
+                            <a href="#">{{ conflict[0].name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+{% endblock %}
+

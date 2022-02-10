@@ -19,15 +19,7 @@
                     <h1 class="h1">{{ equipment.name }}</h1>
                     <h3 class="hero-text">{{ equipment.type.name }}</h3>
                 </div>
-                {% if app.user.cart.contains(equipment) %}
-                    <form action="{{ path("user.cart.remove", {id: equipment.id}) }}" method="POST" class="form-button">
-                        <button class="btn-gradient btn-big">{{ icon('remove_shopping_cart') }}Retirer du panier</button>
-                    </form>
-                {% else %}
-                    <form action="{{ path("user.cart.add", {id: equipment.id}) }}" method="POST" class="form-button">
-                        <button class="btn-gradient btn-big">{{ icon('shopping_cart') }}Ajouter au panier</button>
-                    </form>
-                {% endif %}
+                {{ include('components/_cart_manage_btn.html.twig') }}
             </div>
             <div class="card p3">
                 <div class="mb2">

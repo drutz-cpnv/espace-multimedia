@@ -92,10 +92,11 @@
   }
 }
 
-.card__pills{
+.card__pills, .card__actions{
   position: absolute;
   top: space(2);
   right: space(2);
   display: flex;
   align-items: center;
+  z-index: 3;
 }

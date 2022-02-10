@@ -387,4 +387,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->cart->count();
     }
+
+    public function flushCart()
+    {
+        foreach ($this->getCart() as $carte){
+            $this->cart->removeElement($carte);
+        }
+    }
+
+    public function isAdmin()
+    {
+        if (in_array("ROLE_WEBMASTER", $this->getRoles())) return true;
+        elseif (in_array("ROLE_ADMIN", $this->getRoles())) return true;
+        elseif (in_array("ROLE_EDITOR", $this->getRoles())) return true;
+        else return false;
+    }
 }

@@ -36,6 +36,24 @@ class OrderRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+
+    public function findBetweenDates($dates)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.start BETWEEN :start AND :end')
+            ->orWhere('o.end BETWEEN :start AND :end')
+            ->setParameters(['start' => $dates[0], 'end' => $dates[1]])
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     /*
     public function findOneBySomeField($value): ?Order
     {

@@ -30,32 +30,28 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route("/cart", name: "user.cart")]
+    public function confirmCart(): Response
+    {
+        return $this->render('pages/cart.html.twig');
+    }
+
     #[Route("/cart/add/{id}", name: "user.cart.add", methods: ["POST"])]
     public function newCartItem(Equipment $equipment, EntityManagerInterface $entityManager): Response
     {
-
         $user = $this->getUser();
         $user->addToCart($equipment);
-
         $entityManager->flush();
-
         return $this->redirectToRoute('equipment.show', ['id' => $equipment->getId(), 'slug' => $equipment->getSlug()], Response::HTTP_SEE_OTHER);
-
-
     }
 
     #[Route("/cart/remove/{id}", name: "user.cart.remove", methods: ["POST"])]
-    public function removeCartItem(Equipment $equipment, EntityManagerInterface $entityManager): Response
+    public function removeCartItem(Equipment $equipment, EntityManagerInterface $entityManager, Request $request): Response
     {
-
         $user = $this->getUser();
         $user->removeCart($equipment);
-
         $entityManager->flush();
-
-        return $this->redirectToRoute('equipment.show', ['id' => $equipment->getId(), 'slug' => $equipment->getSlug()], Response::HTTP_SEE_OTHER);
-
-
+        return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 
 }

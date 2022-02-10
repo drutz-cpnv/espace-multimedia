@@ -1,0 +1,21 @@
+{{ form_start(form, {attr: {class: 'stack-large stacked'}}) }}
+<div class="card p3">
+    <div class="stack">
+        <section class="grid">
+            {{ form_row(form.title) }}
+            {{ form_row(form.start) }}
+            {{ form_row(form.end) }}
+            {{ form_row(form.teacher) }}
+        </section>
+        <section>
+            <div class="section-title">
+                Brève description du projet
+            </div>
+            {{ form_row(form.description) }}
+        </section>
+    </div>
+</div>
+<div class="text-right">
+    <button type="submit" class="btn-primary">Étape suivante</button>
+</div>
+{{ form_end(form) }}

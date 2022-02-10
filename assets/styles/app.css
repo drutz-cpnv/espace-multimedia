@@ -24,7 +24,7 @@
   --gray-900: #212529;
   --success: #38ce35;
   --error: #e01313;
-  --pending: #ce7535;
+  --pending: #ff7b1e;
   --passed: #1c6fe1;
   --space: 8px;
   --border: #d5e3ec;
@@ -1402,12 +1402,13 @@ nav.header ul {
   border: 1px solid var(--contrast);
 }
 
-.card__pills {
+.card__pills, .card__actions {
   position: absolute;
   top: calc(2 * var(--space));
   right: calc(2 * var(--space));
   display: flex;
   align-items: center;
+  z-index: 3;
 }
 
 label {
@@ -1733,6 +1734,11 @@ button:not([class]):hover .icon-delete {
   font-size: 0.9em;
   filter: brightness(1);
   white-space: nowrap;
+  /*  .icon {
+      width: 16px;
+      height: 16px;
+      margin-right: space(1);
+    }*/
 }
 [disabled].btn-discord, [disabled].btn-social, [disabled].btn-secondary, [disabled].btn-danger, [disabled].btn-white-outlined, [disabled].btn-primary-outlined, [disabled].btn-primary, [disabled].btn-gradient {
   cursor: default;
@@ -1744,11 +1750,6 @@ button:not([class]):hover .icon-delete {
 }
 .btn-discord:hover, .btn-social:hover, .btn-secondary:hover, .btn-danger:hover, .btn-white-outlined:hover, .btn-primary-outlined:hover, .btn-primary:hover, .btn-gradient:hover {
   filter: brightness(1.2);
-}
-.btn-discord .icon, .btn-social .icon, .btn-secondary .icon, .btn-danger .icon, .btn-white-outlined .icon, .btn-primary-outlined .icon, .btn-primary .icon, .btn-gradient .icon {
-  width: 16px;
-  height: 16px;
-  margin-right: calc(1 * var(--space));
 }
 
 .btn-gradient {

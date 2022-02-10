@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerLight = true %}
+
+{% block body %}
+    <div class="page-header container">
+        <div class="stack w100">
+            <h1 class="h1">Mon panier</h1>
+        </div>
+    </div>
+    <div class="layout-sidebar py5" style="--gap: 5">
+        <main class="stack-large">
+            <div class="hardware">
+                {% for equipment in app.user.cart %}
+                    {{ include('components/_equipment_action_card.html.twig') }}
+                {% else %}
+                    <div class="card">
+                        <div class="card__body stack">
+                            <h2 class="card__title">
+                                Votre panier est vide.
+                            </h2>
+                            <p>
+                                <a href="{{ path('equipment') }}" class="btn-gradient btn-small">Découvrer l'équipement disponible</a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+        <aside class="stack">
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Conditions de commmande
+                    </h2>
+                    <p>TODO: Rédiger informations sur les commandes.</p>
+                </div>
+            </div>
+            <div class="mb2">
+                <div>
+                    <h2 class="h5 mb2">
+                        Commander
+                    </h2>
+                    <p class="mb2">
+                        Afin de rendre le processus de commande plus simple, nous vous prions de vérifier que tous l'équipement dont avez besoins se trouve dans votre panier. Si cela est le cas nous pouvons commencer.
+                    </p>
+                    <p class="text-right"><a href="{{ path('order.new') }}" class="btn-gradient">Commencer</a></p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+
+{% endblock %}
+
