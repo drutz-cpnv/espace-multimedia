@@ -2304,6 +2304,22 @@ a.pill:hover::after {
   padding-left: calc(1 * var(--space));
 }
 
+.dots {
+  --size: 5px;
+  display: flex;
+  gap: calc(1 * var(--space));
+  max-width: 60px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background-color: var(--dot-color);
+}
+
 label {
   text-transform: uppercase;
   font-weight: 300;

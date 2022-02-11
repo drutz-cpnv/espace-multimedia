@@ -1559,6 +1559,22 @@ button:not([class]):hover .icon-delete {
   background: #47639e;
 }
 
+.dots {
+  --size: 5px;
+  display: flex;
+  gap: calc(1 * var(--space));
+  max-width: 60px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background-color: var(--dot-color);
+}
+
 @keyframes dropdown {
   from {
     top: -100%;
@@ -2497,30 +2513,6 @@ button:not([class]):hover .icon-delete {
 
 .fade-out-right {
   animation: 0.5s fade-out-form linear;
-}
-
-.dot, .gray-dot, .orange-dot, .green-dot, .red-dot {
-  background-color: #f96669;
-  height: 5px;
-  width: 5px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.red-dot {
-  background-color: #ff0000;
-}
-
-.green-dot {
-  background-color: #00cb00;
-}
-
-.orange-dot {
-  background-color: #F4511E;
-}
-
-.gray-dot {
-  background-color: #505050;
 }
 
 .order-details {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Twig;
 
+use App\Entity\Order;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -14,6 +15,7 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFunction('icon', [$this, 'icon'], ['is_safe' => ['html']]),
             new TwigFunction('menu_active', [$this, 'menuActive'], ['is_safe' => ['html'], 'needs_context' => true]),
+            new TwigFunction('dot', [$this, 'getStateDot'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -30,6 +32,16 @@ class TwigExtension extends AbstractExtension
 <span class="$class">
 $name
 </span>
+HTML;
+
+    }
+
+    public function getStateDot(Order $order): string
+    {
+        return <<<HTML
+<div class="dots">
+    <div class="dot" style="--dot-color: #{$order->getOrderStates()->last()->getState()->getColor()}" title="{$order->getOrderStates()->last()->getState()->getName()}"></div>
+</div>
 HTML;
 
     }

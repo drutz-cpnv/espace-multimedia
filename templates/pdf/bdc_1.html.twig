@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bon de commande N° {{ order.initialZeroId }}</title>
+    <style>
+        * {
+            font-family: "Ubuntu", sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            padding: 50px;
+        }
+        header {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        header table{
+            width: 100%;
+        }
+
+        header .title {
+            text-align: right;
+        }
+        header .title h1 {
+            font-size: 30px;
+        }
+
+        header .logo img{
+            height: 30px;
+        }
+
+        header .title h4{
+            color: #A3A3A3;
+            font-size: 20px;
+        }
+
+        main section {
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        main section h2{
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        main table{
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+        }
+
+        main table th{
+            color: #A2A2A2;
+            font-weight: 400;
+            font-family: "Ubuntu", sans-serif;
+            text-align: left;
+        }
+
+        main table tr > *{
+            padding: 5px 0px;
+        }
+
+        main table td{
+            color: #000000;
+            font-weight: bold;
+        }
+
+        main table td:last-child{
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <table>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <img src="https://www.cpnv.ch/app/uploads/logo@2x.png" alt="">
+                    </div>
+                </td>
+                <td>
+                    <div class="title">
+                        <h1>Bon de commande de livraison</h1>
+                        <h4>{{ order.initialZeroId }}</h4>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </header>
+    <main>
+        <section>
+            <h2>Détails de la commande</h2>
+            <table>
+                <tr>
+                    <th>Client</th>
+                    <td>{{ order.client }}</td>
+                    <th>N° de commande</th>
+                    <td>{{ order.initialZeroId }}</td>
+                </tr>
+                <tr>
+                    <th>Enseignant</th>
+                    <td>{{ order.teacher }}</td>
+                    <th>Date de commande</th>
+                    <td>{{ order.createdAt | date("d.m.Y") }}</td>
+                </tr>
+                <tr>
+                    <th>Projet</th>
+                    <td>{{ order.title }}</td>
+                    <th>Acceptée le</th>
+                    <td>{{ order.orderStates.last.createdAt | date("d.m.Y") }}</td>
+                </tr>
+                <tr>
+                    <th>Début</th>
+                    <td>{{ order.start | date("d.m.Y") }}</td>
+                    <th>Acceptée par</th>
+                    <td>{{ order.orderStates.last.createdBy }}</td>
+                </tr>
+                <tr>
+                    <th>Fin</th>
+                    <td>{{ order.end | date("d.m.Y") }}</td>
+                    <th></th>
+                    <td></td>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <h2>Équipements</h2>
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Marque</th>
+                    <th>Type</th>
+                    <th>Tag</th>
+                </tr>
+                {% for item in order.items %}
+                <tr>
+                    <td>{{ item.equipment.name }}</td>
+                    <th>{{ item.equipment.brand }}</th>
+                    <th>{{ item.equipment.type }}</th>
+                    <th>{{ item.tag }}</th>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+</body>
+</html>

@@ -311,4 +311,12 @@ class Order
         $thisEnd = $this->getEnd()->getTimestamp();
         return ($start->getTimestamp() >= $thisStart && $end->getTimestamp() <= $thisEnd) || ($start->getTimestamp() <= $thisEnd && $start->getTimestamp() >= $thisStart) || ($end->getTimestamp() >= $thisStart && $end->getTimestamp() <= $thisEnd) || ($start->getTimestamp() <= $thisStart && $end->getTimestamp() >= $thisEnd);
     }
+
+    public function getInitialZeroId(): string
+    {
+        $base = "000000";
+        $base = substr($base, -0, -strlen((string)$this->getId()));
+        $base .= $this->getId();
+        return $base;
+    }
 }

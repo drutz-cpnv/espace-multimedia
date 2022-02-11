@@ -8,6 +8,7 @@
 @import "layouts";
 @import "components/form";
 @import "components/button";
+@import "components/dots";
 
 
 @keyframes dropdown {
@@ -883,29 +884,7 @@
     animation: 0.5s fade-out-form linear;
 }
 
-.dot, .gray-dot, .orange-dot, .green-dot, .red-dot {
-    background-color: #f96669;
-    height: 5px;
-    width: 5px;
-    border-radius: 50%;
-    display: inline-block;
-}
 
-.red-dot {
-    background-color: #ff0000;
-}
-
-.green-dot {
-    background-color: #00cb00;
-}
-
-.orange-dot {
-    background-color: #F4511E;
-}
-
-.gray-dot {
-    background-color: #505050;
-}
 
 .order-details {
     display: grid;

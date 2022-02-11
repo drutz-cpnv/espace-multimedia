@@ -1,0 +1,46 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'local_shipping',
+            title: 'Commandes'
+        } %}
+        <div class="content">
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                <tr>
+                    <th>N° de commande</th>
+                    <th>Client</th>
+                    <th>Titre du projet</th>
+                    <th>Date de création</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.initialZeroId }}</td>
+                        <td>{{ order.client }}</td>
+                        <td>{{ order.title }}</td>
+                        <td>{{ order.createdAt ? order.createdAt|date('d.m.Y H:i:s') : '' }}</td>
+                        <td>{{ dot(order) }}</td>
+                        <td>
+                            {#<a class="small-btn" href="{{ path('admin.equipment.show', {'id': equipment.id}) }}">Afficher</a>
+                            <a class="small-btn" href="{{ path('admin.equipment.edit', {'id': equipment.id}) }}">Modifier</a>
+                            {{ include('admin/equipment/_delete_form.html.twig') }}#}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucune n'a été effectuée</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

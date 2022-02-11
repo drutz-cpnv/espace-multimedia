@@ -1,0 +1,16 @@
+.dots{
+  --size: 5px;
+  display: flex;
+  gap: space(1);
+  max-width: 60px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot,
+%dot{
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background-color: var(--dot-color);
+}
