@@ -19,6 +19,34 @@
   }
 }
 
+.flat-card{
+  @extend %card;
+  border-radius: 10px;
+  border: 1px solid var(--gray-400);
+  box-shadow: none;
+  background-color: #FFFFFF;
+
+  &:hover{
+    border-color: var(--gray-600);
+  }
+
+  &:active{
+    border-color: #1c6fe1;
+    box-shadow: 0 0 0 3px rgba(28, 111, 225, 0.55);
+    color: #1c6fe1;
+  }
+
+  & > .icon{
+    font-size: 40px;
+    color: var(--gray-400);
+    margin-bottom: space(2);
+  }
+
+  .text-muted{
+    line-height: 23px;
+  }
+}
+
 .card__body{
   padding: space(2);
 }

@@ -1,0 +1,113 @@
+{% extends 'admin_base.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <section>
+            {% include 'admin/_admin-page_header.html.twig' with {
+                icon: 'info',
+                title: "Commande N°"~order.initialZeroId,
+            } %}
+            <div class="content">
+                <div class="grid" style="--gap: 20px">
+                    <div class="p2">
+                        <div class="text-muted">Client</div>
+                        <h2 class="h2">{{ order.client }}</h2>
+                    </div>
+                    <div class="p2">
+                        <div class="text-muted mb2">Statut</div>
+                        <span class="pill" style="color: #{{ order.currentStatus.state.color }}">{{ order.currentStatus }}</span>
+                    </div>
+                    <div class="p2">
+                        <div class="text-muted mb2">Enseignant</div>
+                        <h4 class="h4">{{ order.teacher }}</h4>
+                    </div>
+                    <div class="p2">
+                        <div class="text-muted mb2">Date de début</div>
+                        <h4 class="h4">{{ order.start | date("d.m.Y") }}</h4>
+                    </div>
+                    <div class="p2">
+                        <div class="text-muted mb2">Date de fin</div>
+                        <h4 class="h4">{{ order.end | date("d.m.Y") }}</h4>
+                    </div>
+                    <div class="p2">
+                        <div class="text-muted mb2">Date de création de la commande</div>
+                        <h4 class="h4">{{ order.createdAt | date("d.m.Y à H:i") }}</h4>
+                    </div>
+                    <div class="p2">
+                        <div class="text-muted mb2">Documents</div>
+                        <div>
+                            <a href="{{ path('admin.order.document.1', {id: order.id}) }}" class="btn-gradient btn-small">Télécharger le bon de commande</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="admi-page__page-header">
+                <div class="title">
+                    {{ icon('grid_view') }}
+                    <h1>Équipements</h1>
+                </div>
+            </div>
+            <div class="content">
+                <table class="table js-search-table" style="margin: 20px 0">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Type</th>
+                        <th>Marque</th>
+                        <th>Armoire</th>
+                        <th>Tag</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for item in order.items %}
+                        <tr>
+                            <td><a target="_blank" class="link" href="{{ path('equipment.show', {id: item.equipment.id, slug: item.equipment.slug }) }}">{{ item.equipment.name }}</a></td>
+                            <td>{{ item.equipment.type }}</td>
+                            <td>{{ item.equipment.brand }}</td>
+                            <td>{{ item.equipment.cabinet }}</td>
+                            <td>#{{ item.tag }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Aucun équipement dans cette commande. Ceci est une erreur veuillez contacter le webmaster.</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        {# Section des documents de la commande #}
+        <section>
+            <div class="admi-page__page-header">
+                <div class="title">
+                    {{ icon('file_present') }}
+                    <h1>Documents</h1>
+                </div>
+                <div class="header-actions">
+                    <a href="{{ path('admin.order.upload.document', {id: order.id}) }}" class="btn js-modal-btn">Ajouter un document</a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="grid" style="--gap: 16px">
+                    {% for document in order.documents %}
+                        <a class="flat-card p3" target="_blank" href="{{ vich_uploader_asset(document) }}">
+                            {{ icon("task") }}
+                            <h4 class="h4 mb2">{{ document.title }}</h4>
+                            <span class="text-muted">Ajouté par {{ document.createdBy }}</span>
+                            <span class="text-muted">{{ document.createdAt | date("d.m.Y à H:i") }}</span>
+                        </a>
+                    {% else %}
+                        <div class="flat-card p3">
+                            <h3 class="h3">Aucun document pour cette commande</h3>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

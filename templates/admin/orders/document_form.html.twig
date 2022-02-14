@@ -1,0 +1,14 @@
+{{ form_start(form, {attr: {class: 'stacked'}}) }}
+<section class="stack-large">
+    <section>
+        <div class="section-title">
+            Informations générales
+        </div>
+        <div class="grid">
+            {{ form_row(form.title) }}
+            {{ form_row(form.pdfFile) }}
+        </div>
+        <button type="submit" class="btn-gradient">Ajouter le document</button>
+    </section>
+</section>
+{{ form_end(form) }}

@@ -28,9 +28,7 @@
                         <td>{{ order.createdAt ? order.createdAt|date('d.m.Y H:i:s') : '' }}</td>
                         <td>{{ dot(order) }}</td>
                         <td>
-                            {#<a class="small-btn" href="{{ path('admin.equipment.show', {'id': equipment.id}) }}">Afficher</a>
-                            <a class="small-btn" href="{{ path('admin.equipment.edit', {'id': equipment.id}) }}">Modifier</a>
-                            {{ include('admin/equipment/_delete_form.html.twig') }}#}
+                            <a class="small-btn" href="{{ path('admin.order.show', {'id': order.id}) }}">Afficher</a>
                         </td>
                     </tr>
                 {% else %}

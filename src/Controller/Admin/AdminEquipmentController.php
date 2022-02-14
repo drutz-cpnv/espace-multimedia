@@ -87,7 +87,7 @@ class AdminEquipmentController extends AbstractController
     }
 
     #[Route("/{id}", name: "admin.equipment.show")]
-    public function show(Equipment $equipment, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Equipment $equipment): Response
     {
         return $this->render('admin/equipment/show.html.twig', [
             'menu' => 'admin.equipment',

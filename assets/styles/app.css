@@ -619,9 +619,10 @@ a.underline:hover {
 }
 
 .grid {
+  --gap: space(2);
   width: 100%;
   display: grid !important;
-  grid-gap: calc(2 * var(--space));
+  grid-gap: var(--gap);
   grid-template-columns: repeat(auto-fill, minmax(var(--col, 275px), 1fr));
 }
 
@@ -1316,7 +1317,7 @@ nav.header ul {
   color: var(--contrast);
 }
 
-.card, .auth-form, .cart {
+.card, .auth-form, .cart, .flat-card {
   background: var(--card-bg, var(--background-light));
   border: 1px solid var(--border);
   box-shadow: 0 2px 4px var(--shadow);
@@ -1326,13 +1327,36 @@ nav.header ul {
   flex-direction: column;
   position: relative;
 }
-.card a, .auth-form a, .cart a {
+.card a, .auth-form a, .cart a, .flat-card a {
   position: relative;
   z-index: 3;
 }
-.card .icon, .auth-form .icon, .cart .icon {
+.card .icon, .auth-form .icon, .cart .icon, .flat-card .icon {
   vertical-align: center;
   font-size: 12px;
+}
+
+.flat-card {
+  border-radius: 10px;
+  border: 1px solid var(--gray-400);
+  box-shadow: none;
+  background-color: #FFFFFF;
+}
+.flat-card:hover {
+  border-color: var(--gray-600);
+}
+.flat-card:active {
+  border-color: #1c6fe1;
+  box-shadow: 0 0 0 3px rgba(28, 111, 225, 0.55);
+  color: #1c6fe1;
+}
+.flat-card > .icon {
+  font-size: 40px;
+  color: var(--gray-400);
+  margin-bottom: calc(2 * var(--space));
+}
+.flat-card .text-muted {
+  line-height: 23px;
 }
 
 .card__body {

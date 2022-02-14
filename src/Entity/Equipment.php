@@ -362,6 +362,9 @@ class Equipment
 
     public function getCabinet(): ?string
     {
+        if(is_null($this->cabinet) || $this->cabinet === ""){
+            return "Aucune armoire définie pour cet équipement.";
+        }
         return $this->cabinet;
     }
 

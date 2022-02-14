@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\OrderDocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -51,12 +53,22 @@ class OrderDocument
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="documents")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $documet_order;
+    private $document_order;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+    }
 
     public function getId(): ?int
     {
@@ -80,21 +92,21 @@ class OrderDocument
         return $this->createdBy;
     }
 
-    public function setCreatedBy(?User $createdBy): self
+    public function setCreatedBy(User|UserInterface $createdBy): self
     {
         $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getDocumetOrder(): ?Order
+    public function getDocumentOrder(): ?Order
     {
-        return $this->documet_order;
+        return $this->document_order;
     }
 
-    public function setDocumetOrder(?Order $documet_order): self
+    public function setDocumentOrder(?Order $documet_order): self
     {
-        $this->documet_order = $documet_order;
+        $this->document_order = $documet_order;
 
         return $this;
     }
@@ -150,6 +162,26 @@ class OrderDocument
     public function __toString(): string
     {
         return $this->getTitle();
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getInitialZeroId(): string
+    {
+        $base = "000000";
+        $base = substr($base, -0, -strlen((string)$this->getId()));
+        $base .= $this->getId();
+        return $base;
     }
 
 

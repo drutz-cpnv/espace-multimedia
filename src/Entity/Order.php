@@ -57,7 +57,7 @@ class Order
     private $orderStates;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderDocument::class, mappedBy="documet_order")
+     * @ORM\OneToMany(targetEntity=OrderDocument::class, mappedBy="document_order")
      */
     private $documents;
 
@@ -318,5 +318,9 @@ class Order
         $base = substr($base, -0, -strlen((string)$this->getId()));
         $base .= $this->getId();
         return $base;
+    }
+
+    public function getCurrentStatus(): OrderState {
+        return $this->getOrderStates()->last();
     }
 }

@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
         /**
          * Création des status des commandes
          */
-        $toPersist[] = (new State())->setName("En attente")
+        /*$toPersist[] = (new State())->setName("En attente")
             ->setSlug("pendding")
             ->setColor("ff7b1e");
 
@@ -38,7 +38,10 @@ class AppFixtures extends Fixture
 
         $toPersist[] = (new State())->setName("Passée")
             ->setSlug("passed")
-            ->setColor("1c6fe1");
+            ->setColor("1c6fe1");*/
+        $toPersist[] = (new State())->setName("Annulée")
+            ->setSlug("cancelled")
+            ->setColor("353b48");
 
 
 

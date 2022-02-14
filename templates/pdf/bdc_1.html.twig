@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Bon de commande N° {{ order.initialZeroId }}</title>
+    <title>Commande N°{{ order.initialZeroId }}</title>
     <style>
         * {
             font-family: "Ubuntu", sans-serif;
@@ -84,12 +84,12 @@
             <tr>
                 <td>
                     <div class="logo">
-                        <img src="https://www.cpnv.ch/app/uploads/logo@2x.png" alt="">
+                        <img src="https://instagram.fqls1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/272680266_487150442979044_6184355517973503533_n.jpg?_nc_ht=instagram.fqls1-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=dlEucP9PXMIAX-YJeXQ&edm=AIQHJ4wBAAAA&ccb=7-4&oh=00_AT9NnHz8WRhXyV7lgODoAPXjawLLoiznteCPqXDMYDIIRA&oe=6211E1DD&_nc_sid=7b02f1" alt="">
                     </div>
                 </td>
                 <td>
                     <div class="title">
-                        <h1>Bon de commande de livraison</h1>
+                        <h1>Bon de livraison</h1>
                         <h4>{{ order.initialZeroId }}</h4>
                     </div>
                 </td>
@@ -149,6 +149,22 @@
                     <th>{{ item.tag }}</th>
                 </tr>
                 {% endfor %}
+            </table>
+        </section>
+        <section>
+            <h2>Signatures</h2>
+            <table class="signtable">
+                <tr>
+                    <td style="padding-bottom: 30px; border-bottom: 1px solid #313131">
+                        <div>{{ app.user }}</div>
+                        <div style="font-size: 13px; color: #6d6d6d; font-family: Inter, sans-serif">Membre Espace Multimédia</div>
+                    </td>
+                    <td style="width: 50%"></td>
+                    <td style="padding-bottom: 30px; border-bottom: 1px solid #313131">
+                        <div>{{ order.client }}</div>
+                        <div style="font-size: 13px; color: #6d6d6d; font-family: Inter, sans-serif">Client</div>
+                    </td>
+                </tr>
             </table>
         </section>
     </main>
