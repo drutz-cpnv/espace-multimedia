@@ -3,46 +3,75 @@
 
 {% block body %}
     <div class="container">
+        {# Section du résumer du projet #}
         <section>
             {% include 'admin/_admin-page_header.html.twig' with {
                 icon: 'info',
                 title: "Commande N°"~order.initialZeroId,
             } %}
             <div class="content">
-                <div class="grid" style="--gap: 20px">
-                    <div class="p2">
-                        <div class="text-muted">Client</div>
-                        <h2 class="h2">{{ order.client }}</h2>
-                    </div>
-                    <div class="p2">
-                        <div class="text-muted mb2">Statut</div>
-                        <span class="pill" style="color: #{{ order.currentStatus.state.color }}">{{ order.currentStatus }}</span>
-                    </div>
-                    <div class="p2">
-                        <div class="text-muted mb2">Enseignant</div>
-                        <h4 class="h4">{{ order.teacher }}</h4>
-                    </div>
-                    <div class="p2">
-                        <div class="text-muted mb2">Date de début</div>
-                        <h4 class="h4">{{ order.start | date("d.m.Y") }}</h4>
-                    </div>
-                    <div class="p2">
-                        <div class="text-muted mb2">Date de fin</div>
-                        <h4 class="h4">{{ order.end | date("d.m.Y") }}</h4>
-                    </div>
-                    <div class="p2">
-                        <div class="text-muted mb2">Date de création de la commande</div>
-                        <h4 class="h4">{{ order.createdAt | date("d.m.Y à H:i") }}</h4>
-                    </div>
-                    <div class="p2">
-                        <div class="text-muted mb2">Documents</div>
-                        <div>
-                            <a href="{{ path('admin.order.document.1', {id: order.id}) }}" class="btn-gradient btn-small">Télécharger le bon de commande</a>
+                <section>
+                    <div class="grid" style="--gap: 20px">
+                        <div class="p2">
+                            <div class="text-muted">ID</div>
+                            <h2 class="h2">{{ order.initialZeroId }}</h2>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted">Client</div>
+                            <h2 class="h2">{{ order.client }}</h2>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Statut</div>
+                            <span class="pill" style="color: #{{ order.currentStatus.state.color }}">{{ order.currentStatus }}</span>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Nom du projet</div>
+                            <h4 class="h4">{{ order.title }}</h4>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Description</div>
+                            <p>{{ order.description }}</p>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Enseignant</div>
+                            <h4 class="h4">{{ order.teacher }}</h4>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Date de début</div>
+                            <h4 class="h4">{{ order.start | date("d.m.Y") }}</h4>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Date de fin</div>
+                            <h4 class="h4">{{ order.end | date("d.m.Y") }}</h4>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Date de création de la commande</div>
+                            <h4 class="h4">{{ order.createdAt | date("d.m.Y à H:i") }}</h4>
+                        </div>
+                        <div class="p2">
+                            <div class="text-muted mb2">Téléchargement des documents</div>
+                            <div>
+                                <a href="{{ path('admin.order.document.1', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de livraison</a>
+                                <a href="{{ path('admin.order.document.2', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de récupération</a>
+                            </div>
+                        </div>
+                        <div class="p2 full">
+                            <div class="text-muted mb2">Changement de statut</div>
+                            <div class="grid">
+                                <a href="{{ path('admin.order.pending', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Mettre en attente</a>
+                                <a href="{{ path('admin.order.accept', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Accepter la commande</a>
+                                <a href="{{ path('admin.order.refuse', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Refuser la commande</a>
+                                <a href="{{ path('admin.order.pending_equipment', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">En attente du matériel</a>
+                                <a href="{{ path('admin.order.invalid', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Matériel incomplet</a>
+                                <a href="{{ path('admin.order.pass', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Matériel rendu</a>
+                                {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('admin.order.cancel', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Annuler la commande</a>{% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </section>
+        {# Section de listing de l'équipement #}
         <section>
             <div class="admi-page__page-header">
                 <div class="title">
@@ -105,6 +134,48 @@
                         <div class="flat-card p3">
                             <h3 class="h3">Aucun document pour cette commande</h3>
                         </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {# Section de la chronologie des événements #}
+        <section>
+            <div class="admi-page__page-header">
+                <div class="title">
+                    {{ icon('timeline') }}
+                    <h1>Chronologie</h1>
+                </div>
+            </div>
+            <div class="content">
+                <div class="timeline grid">
+                    <div class="card full timeline-element">
+                        <div class="card__body stack">
+                            <h2 class="card__title">Création de la commande</h2>
+                        </div>
+                        <footer class="card__footer text-small">
+                            <div class="text-truncate">
+                                {{ icon('event') }} {{ order.createdAt | date("d.m.Y") }}
+                            </div>
+                            <div>
+                                {{ icon('person') }} {{ order.client }}
+                            </div>
+                        </footer>
+                    </div>
+                    {% for status in order.orderStates %}
+                    <div class="card full timeline-element">
+                        <div class="card__body stack">
+                            <h2 class="card__title">Changement de statut => <span style="color: #{{ status.state.color }}">{{ status.state.name }}</span></h2>
+                            <p>{{ status.comments }}</p>
+                        </div>
+                        <footer class="card__footer text-small">
+                            <div class="text-truncate">
+                                {{ icon('event') }} {{ status.createdAt | date("d.m.Y à H:i") }}
+                            </div>
+                            <div>
+                                {{ icon('person') }} {{ status.createdBy }}
+                            </div>
+                        </footer>
+                    </div>
                     {% endfor %}
                 </div>
             </div>

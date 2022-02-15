@@ -76,6 +76,14 @@
             text-align: right;
         }
 
+        main .checkbox{
+            height: 15px;
+            width: 15px;
+            border: 1px solid #FF292D;
+            border-radius: 3px;
+            background-color: #ffdcdc;
+        }
+
     </style>
 </head>
 <body>
@@ -89,7 +97,7 @@
                 </td>
                 <td>
                     <div class="title">
-                        <h1>Bon de livraison</h1>
+                        <h1>Bon de récupération</h1>
                         <h4>{{ order.initialZeroId }}</h4>
                     </div>
                 </td>
@@ -136,10 +144,16 @@
             <h2>Équipements</h2>
             <table>
                 <tr>
+                    <th colspan="4"></th>
+                    <th colspan="2" style="color: #000">Vérification du matériel</th>
+                </tr>
+                <tr>
                     <th>Nom</th>
                     <th>Marque</th>
                     <th>Type</th>
                     <th>Tag</th>
+                    <th>Client</th>
+                    <th>Staff</th>
                 </tr>
                 {% for item in order.items %}
                 <tr>
@@ -147,6 +161,8 @@
                     <th>{{ item.equipment.brand }}</th>
                     <th>{{ item.equipment.type }}</th>
                     <th>{{ item.tag }}</th>
+                    <th><div class="checkbox"></div></th>
+                    <th><div class="checkbox"></div></th>
                 </tr>
                 {% endfor %}
             </table>

@@ -618,10 +618,9 @@ a.underline:hover {
 }
 
 .grid {
-  --gap: space(2);
   width: 100%;
   display: grid !important;
-  grid-gap: var(--gap);
+  grid-gap: calc(2 * var(--space));
   grid-template-columns: repeat(auto-fill, minmax(var(--col, 275px), 1fr));
 }
 
@@ -1726,7 +1725,7 @@ a.pill:hover::after {
   font-size: 16px;
   font-weight: 700;
 }
-.card__title:hover {
+a .card__title:hover {
   color: var(--contrast);
 }
 
@@ -3300,6 +3299,7 @@ body.admin-page .admi-page__page-header .header-actions a:active {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
   backdrop-filter: saturate(180%) blur(10px);
   -webkit-backdrop-filter: saturate(180%) blur(10px);
   background-color: rgba(0, 0, 0, 0.6);
@@ -3313,7 +3313,7 @@ body.admin-page .admi-page__page-header .header-actions a:active {
 
 .admin-order-modal .modal-content {
   background-color: #FFF;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 32px;
   width: fit-content;
   box-shadow: 0 10px 30px rgba(51, 51, 51, 0.1);
@@ -3322,8 +3322,8 @@ body.admin-page .admi-page__page-header .header-actions a:active {
 
 .admin-order-modal .modal-content .close-btn {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: 6px;
+  right: 6px;
   height: 28px;
   width: 28px;
   padding: 2.5px;

@@ -25,8 +25,8 @@ services:
             $api_secret: '%env(API_SECRET)%'
             $api_key: '%env(API_KEY)%'
 
-    App\Services\NewOrder:
-
+    App\Services\OrderManager:
+        autowire: true
 
     tasks.teachers_update:
         class: App\Services\Tasks\UpdateTeachers

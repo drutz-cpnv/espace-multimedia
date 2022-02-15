@@ -1,0 +1,5 @@
+#!/bin/sh
+npm run build
+ssh t67tz_phpstorm_macos@t67tz.ftp.infomaniak.com 'cd ~/sites/beta.espace-multimedia.drutz.ch/public && rm -rf build'
+rsync -av ./ t67tz_phpstorm_macos@t67tz.ftp.infomaniak.com:~/sites/beta.espace-multimedia.drutz.ch --include=public/build --include=vendor --exclude-from=.gitignore --exclude=".*" --exclude=deploy
+ssh t67tz_phpstorm_macos@t67tz.ftp.infomaniak.com 'cd ~/sites/beta.espace-multimedia.drutz.ch && php-8.1 bin/console cache:clear'

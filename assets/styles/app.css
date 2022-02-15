@@ -619,10 +619,9 @@ a.underline:hover {
 }
 
 .grid {
-  --gap: space(2);
   width: 100%;
   display: grid !important;
-  grid-gap: var(--gap);
+  grid-gap: calc(2 * var(--space));
   grid-template-columns: repeat(auto-fill, minmax(var(--col, 275px), 1fr));
 }
 
@@ -1368,7 +1367,7 @@ nav.header ul {
   font-size: 16px;
   font-weight: 700;
 }
-.card__title:hover {
+a .card__title:hover {
   color: var(--contrast);
 }
 
