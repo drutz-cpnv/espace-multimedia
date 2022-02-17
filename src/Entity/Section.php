@@ -26,21 +26,23 @@ class Section
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Paragraph::class, mappedBy="section", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\GreaterThan(0)
+     */
+    private $position;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Paragraph::class, mappedBy="section", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"position" = "ASC"})
      */
     private $paragraphs;
 
     /**
      * @ORM\ManyToOne(targetEntity=Content::class, inversedBy="sections")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $content;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThan(0)
-     */
-    private $position;
 
     public function __construct()
     {

@@ -15,10 +15,27 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class OrderManager
 {
 
+    private const ASSERT_TO_ACCEPT = [
+        'late',
+        'cancelled',
+        'error',
+        'terminated',
+        'accepted'
+    ];
+
+    private const ASSERT_TO_REFUSE = [
+        'late',
+        'cancelled',
+        'error',
+        'terminated',
+        'refused'
+    ];
+
     public function __construct(
         private StateRepository $stateRepository,
         private EntityManagerInterface $entityManager,
-        private Security $security
+        private Security $security,
+        private UserNotifierService $notifierService
     )
     {
     }
@@ -89,6 +106,7 @@ class OrderManager
 
     public function acceptOrder(OrderState $orderState, Order $order)
     {
+        if (in_array($order->getCurrentStatus()->getState()->getSlug(), self::ASSERT_TO_ACCEPT)) return false;
         $accept = $this->stateRepository->findOneBySlug('accepted');
         $orderState->setState($accept);
         $orderState->setCreatedBy($this->security->getUser());
@@ -96,10 +114,13 @@ class OrderManager
 
         $this->entityManager->persist($orderState);
         $this->entityManager->flush();
+        $this->notifierService->clientOrderStatusChange($order->getId());
+        return true;
     }
 
     public function refuseOrder(OrderState $orderState, Order $order)
     {
+        if (!in_array($order->getCurrentStatus()->getState()->getSlug(), self::ASSERT_TO_REFUSE)) return false;
         $refuse = $this->stateRepository->findOneBySlug('refused');
         $orderState->setState($refuse);
         $orderState->setCreatedBy($this->security->getUser());

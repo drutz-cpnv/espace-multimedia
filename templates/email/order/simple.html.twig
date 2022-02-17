@@ -1,5 +1,7 @@
 {% extends 'email/base.html.twig' %}
 
+{% set subject_header_color = order.currentStatus.state.color %}
+
 {% block title %}{{ title }}{% endblock %}
 {% block subject %}{{ subject }}{% endblock %}
 {% block subject_header %}{{ subject_header }}{% endblock %}
@@ -29,6 +31,10 @@
             [
                 "Statut de la commande",
                 order.currentStatus
+            ],
+            [
+                "Détails du statut",
+                order.currentStatus.comments
             ],
             [
                 "Durée de location",

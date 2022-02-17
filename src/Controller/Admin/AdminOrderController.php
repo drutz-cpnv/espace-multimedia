@@ -280,7 +280,7 @@ class AdminOrderController extends AbstractController
         $mailer->send($email);*/
 
         //$notifierService->clientOrderReceived($this->getUser()->getId(), $order->getId());
-        $notifierService->clientOrderStatusChange($order->getId());
+        //$notifierService->clientOrderStatusChange($order->getId());
 
         return $this->render('admin/orders/show.html.twig', [
             'menu' => 'admin.order',

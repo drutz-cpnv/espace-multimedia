@@ -24,25 +24,6 @@ class AdminContentController extends AbstractController
     #[Route("", name: "admin.content.index")]
     public function index(ContentRepository $contentRepository, EntityManagerInterface $entityManager): Response
     {
-        /*$content = (new Content())
-            ->setName("Contenu page d'informations")
-            ->setCreatedBy($this->getUser())
-            ->setUpdatedBy($this->getUser());
-
-        $section = (new Section())
-            ->setName("Source des données")
-            ->setContent($content);
-
-        $paragraph = (new Paragraph())
-            ->setName("Source des données")
-            ->setText("Certaines données sont directement tirée de la base de donnée du CPNV. En effet, suite à une demande effectuée au près du responsable du développement de l'intranet du CPNV, cette même personne m'a donné accès à l'API de l'intranet. En claire, lors de votre inscription, vous n'avez pas besoin de rentrer d'autre données que votre adresse email. Grâce à celle-ci, je peux effectuer une requête auprès de l'API afin d'obtenir les données qui me seront nécessaires pour vous fournir toutes les services qui sont mis en places.")
-            ->setSection($section);
-
-        $entityManager->persist($content);
-        $entityManager->persist($section);
-        $entityManager->persist($paragraph);
-        $entityManager->flush();*/
-
         return $this->render("admin/content/index.html.twig", [
             'menu' => 'admin.content',
             'contents' => $contentRepository->findAll()

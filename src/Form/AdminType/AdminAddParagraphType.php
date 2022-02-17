@@ -13,6 +13,7 @@ class AdminAddParagraphType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('position')
         ;
     }
 

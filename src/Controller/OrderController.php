@@ -9,6 +9,7 @@ use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
 use App\Services\OrderManager;
+use App\Services\UserNotifierService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +30,7 @@ class OrderController extends AbstractController
     }
 
     #[Route("/nouvelle-commande", name: "order.new")]
-    public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, StateRepository $stateRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, UserNotifierService $notifierService): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
@@ -53,6 +54,8 @@ class OrderController extends AbstractController
             $this->getUser()->flushCart();
             $entityManager->persist($order);
             $entityManager->flush();
+
+            $notifierService->clientOrderReceived($order->getId());
 
             return $this->redirectToRoute('equipment', [], Response::HTTP_SEE_OTHER);
 

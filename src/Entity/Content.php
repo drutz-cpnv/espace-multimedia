@@ -48,7 +48,7 @@ class Content
     private $updatedBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="content", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="content", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"position" = "ASC"})
      */
     private $sections;
@@ -163,5 +163,10 @@ class Content
     public function getFirstSection(): Section
     {
         return $this->getSections()->first();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

@@ -29,15 +29,16 @@ class Paragraph
     private $text;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="paragraphs")
-     */
-    private $section;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\NotEqualTo(0)
      */
     private $position;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="paragraphs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $section;
 
     public function getId(): ?int
     {
