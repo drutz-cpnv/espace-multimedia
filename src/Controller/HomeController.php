@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\UserType;
+use App\Repository\ContentRepository;
 use App\Repository\UserRepository;
 use App\Services\IntranetAPI;
 use App\Services\Tasks\UpdateTeachers;
@@ -22,11 +23,12 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/support', name: 'app.support')]
-    public function support(): Response
+    #[Route('/informations', name: 'app.support')]
+    public function support(ContentRepository $contentRepository): Response
     {
-        return $this->render('pages/index.html.twig', [
-            'menu' => 'support'
+        return $this->render('pages/support.html.twig', [
+            'menu' => 'support',
+            'content' => $contentRepository->find(1)
         ]);
     }
 }

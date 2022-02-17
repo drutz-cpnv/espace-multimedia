@@ -1,0 +1,22 @@
+{{ form_start(form, {attr: {class: 'stacked'}}) }}
+<section class="stack-large">
+    <section>
+        <div class="section-title">
+            Contenu du paragraphe
+        </div>
+        <div class="grid mb2">
+            {{ form_row(form.name) }}
+            {{ form_row(form.position) }}
+        </div>
+        <div class="stack">
+            {{ form_row(form.text, {attr: {
+                class: "font-mono",
+                rows: "20"
+            }}) }}
+        </div>
+    </section>
+    <section>
+        <button type="submit" class="btn-gradient">Enregistrer</button>
+    </section>
+</section>
+{{ form_end(form) }}

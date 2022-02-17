@@ -1,5 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Support</h1>
+<div class="container py5">
+    <div class="support">
+        <div class="support-hero">
+            <h1 class="hero-title">
+                Informations
+            </h1>
+            <p class="hero-infos">
+                {{ content.updatedAt | format_datetime('long', 'none') }} • {{ content.updatedBy }} • Espace Multimédia
+            </p>
+        </div>
+        {% for section in content.sections %}
+            <section>
+                <h2 class="h2">{{ section.name }}</h2>
+                {% for p in section.paragraphs %}
+                    <p>{{ p.text }}</p>
+                {% endfor %}
+            </section>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

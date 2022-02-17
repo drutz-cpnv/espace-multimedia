@@ -1074,7 +1074,7 @@ body.admin-page header.admin-header .container .header-actions a:hover span {
 body.admin-page header.admin-header .container .header-actions span {
     padding: 3px 0;
 }
-body.admin-page aside {
+body.admin-page > aside {
     width: 275px;
     height: 100%;
     background-color: #FFF;
@@ -1082,15 +1082,15 @@ body.admin-page aside {
     grid-column: 1;
     grid-row: 1/span 2;
 }
-body.admin-page aside nav {
+body.admin-page > aside nav {
     padding: 10px 0;
 }
-body.admin-page aside nav section {
+body.admin-page > aside nav section {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
 }
-body.admin-page aside nav .section-title {
+body.admin-page > aside nav .section-title {
     padding-top: 15px;
     border-top: 1px solid #F3F1F3;
     font-size: 0.8rem;
@@ -1098,7 +1098,7 @@ body.admin-page aside nav .section-title {
     color: #919191;
     margin: 0 25px 5px;
 }
-body.admin-page aside nav .nav-btn {
+body.admin-page > aside nav .nav-btn {
     text-decoration: none;
     color: #000;
     padding: 12px 25px;
@@ -1107,15 +1107,15 @@ body.admin-page aside nav .nav-btn {
     font-weight: 500;
 }
 
-body.admin-page aside nav .nav-btn.is-active {
+body.admin-page > aside nav .nav-btn.is-active {
     border-left: 4px solid #f96669;
     color: #f96669;
     background-color: #fff9f9;
 }
-body.admin-page aside nav .nav-btn .icon {
+body.admin-page > aside nav .nav-btn .icon {
     margin-right: 10px;
 }
-body.admin-page aside nav .nav-btn:hover {
+body.admin-page > aside nav .nav-btn:hover {
     background-color: #fafafa;
 }
 body.admin-page main.main-content > .container {
@@ -1453,4 +1453,120 @@ body.admin-page .admi-page__page-header .header-actions a:active {
     height: 100px ;
 }
 
+.sections-split{
+    @extend %stack;
+    margin-bottom: space(2);
+
+    & > div{
+        @extend %card;
+        padding-bottom: space(1.5);
+        padding-top: space(1.5);
+
+        h3{
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: space(2);
+            padding-left: space(3);
+            padding-right: space(3);
+        }
+    }
+
+    .sections__list{
+        & > a, & > .sections__item{
+            position: relative;
+            display: flex;
+            align-items: center;
+            line-height: 1.4;
+            padding: space(1) space(3);
+            z-index: 0;
+
+            .form-button{
+                display: none;
+                z-index: 2;
+                .icon{
+                    &:hover{
+                        background-color: var(--contrast);
+                        color: #FFF;
+                    }
+                }
+            }
+
+            & > a{
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 1;
+            }
+
+            .sections__icon{
+                z-index: 2;
+            }
+
+            &:hover{
+                background-color: var(--border-light);
+
+                .sections__icon{
+                    & > .icon{
+                        display: none;
+                    }
+                    .form-button{
+                        display: inline;
+
+                    }
+                }
+            }
+
+            &.current{
+                background-color: lighten($primary, 30%);
+                color: var(--contrast);
+                font-weight: 600;
+
+                .sections__icon{
+                    & > .icon{
+                        background: transparent;
+                    }
+                }
+            }
+        }
+
+        .icon{
+            height: 32px;
+            width: 32px;
+            background-color: #f3f9fb;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 17px;
+            margin-right: space(2);
+        }
+
+        .sections__new-p{
+            .icon{
+                background-color: lighten($primary, 30%);
+                color: var(--contrast);
+            }
+        }
+
+        .sections__title{
+            margin-right: space(1);
+            transform: translateY(1px);
+        }
+
+        .sections__infos{
+            color: var(--color-light);
+            margin-left: auto;
+            font-size: .9rem;
+            white-space: nowrap;
+        }
+    }
+}
+
+.sections-aside{
+    h2{
+        margin-bottom: space(2);
+    }
+}
 

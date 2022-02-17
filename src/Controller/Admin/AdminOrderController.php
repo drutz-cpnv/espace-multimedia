@@ -10,12 +10,16 @@ use App\Form\AdminType\OrderDocumentType;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
 use App\Services\OrderManager;
+use App\Services\UserNotifierService;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -261,8 +265,23 @@ class AdminOrderController extends AbstractController
     }
 
     #[Route("/{id}", name: "admin.order.show")]
-    public function show(Order $order): Response
+    public function show(Order $order, UserNotifierService $notifierService): Response
     {
+        /*$sender = Address::create('Espace Multimédia <no-reply@espace-multimedia.drutz.ch>');
+        $destination = Address::create('Dimitri RUTZ <dimitri.rutz@cpnv.ch>');
+
+        $email = (new TemplatedEmail())
+            ->from($sender)
+            ->to($destination)
+            ->subject("Nouvelle commande")
+            ->htmlTemplate("email/order/new_client.html.twig")
+            ->context([]);
+
+        $mailer->send($email);*/
+
+        //$notifierService->clientOrderReceived($this->getUser()->getId(), $order->getId());
+        $notifierService->clientOrderStatusChange($order->getId());
+
         return $this->render('admin/orders/show.html.twig', [
             'menu' => 'admin.order',
             'order' => $order

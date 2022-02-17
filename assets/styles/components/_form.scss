@@ -39,6 +39,10 @@ input:disabled {
   min-height: 48px;
 }
 
+.form-group textarea{
+  line-height: 1.5;
+}
+
 .ts-control{
   padding: space(1.5) space(1) !important;
   background: var(--background);

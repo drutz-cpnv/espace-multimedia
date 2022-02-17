@@ -28,6 +28,8 @@ services:
     App\Services\OrderManager:
         autowire: true
 
+    App\Services\ContentManager:
+
     tasks.teachers_update:
         class: App\Services\Tasks\UpdateTeachers
 

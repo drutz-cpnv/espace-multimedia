@@ -281,6 +281,15 @@ hr {
   }
 }
 
+.hero-infos {
+  margin-top: calc(1 * var(--space));
+  font-size: 12px;
+  font-weight: 600;
+  color: #1c6fe1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
 .section-title {
   font-family: "Inter", sans-serif;
   font-size: 18px;
@@ -504,6 +513,14 @@ a.underline:hover {
   text-decoration: underline;
 }
 
+.font-mono {
+  font-family: "Roboto Mono", monospace;
+}
+
+.accent {
+  color: var(--contrast);
+}
+
 .relative {
   position: relative;
 }
@@ -525,7 +542,7 @@ a.underline:hover {
   overflow: hidden;
 }
 
-.layout-sidebar,
+.layout-sidebar-left, .layout-sidebar,
 .container {
   box-sizing: border-box;
   width: 100%;
@@ -663,6 +680,7 @@ a.underline:hover {
   justify-content: flex-end;
 }
 
+.sections-split,
 .stack,
 .stack-large,
 .stack-separated {
@@ -672,6 +690,7 @@ a.underline:hover {
   align-content: flex-start;
   grid-gap: calc(var(--gap) * var(--space));
 }
+.sections-split > *,
 .stack > *,
 .stack-large > *,
 .stack-separated > * {
@@ -738,6 +757,20 @@ a.underline:hover {
 @media (min-width: 1100px) {
   .layout-sidebar {
     grid-template-columns: 1fr 300px;
+  }
+}
+
+.layout-sidebar-left {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: 1fr;
+}
+.layout-sidebar-left > * {
+  min-width: 0;
+}
+@media (min-width: 880px) {
+  .layout-sidebar-left {
+    grid-template-columns: 420px 1fr;
   }
 }
 
@@ -1060,6 +1093,10 @@ input:disabled {
   width: 100%;
   outline: none;
   min-height: 48px;
+}
+
+.form-group textarea {
+  line-height: 1.5;
 }
 
 .ts-control {
@@ -1674,7 +1711,7 @@ a.pill:hover::after {
   background-color: #9fb3c8;
 }
 
-.card, .flat-card {
+.card, .sections-split > div, .flat-card {
   background: var(--card-bg, var(--background-light));
   border: 1px solid var(--border);
   box-shadow: 0 2px 4px var(--shadow);
@@ -1684,11 +1721,11 @@ a.pill:hover::after {
   flex-direction: column;
   position: relative;
 }
-.card a, .flat-card a {
+.card a, .sections-split > div a, .flat-card a {
   position: relative;
   z-index: 3;
 }
-.card .icon, .flat-card .icon {
+.card .icon, .sections-split > div .icon, .flat-card .icon {
   vertical-align: center;
   font-size: 12px;
 }
@@ -1699,14 +1736,6 @@ a.pill:hover::after {
   box-shadow: none;
   background-color: #FFFFFF;
 }
-.flat-card:hover {
-  border-color: var(--gray-600);
-}
-.flat-card:active {
-  border-color: #1c6fe1;
-  box-shadow: 0 0 0 3px rgba(28, 111, 225, 0.55);
-  color: #1c6fe1;
-}
 .flat-card > .icon {
   font-size: 40px;
   color: var(--gray-400);
@@ -1714,6 +1743,16 @@ a.pill:hover::after {
 }
 .flat-card .text-muted {
   line-height: 23px;
+}
+
+a.flat-card:hover {
+  border-color: var(--gray-600);
+}
+
+a.flat-card:active {
+  border-color: #1c6fe1;
+  box-shadow: 0 0 0 3px rgba(28, 111, 225, 0.55);
+  color: #1c6fe1;
 }
 
 .card__body {
@@ -2951,7 +2990,7 @@ body.admin-page header.admin-header .container .header-actions span {
   padding: 3px 0;
 }
 
-body.admin-page aside {
+body.admin-page > aside {
   width: 275px;
   height: 100%;
   background-color: #FFF;
@@ -2960,17 +2999,17 @@ body.admin-page aside {
   grid-row: 1/span 2;
 }
 
-body.admin-page aside nav {
+body.admin-page > aside nav {
   padding: 10px 0;
 }
 
-body.admin-page aside nav section {
+body.admin-page > aside nav section {
   display: flex;
   flex-direction: column;
   margin-top: 5px;
 }
 
-body.admin-page aside nav .section-title {
+body.admin-page > aside nav .section-title {
   padding-top: 15px;
   border-top: 1px solid #F3F1F3;
   font-size: 0.8rem;
@@ -2979,7 +3018,7 @@ body.admin-page aside nav .section-title {
   margin: 0 25px 5px;
 }
 
-body.admin-page aside nav .nav-btn {
+body.admin-page > aside nav .nav-btn {
   text-decoration: none;
   color: #000;
   padding: 12px 25px;
@@ -2988,17 +3027,17 @@ body.admin-page aside nav .nav-btn {
   font-weight: 500;
 }
 
-body.admin-page aside nav .nav-btn.is-active {
+body.admin-page > aside nav .nav-btn.is-active {
   border-left: 4px solid #f96669;
   color: #f96669;
   background-color: #fff9f9;
 }
 
-body.admin-page aside nav .nav-btn .icon {
+body.admin-page > aside nav .nav-btn .icon {
   margin-right: 10px;
 }
 
-body.admin-page aside nav .nav-btn:hover {
+body.admin-page > aside nav .nav-btn:hover {
   background-color: #fafafa;
 }
 
@@ -3374,6 +3413,94 @@ body.admin-page .admi-page__page-header .header-actions a:active {
 
 .admin-item-thumb {
   height: 100px;
+}
+
+.sections-split {
+  margin-bottom: calc(2 * var(--space));
+}
+.sections-split > div {
+  padding-bottom: calc(1.5 * var(--space));
+  padding-top: calc(1.5 * var(--space));
+}
+.sections-split > div h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: calc(2 * var(--space));
+  padding-left: calc(3 * var(--space));
+  padding-right: calc(3 * var(--space));
+}
+.sections-split .sections__list > a, .sections-split .sections__list > .sections__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  line-height: 1.4;
+  padding: calc(1 * var(--space)) calc(3 * var(--space));
+  z-index: 0;
+}
+.sections-split .sections__list > a .form-button, .sections-split .sections__list > .sections__item .form-button {
+  display: none;
+  z-index: 2;
+}
+.sections-split .sections__list > a .form-button .icon:hover, .sections-split .sections__list > .sections__item .form-button .icon:hover {
+  background-color: var(--contrast);
+  color: #FFF;
+}
+.sections-split .sections__list > a > a, .sections-split .sections__list > .sections__item > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+.sections-split .sections__list > a .sections__icon, .sections-split .sections__list > .sections__item .sections__icon {
+  z-index: 2;
+}
+.sections-split .sections__list > a:hover, .sections-split .sections__list > .sections__item:hover {
+  background-color: var(--border-light);
+}
+.sections-split .sections__list > a:hover .sections__icon > .icon, .sections-split .sections__list > .sections__item:hover .sections__icon > .icon {
+  display: none;
+}
+.sections-split .sections__list > a:hover .sections__icon .form-button, .sections-split .sections__list > .sections__item:hover .sections__icon .form-button {
+  display: inline;
+}
+.sections-split .sections__list > a.current, .sections-split .sections__list > .sections__item.current {
+  background-color: #fff9f9;
+  color: var(--contrast);
+  font-weight: 600;
+}
+.sections-split .sections__list > a.current .sections__icon > .icon, .sections-split .sections__list > .sections__item.current .sections__icon > .icon {
+  background: transparent;
+}
+.sections-split .sections__list .icon {
+  height: 32px;
+  width: 32px;
+  background-color: #f3f9fb;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  margin-right: calc(2 * var(--space));
+}
+.sections-split .sections__list .sections__new-p .icon {
+  background-color: #fff9f9;
+  color: var(--contrast);
+}
+.sections-split .sections__list .sections__title {
+  margin-right: calc(1 * var(--space));
+  transform: translateY(1px);
+}
+.sections-split .sections__list .sections__infos {
+  color: var(--color-light);
+  margin-left: auto;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.sections-aside h2 {
+  margin-bottom: calc(2 * var(--space));
 }
 
 /*# sourceMappingURL=admin.css.map */

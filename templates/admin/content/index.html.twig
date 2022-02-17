@@ -1,0 +1,24 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="admi-page__page-header">
+            <div class="title">
+                {{ icon('text_fields') }}
+                <h1>Contenu</h1>
+            </div>
+            <div class="header-actions">
+                <a href="{{ path('admin.content.new') }}" class="btn js-modal-btn">Nouvelle section de contenu</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="grid">
+                {% for content in contents %}
+                    <a href="{{ path('admin.content.sections.paragraph', {id: content.firstParagraph.id}) }}" class="flat-card p3">
+                        <h4 class="h4">{{ content.name }}</h4>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

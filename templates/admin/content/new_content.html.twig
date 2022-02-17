@@ -1,0 +1,13 @@
+{{ form_start(form, {attr: {class: 'stacked'}}) }}
+<section class="stack-large">
+    <section>
+        <div class="section-title">
+            Bloc de contenu
+        </div>
+        <div class="grid">
+            {{ form_row(form.name) }}
+        </div>
+        <button type="submit" class="btn-gradient">Ajouter</button>
+    </section>
+</section>
+{{ form_end(form) }}

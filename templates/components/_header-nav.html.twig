@@ -10,7 +10,7 @@
         <li><a href="{{ path('orders.user') }}" {{ menu_active('myOrder') }}>{{ icon('receipt_long') }} Mes
                 commandes</a>
         </li>
-        <li><a href="{{ path('app.support') }}" {{ menu_active('support') }}>{{ icon('help_outline') }} Support</a></li>
+        <li><a href="{{ path('app.support') }}" {{ menu_active('support') }}>{{ icon('help_outline') }} Informations</a></li>
         {% if app.user.id is defined %}
             {% if app.user.isAdmin %}
             <li><a href="{{ path('admin.index') }}">{{ icon('tune') }} Administration</a></li>

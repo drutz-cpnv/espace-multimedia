@@ -281,6 +281,15 @@ hr {
   }
 }
 
+.hero-infos {
+  margin-top: calc(1 * var(--space));
+  font-size: 12px;
+  font-weight: 600;
+  color: #1c6fe1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
 .section-title {
   font-family: "Inter", sans-serif;
   font-size: 18px;
@@ -505,6 +514,14 @@ a.underline:hover {
   text-decoration: underline;
 }
 
+.font-mono {
+  font-family: "Roboto Mono", monospace;
+}
+
+.accent {
+  color: var(--contrast);
+}
+
 .relative {
   position: relative;
 }
@@ -526,7 +543,7 @@ a.underline:hover {
   overflow: hidden;
 }
 
-.equipment, nav.header, .layout-sidebar,
+.equipment, nav.header, .layout-sidebar-left, .layout-sidebar,
 .container {
   box-sizing: border-box;
   width: 100%;
@@ -739,6 +756,20 @@ a.underline:hover {
 @media (min-width: 1100px) {
   .layout-sidebar {
     grid-template-columns: 1fr 300px;
+  }
+}
+
+.layout-sidebar-left {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: 1fr;
+}
+.layout-sidebar-left > * {
+  min-width: 0;
+}
+@media (min-width: 880px) {
+  .layout-sidebar-left {
+    grid-template-columns: 420px 1fr;
   }
 }
 
@@ -1341,14 +1372,6 @@ nav.header ul {
   box-shadow: none;
   background-color: #FFFFFF;
 }
-.flat-card:hover {
-  border-color: var(--gray-600);
-}
-.flat-card:active {
-  border-color: #1c6fe1;
-  box-shadow: 0 0 0 3px rgba(28, 111, 225, 0.55);
-  color: #1c6fe1;
-}
 .flat-card > .icon {
   font-size: 40px;
   color: var(--gray-400);
@@ -1356,6 +1379,16 @@ nav.header ul {
 }
 .flat-card .text-muted {
   line-height: 23px;
+}
+
+a.flat-card:hover {
+  border-color: var(--gray-600);
+}
+
+a.flat-card:active {
+  border-color: #1c6fe1;
+  box-shadow: 0 0 0 3px rgba(28, 111, 225, 0.55);
+  color: #1c6fe1;
 }
 
 .card__body {
@@ -1465,6 +1498,10 @@ input:disabled {
   width: 100%;
   outline: none;
   min-height: 48px;
+}
+
+.form-group textarea {
+  line-height: 1.5;
 }
 
 .ts-control {
@@ -2376,6 +2413,10 @@ input:disabled {
   min-height: 48px;
 }
 
+.form-group textarea {
+  line-height: 1.5;
+}
+
 .ts-control {
   padding: calc(1.5 * var(--space)) calc(1 * var(--space)) !important;
   background: var(--background);
@@ -2767,6 +2808,19 @@ button:not([class]):hover .icon-delete {
 .equipment-page {
   background-color: var(--background-light);
   border-top: 1px solid var(--border);
+}
+
+.support .support-hero {
+  text-align: center;
+}
+
+.support section {
+  padding: calc(4 * var(--space));
+  max-width: 680px;
+  margin: calc(3 * var(--space)) auto;
+}
+.support section h2 {
+  margin-bottom: calc(2 * var(--space));
 }
 
 body {

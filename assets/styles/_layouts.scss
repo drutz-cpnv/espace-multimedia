@@ -259,6 +259,21 @@
   }
 }
 
+.layout-sidebar-left{
+  @extend %container;
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: 1fr;
+
+  & > * {
+    min-width: 0;
+  }
+
+  @include up(880) {
+    grid-template-columns: 420px 1fr;
+  }
+}
+
 .sticky {
   position: sticky;
   top: space(3);

@@ -1,0 +1,64 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="layout-sidebar-left">
+            <aside class="sections-aside">
+                <h2 class="h2">Sections — <span class="accent">{{ content.id }}</span></h2>
+                <div class="sections-split">
+                    <div>
+                        {{ form_start(form_section, {attr: {class: 'stacked my2'}}) }}
+                        <section>
+                            <h3>Modifier la section</h3>
+                            <div class="stack px3">
+                                {{ form_row(form_section.name, { label: "Titre de la section"}) }}
+                                {{ form_row(form_section.position, { label: "Ordre de la section"}) }}
+                                <button type="submit" class="btn-gradient">Modifier</button>
+                            </div>
+                        </section>
+                        {{ form_end(form_section) }}
+                    </div>
+                    {% for section in content.sections %}
+                    <div>
+                        <h3 class="flex flex-between">{{ section.name }} <span class="text-muted">{{ section.position }}</span></h3>
+                        <div class="sections__list">
+                            {% for p in section.paragraphs %}
+                                <div class="sections__item {% if paragraph.id == p.id %}current{% endif %}">
+                                    <div class="sections__icon">
+                                        <form method="post" class="form-button" action="{{ path('admin.content.paragraph.delete', {'id': p.id}) }}" onsubmit="return confirm('Êtes-vous sûre de vouloir supprimer ce type d\'équipement ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ p.id) }}">
+                                            <button>{{ icon("delete") }}</button>
+                                        </form>
+                                        {{ icon("align_horizontal_left") }}
+                                    </div>
+                                    <span class="sections__title">{{ p.name }}</span>
+                                    <span class="sections__infos"><span class="text-muted">{{ section.position }}.{{ p.position }}</span></span>
+                                    <a href="{{ path('admin.content.sections.paragraph', {id: p.id}) }}"></a>
+                                </div>
+                            {% endfor %}
+                            <a href="{{ path('admin.content.sections.new_paragaph', {id: section.id}) }}" class="sections__new-p js-modal-btn">
+                                {{ icon("add") }}
+                                <span class="sections__title">Nouveau paragraphe</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div>
+                        <div class="sections__list">
+                            <a href="{{ path('admin.content.new_section', {id: content.id}) }}" class="sections__new-p js-modal-btn">
+                                {{ icon("add") }}
+                                <span class="sections__title">Nouvelle section</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <main>
+                <h2 class="h2 mb2">Paragraphe</h2>
+                <div class="content">
+                    {{ include('admin/content/_paragraph_form.html.twig') }}
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

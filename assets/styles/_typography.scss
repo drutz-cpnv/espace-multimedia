@@ -32,6 +32,16 @@
   }
 }
 
+%hero-infos,
+.hero-infos{
+  margin-top: space(1);
+  font-size: 12px;
+  font-weight: 600;
+  color: #1c6fe1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
 %section-title,
 .section-title {
   font-family: $font-alt;
@@ -244,4 +254,11 @@ a.underline:hover {
 .link:hover {
   color: var(--contrast);
   text-decoration: underline;
+}
+.font-mono{
+  font-family: "Roboto Mono", monospace;
+}
+
+.accent{
+  color: var(--contrast);
 }

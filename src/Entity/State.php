@@ -39,6 +39,11 @@ class State
      */
     private $orderStates;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Content::class)
+     */
+    private $content_template;
+
     public function __construct()
     {
         $this->orderStates = new ArrayCollection();
@@ -115,8 +120,33 @@ class State
         return $this;
     }
 
+    public function getOrderCount()
+    {
+        $orders = [];
+        foreach ($this->getOrderStates() as $orderState) {
+            $order = $orderState->getOrder();
+            if($order->getCurrentStatus() === $orderState){
+                $orders[] = $order;
+            }
+        }
+        return count($orders);
+
+    }
+
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getContentTemplate(): ?Content
+    {
+        return $this->content_template;
+    }
+
+    public function setContentTemplate(?Content $content_template): self
+    {
+        $this->content_template = $content_template;
+
+        return $this;
     }
 }

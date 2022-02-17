@@ -122,7 +122,7 @@ class OrderManager
 
     public function equipmentPending(OrderState $orderState, Order $order)
     {
-        $equipmentPending = $this->stateRepository->findOneBySlug('equipment_pending');
+        $equipmentPending = $this->stateRepository->findOneBySlug('late');
         $orderState->setState($equipmentPending);
         $orderState->setCreatedBy($this->security->getUser());
         $order->addOrderState($orderState);
@@ -133,7 +133,7 @@ class OrderManager
 
     public function invalidEquipment(OrderState $orderState, Order $order)
     {
-        $equipmentPending = $this->stateRepository->findOneBySlug('equipment_invalid');
+        $equipmentPending = $this->stateRepository->findOneBySlug('error');
         $orderState->setState($equipmentPending);
         $orderState->setCreatedBy($this->security->getUser());
         $order->addOrderState($orderState);
@@ -144,7 +144,7 @@ class OrderManager
 
     public function passOrder(OrderState $orderState, Order $order)
     {
-        $equipmentPending = $this->stateRepository->findOneBySlug('passed');
+        $equipmentPending = $this->stateRepository->findOneBySlug('terminated');
         $orderState->setState($equipmentPending);
         $orderState->setCreatedBy($this->security->getUser());
         $order->addOrderState($orderState);
