@@ -543,7 +543,7 @@ a.underline:hover {
   overflow: hidden;
 }
 
-.equipment, nav.header, .layout-sidebar-left, .layout-sidebar,
+.orders-page, .equipment, nav.header, .layout-sidebar-left, .layout-sidebar,
 .container {
   box-sizing: border-box;
   width: 100%;
@@ -1366,6 +1366,37 @@ nav.header ul {
   font-size: 12px;
 }
 
+.inCart {
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  top: -5px;
+  border: 5px solid var(--contrast);
+  border-radius: 8px;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.inCart svg {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  height: 30px;
+  stroke: #FFF;
+  z-index: 3;
+}
+.inCart::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: 0;
+  width: 100px;
+  height: 40px;
+  transform: rotate(45deg);
+  background-color: var(--contrast);
+}
+
 .flat-card {
   border-radius: 10px;
   border: 1px solid var(--gray-400);
@@ -1810,6 +1841,10 @@ button:not([class]):hover .icon-delete {
 }
 .btn-discord:hover, .btn-social:hover, .btn-secondary:hover, .btn-danger:hover, .btn-white-outlined:hover, .btn-primary-outlined:hover, .btn-primary:hover, .btn-gradient:hover {
   filter: brightness(1.2);
+}
+.btn-discord .feather, .btn-social .feather, .btn-secondary .feather, .btn-danger .feather, .btn-white-outlined .feather, .btn-primary-outlined .feather, .btn-primary .feather, .btn-gradient .feather {
+  height: 110%;
+  width: 100%;
 }
 
 .btn-gradient {
@@ -2380,6 +2415,44 @@ a.pill:hover::after {
   background-color: var(--dot-color);
 }
 
+flash-message {
+  position: fixed;
+  left: calc(3 * var(--space));
+  width: fit-content;
+  transition-duration: 0.4s;
+  bottom: -100%;
+  visibility: hidden;
+}
+flash-message > div {
+  background-color: var(--flash-color);
+  padding: calc(1.5 * var(--space)) calc(2 * var(--space));
+  display: flex;
+  align-items: center;
+  border-radius: 13px;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+flash-message.visible {
+  bottom: calc(3 * var(--space));
+  visibility: visible;
+}
+flash-message span {
+  word-break: keep-all;
+}
+flash-message .icon {
+  height: 35px;
+  width: 35px;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: calc(2 * var(--space));
+}
+flash-message .icon svg {
+  stroke: var(--flash-color);
+}
+
 label {
   text-transform: uppercase;
   font-weight: 300;
@@ -2821,6 +2894,34 @@ button:not([class]):hover .icon-delete {
 }
 .support section h2 {
   margin-bottom: calc(2 * var(--space));
+}
+
+.orders-page {
+  display: grid;
+  grid-gap: calc(3 * var(--space));
+  grid-template-columns: 1fr;
+}
+@media (min-width: 800px) {
+  .orders-page {
+    grid-template-columns: 190px 1fr;
+  }
+}
+
+.orders-page .orders-status a {
+  display: flex;
+  align-items: center;
+  padding: calc(1 * var(--space)) calc(1 * var(--space));
+  transition: color 0.2s;
+}
+.orders-page .orders-status a:hover {
+  color: var(--contrast);
+}
+.orders-page .orders-status a span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: calc(1 * var(--space));
 }
 
 body {

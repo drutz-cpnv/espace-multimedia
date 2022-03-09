@@ -22,9 +22,10 @@ class OrderController extends AbstractController
 {
 
     #[Route("/mes-commandes", name: "orders.user")]
-    public function myOrders(): Response
+    public function myOrders(StateRepository $stateRepository): Response
     {
         return $this->render('pages/my-orders.html.twig', [
+            'states' => $stateRepository->findAll(),
             'menu' => 'myOrder'
         ]);
     }
@@ -43,6 +44,7 @@ class OrderController extends AbstractController
             $check = $orderManager->checkConflicts($order);
 
             if(count($check['conflicts']) !== 0){
+                $this->addFlash('error', "Un ou plusieurs objets sélectionner ne sont pas disponible !");
                 return $this->render("pages/order/conflicts_order.html.twig", [
                     'conflicts' => $check['conflicts'],
                     'order' => $order
@@ -57,6 +59,7 @@ class OrderController extends AbstractController
 
             $notifierService->clientOrderReceived($order->getId());
 
+            $this->addFlash('success', "Votre commande a été créé, vérifier vos emails !");
             return $this->redirectToRoute('equipment', [], Response::HTTP_SEE_OTHER);
 
         }

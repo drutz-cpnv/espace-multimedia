@@ -1,0 +1,13 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'camera_alt',
+            title: 'Modifier \'objet',
+        } %}
+        <div class="content">
+            {{ include('admin/equipment/_item_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

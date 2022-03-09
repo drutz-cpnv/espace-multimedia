@@ -45,14 +45,30 @@ class AdminOrderController extends AbstractController
 
         $pdf = new Dompdf($pdfOptions);
 
+        $svg = '<svg width="310" height="500" viewBox="0 0 310 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_5_2)">
+<path d="M194.29 362.34L271.27 438.83L210.48 500L82.91 373.26L0 290.88H121.01C121.57 290.88 122.12 290.88 122.66 290.86" fill="#060400"/>
+<path d="M122.66 290.86C178.41 289.98 223.32 244.51 223.32 188.56C223.32 132.04 177.51 86.23 121.01 86.23H104.56V0.72C107.28 0.47 110.02 0.3 112.78 0.19C115.5 0.05 118.26 0 121.01 0C225.15 0 309.57 84.42 309.57 188.56C309.57 266.7 262.02 333.73 194.28 362.34L122.66 290.86Z" fill="#FABA15"/>
+</g>
+<defs>
+<clipPath id="clip0_5_2">
+<rect width="309.58" height="500" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+';
+
+        $logo = '<img src="data:image/svg+xml;base64,' . base64_encode($svg) . '">';
+
         $content = $this->renderView('pdf/bdc_1.html.twig', [
-            'order' => $order
+            'order' => $order,
+            'logo' => $logo
         ]);
 
         $pdf->loadHtml($content);
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
-        $pdf->stream("Bon de livraison". $order->getInitialZeroId() . ".pdf", [
+        $pdf->stream("Bon de commande ". $order->getInitialZeroId() . ".pdf", [
             "Attachment" => true
         ]);
 
@@ -110,181 +126,39 @@ class AdminOrderController extends AbstractController
 
     }
 
-    #[Route("/accept/{id}", name: "admin.order.accept")]
-    public function acceptOrder(Order $order, Request $request, OrderManager $orderManager): Response
+    #[Route("/change-state/{slug}/{id}", name: "admin.order.change_state")]
+    public function changeState(Order $order, string $slug, Request $request, OrderManager $orderManager, EntityManagerInterface $entityManager, UserNotifierService $userNotifier): Response
     {
         $orderState = new OrderState();
         $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
             'attr' => [
-                'action' => $this->generateUrl('admin.order.accept', ['id' => $order->getId()])
+                'action' => $this->generateUrl('admin.order.change_state', ['slug' => $slug, 'id' => $order->getId()])
             ]
         ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $orderManager->acceptOrder($orderState, $order);
+            if($orderManager->changeState($slug, $orderState, $order) !== false){
+                $entityManager->persist($orderState);
+                $entityManager->flush();
+                $userNotifier->clientOrderStatusChange($order->getId());
+            }
             return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/orders/state_change.html.twig', [
             'form' => $form,
-            'form_title' => "Accepter la commande"
-        ]);
-    }
-
-    #[Route("/pending/{id}", name: "admin.order.pending")]
-    public function pendingOrder(Order $order, Request $request, OrderManager $orderManager): Response
-    {
-        $orderState = new OrderState();
-        $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
-            'attr' => [
-                'action' => $this->generateUrl('admin.order.pending', ['id' => $order->getId()])
-            ]
-        ]);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $orderManager->pendingOrder($orderState, $order);
-            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/orders/state_change.html.twig', [
-            'form' => $form,
-            'form_title' => "Mettre en attente"
-        ]);
-    }
-
-    #[Route("/refuse/{id}", name: "admin.order.refuse")]
-    public function refuseOrder(Order $order, Request $request, OrderManager $orderManager): Response
-    {
-        $orderState = new OrderState();
-        $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
-            'attr' => [
-                'action' => $this->generateUrl('admin.order.refuse', ['id' => $order->getId()])
-            ]
-        ]);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $orderManager->refuseOrder($orderState, $order);
-            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/orders/state_change.html.twig', [
-            'form' => $form,
-            'form_title' => "Refuser la commande"
-        ]);
-    }
-
-    #[Route("/equipment-pending/{id}", name: "admin.order.pending_equipment")]
-    public function equipmentPending(Order $order, Request $request, OrderManager $orderManager): Response
-    {
-        $orderState = new OrderState();
-        $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
-            'attr' => [
-                'action' => $this->generateUrl('admin.order.pending_equipment', ['id' => $order->getId()])
-            ]
-        ]);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $orderManager->equipmentPending($orderState, $order);
-            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/orders/state_change.html.twig', [
-            'form' => $form,
-            'form_title' => "En attente de la récupération de l'équipement"
-        ]);
-    }
-
-    #[Route("/cancel/{id}", name: "admin.order.cancel")]
-    public function cancelOrder(Order $order, Request $request, OrderManager $orderManager): Response
-    {
-        $orderState = new OrderState();
-        $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
-            'attr' => [
-                'action' => $this->generateUrl('admin.order.cancel', ['id' => $order->getId()])
-            ]
-        ]);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $orderManager->cancelOrder($orderState, $order);
-            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/orders/state_change.html.twig', [
-            'form' => $form,
-            'form_title' => "Annulation de la commande"
-        ]);
-    }
-
-    #[Route("/equipment-invalid/{id}", name: "admin.order.invalid")]
-    public function invalidEquipment(Order $order, Request $request, OrderManager $orderManager): Response
-    {
-        $orderState = new OrderState();
-        $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
-            'attr' => [
-                'action' => $this->generateUrl('admin.order.invalid', ['id' => $order->getId()])
-            ]
-        ]);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $orderManager->invalidEquipment($orderState, $order);
-            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/orders/state_change.html.twig', [
-            'form' => $form,
-            'form_title' => "Equipement rendu incorrect"
-        ]);
-    }
-
-    #[Route("/pass/{id}", name: "admin.order.pass")]
-    public function passOrder(Order $order, Request $request, OrderManager $orderManager): Response
-    {
-        $orderState = new OrderState();
-        $form = $this->createForm(AdminChangeStateOrderType::class, $orderState, [
-            'attr' => [
-                'action' => $this->generateUrl('admin.order.pass', ['id' => $order->getId()])
-            ]
-        ]);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $orderManager->passOrder($orderState, $order);
-            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/orders/state_change.html.twig', [
-            'form' => $form,
-            'form_title' => "Matériel rendu"
+            'form_title' => "Changement de statut de la commande"
         ]);
     }
 
     #[Route("/{id}", name: "admin.order.show")]
-    public function show(Order $order, UserNotifierService $notifierService): Response
+    public function show(Order $order, StateRepository $stateRepository): Response
     {
-        /*$sender = Address::create('Espace Multimédia <no-reply@espace-multimedia.drutz.ch>');
-        $destination = Address::create('Dimitri RUTZ <dimitri.rutz@cpnv.ch>');
-
-        $email = (new TemplatedEmail())
-            ->from($sender)
-            ->to($destination)
-            ->subject("Nouvelle commande")
-            ->htmlTemplate("email/order/new_client.html.twig")
-            ->context([]);
-
-        $mailer->send($email);*/
-
-        //$notifierService->clientOrderReceived($this->getUser()->getId(), $order->getId());
-        //$notifierService->clientOrderStatusChange($order->getId());
-
         return $this->render('admin/orders/show.html.twig', [
             'menu' => 'admin.order',
-            'order' => $order
+            'order' => $order,
+            'states' => $stateRepository->findAll()
         ]);
     }
 

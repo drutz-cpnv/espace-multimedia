@@ -9,7 +9,7 @@ class ContentManager
 {
 
     /**
-     * Will create a section with 1 empty paragraph (need to be attached to a Content entity)
+     * Create a section with 1 empty paragraph (need to be attached to a Content entity)
      * @return Section
      */
     public function createEmptySection(): Section
@@ -22,7 +22,7 @@ class ContentManager
     }
 
     /**
-     * Will create an empty paragraph (need to be attached to a Section entity)
+     * Create an empty paragraph (need to be attached to a Section entity)
      * @return Paragraph
      */
     public function createEmptyParagraph(): Paragraph

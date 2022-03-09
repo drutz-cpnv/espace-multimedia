@@ -81,6 +81,9 @@ class OrderState
 
     public function getComments(): ?string
     {
+        if(is_null($this->comments) || $this->comments === ""){
+            return "Aucun commentaires n'a été fourni !";
+        }
         return $this->comments;
     }
 

@@ -22,6 +22,7 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $entityManager->flush();
+            $this->addFlash('success', "Votre profil a été mis à jour !");
             return $this->redirectToRoute('user.profil', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('pages/profil.html.twig', [
@@ -42,6 +43,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $user->addToCart($equipment);
         $entityManager->flush();
+        $this->addFlash('success', "L'équipement a été ajouté à votre panier !");
         return $this->redirectToRoute('equipment.show', ['id' => $equipment->getId(), 'slug' => $equipment->getSlug()], Response::HTTP_SEE_OTHER);
     }
 
@@ -51,6 +53,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $user->removeCart($equipment);
         $entityManager->flush();
+        $this->addFlash('success', "L'équipement a été retiré de votre panier !");
         return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 

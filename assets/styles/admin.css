@@ -1406,6 +1406,10 @@ button:not([class]):hover .icon-delete {
 .btn-discord:hover, .btn-social:hover, .btn-secondary:hover, .btn-danger:hover, .btn-white-outlined:hover, .btn-primary-outlined:hover, .btn-primary:hover, .btn-gradient:hover {
   filter: brightness(1.2);
 }
+.btn-discord .feather, .btn-social .feather, .btn-secondary .feather, .btn-danger .feather, .btn-white-outlined .feather, .btn-primary-outlined .feather, .btn-primary .feather, .btn-gradient .feather {
+  height: 110%;
+  width: 100%;
+}
 
 .btn-gradient {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%) var(--contrast);
@@ -1730,6 +1734,37 @@ a.pill:hover::after {
   font-size: 12px;
 }
 
+.inCart {
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  top: -5px;
+  border: 5px solid var(--contrast);
+  border-radius: 8px;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.inCart svg {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  height: 30px;
+  stroke: #FFF;
+  z-index: 3;
+}
+.inCart::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: 0;
+  width: 100px;
+  height: 40px;
+  transform: rotate(45deg);
+  background-color: var(--contrast);
+}
+
 .flat-card {
   border-radius: 10px;
   border: 1px solid var(--gray-400);
@@ -1829,6 +1864,44 @@ a .card__title:hover {
   display: flex;
   align-items: center;
   z-index: 3;
+}
+
+flash-message {
+  position: fixed;
+  left: calc(3 * var(--space));
+  width: fit-content;
+  transition-duration: 0.4s;
+  bottom: -100%;
+  visibility: hidden;
+}
+flash-message > div {
+  background-color: var(--flash-color);
+  padding: calc(1.5 * var(--space)) calc(2 * var(--space));
+  display: flex;
+  align-items: center;
+  border-radius: 13px;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+flash-message.visible {
+  bottom: calc(3 * var(--space));
+  visibility: visible;
+}
+flash-message span {
+  word-break: keep-all;
+}
+flash-message .icon {
+  height: 35px;
+  width: 35px;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: calc(2 * var(--space));
+}
+flash-message .icon svg {
+  stroke: var(--flash-color);
 }
 
 @keyframes dropdown {
@@ -3032,9 +3105,18 @@ body.admin-page > aside nav .nav-btn.is-active {
   color: #f96669;
   background-color: #fff9f9;
 }
+body.admin-page > aside nav .nav-btn.is-active svg {
+  stroke: #f96669;
+}
+body.admin-page > aside nav .nav-btn.is-active svg * {
+  stroke: #f96669;
+}
 
 body.admin-page > aside nav .nav-btn .icon {
   margin-right: 10px;
+}
+body.admin-page > aside nav .nav-btn .icon svg {
+  stroke: #000;
 }
 
 body.admin-page > aside nav .nav-btn:hover {

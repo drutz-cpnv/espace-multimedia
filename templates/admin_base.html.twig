@@ -40,11 +40,11 @@
     <nav>
         <section>
             <a href="{{ path("admin.index") }}" class="nav-btn" {{ menu_active('home') }}>
-                <span class="icon material-icons-round">dashboard</span>
+                <span class="icon"><i data-feather="trello"></i></span>
                 <span class="text">Dashboard</span>
             </a>
             <a href="{{ path("admin.content.index") }}" class="nav-btn" {{ menu_active('admin.content') }}>
-                <span class="icon material-icons-round">text_fields</span>
+                <span class="icon"><i data-feather="type"></i></span>
                 <span class="text">Contenu</span>
             </a>
         </section>
@@ -53,19 +53,19 @@
                 <span>Objets</span>
             </div>
             <a href="{{ path('admin.equipment.index') }}" class="nav-btn" {{ menu_active('admin.equipment')}}>
-                <span class="icon material-icons-round">camera_alt</span>
+                <span class="icon"><i data-feather="video"></i></span>
                 <span class="text">Équipement</span>
             </a>
             <a href="{{ path('admin.brand.index') }}" class="nav-btn" {{ menu_active('admin.brand') }}>
-                <span class="icon material-icons-round">copyright</span>
+                <span class="icon"><i data-feather="at-sign"></i></span>
                 <span class="text">Marques</span>
             </a>
             <a href="{{ path('admin.category.index') }}" class="nav-btn" {{ menu_active('admin.category')}}>
-                <span class="icon material-icons-round">tag</span>
+                <span class="icon"><i data-feather="tag"></i></span>
                 <span class="text">Catégories</span>
             </a>
             <a href="{{ path('admin.type.index') }}" class="nav-btn" {{ menu_active('admin.type')}}>
-                <span class="icon material-icons-round">bookmark</span>
+                <span class="icon"><i data-feather="hash"></i></span>
                 <span class="text">Types</span>
             </a>
         </section>
@@ -74,7 +74,7 @@
                 <span>Commandes</span>
             </div>
             <a href="{{ path('admin.order.index') }}" class="nav-btn" {{ menu_active('admin.order') }}>
-                <span class="icon material-icons-round">local_shipping</span>
+                <span class="icon"><i data-feather="truck"></i></span>
                 <span class="text">Commandes</span>
             </a>
         </section>
@@ -83,11 +83,11 @@
                 <span>Administration</span>
             </div>
             <a href="{{ path('admin.user.index') }}" class="nav-btn" {{ menu_active('admin.user') }}>
-                <span class="icon material-icons-round">manage_accounts</span>
+                <span class="icon"><i data-feather="users"></i></span>
                 <span class="text">Utilisateurs</span>
             </a>
             <a href="#" class="nav-btn">
-                <span class="icon material-icons-round">toggle_on</span>
+                <span class="icon"><i data-feather="sliders"></i></span>
                 <span class="text">Réglages</span>
             </a>
         </section>
@@ -100,5 +100,8 @@
 </main>
 
 
+{% for type, message in app.session.flashBag.all %}
+    <flash-message type="{{ type }}" message="{{ message[0] }}"></flash-message>
+{% endfor %}
 </body>
 </html>

@@ -16,6 +16,7 @@
         "league/glide-symfony": "^2.0",
         "liip/imagine-bundle": "^2.7",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "scienta/doctrine-json-functions": "^5.0",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.4.*",

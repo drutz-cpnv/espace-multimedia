@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run project" type="CompoundRunConfigurationType">
+    <toRun name="dev-server" type="js.build_tools.npm" />
+    <toRun name="run localhost" type="PhpBuiltInWebServerConfigurationType" />
+    <toRun name="MailDev Sever" type="ShConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>

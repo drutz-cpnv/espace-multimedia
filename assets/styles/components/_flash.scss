@@ -1,0 +1,44 @@
+flash-message{
+  position: fixed;
+  left: space(3);
+  width: fit-content;
+  transition-duration: .4s;
+  bottom: -100%;
+  visibility: hidden;
+
+  & > div {
+    background-color: var(--flash-color);
+    padding: space(1.5) space(2);
+    display: flex;
+    align-items: center;
+    border-radius: 13px;
+    color: #FFFFFF;
+    font-weight: 500;
+  }
+
+  &.visible{
+    bottom: space(3);
+    visibility: visible;
+  }
+
+  span{
+    word-break: keep-all;
+  }
+
+
+
+  .icon{
+    height: 35px;
+    width: 35px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: space(2);
+
+    svg{
+      stroke: var(--flash-color);
+    }
+  }
+}

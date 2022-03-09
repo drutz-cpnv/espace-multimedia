@@ -49,22 +49,21 @@
                             <h4 class="h4">{{ order.createdAt | date("d.m.Y à H:i") }}</h4>
                         </div>
                         <div class="p2">
-                            <div class="text-muted mb2">Téléchargement des documents</div>
+                            <div class="text-muted mb2">Document</div>
                             <div>
-                                <a href="{{ path('admin.order.document.1', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de livraison</a>
-                                <a href="{{ path('admin.order.document.2', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de récupération</a>
+                                {% if order.currentStatus.state.slug is same as('accepted') %}<a href="{{ path('admin.order.document.1', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de commande</a>{% else %}<p>Veuillez accepter la commande pour générer le bon de commande.</p>{% endif %}
                             </div>
                         </div>
                         <div class="p2 full">
                             <div class="text-muted mb2">Changement de statut</div>
                             <div class="grid">
-                                <a href="{{ path('admin.order.pending', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Mettre en attente</a>
-                                <a href="{{ path('admin.order.accept', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Accepter la commande</a>
-                                <a href="{{ path('admin.order.refuse', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Refuser la commande</a>
-                                <a href="{{ path('admin.order.pending_equipment', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">En attente du matériel</a>
-                                <a href="{{ path('admin.order.invalid', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Matériel incomplet</a>
-                                <a href="{{ path('admin.order.pass', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Matériel rendu</a>
-                                {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('admin.order.cancel', {id: order.id}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Annuler la commande</a>{% endif %}
+
+                                {% for state in states %}
+                                    {% if status_choices(order.currentStatus, state) %}
+                                        {% include 'admin/orders/status_btn/_'~state.slug~'.html.twig' %}
+                                    {% endif %}
+                                {% endfor %}
+
                             </div>
                         </div>
                     </div>

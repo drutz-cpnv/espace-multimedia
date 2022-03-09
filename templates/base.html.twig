@@ -23,5 +23,9 @@
         {{ include('components/_header-nav.html.twig') }}
         {% block body %}{% endblock %}
     </div>
+
+    {% for type, message in app.session.flashBag.all %}
+        <flash-message type="{{ type }}" message="{{ message[0] }}"></flash-message>
+    {% endfor %}
 </body>
 </html>

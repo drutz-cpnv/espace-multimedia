@@ -1,6 +1,8 @@
 import TomSelect from "tom-select";
 import ModalForm from "./modules/modalForm";
 import {Cart} from "./modules/cart";
+import Flash from "./modules/flash";
+import feather from "feather-icons"
 
 document.documentElement.addEventListener("turbo:load", evt => {
     let multiselect = Array.from(document.querySelectorAll("select[multiple]"))
@@ -25,5 +27,9 @@ document.documentElement.addEventListener("turbo:load", evt => {
             let modal = new ModalForm(v)
         })
     }
+
+    feather.replace()
 })
+
+customElements.define('flash-message', Flash)
 

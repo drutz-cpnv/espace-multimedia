@@ -30,6 +30,8 @@ services:
 
     App\Services\ContentManager:
 
+    App\Services\SettingService:
+
     tasks.teachers_update:
         class: App\Services\Tasks\UpdateTeachers
 

@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Entity\Order;
 use App\Entity\OrderState;
+use App\Entity\State;
 use App\Entity\User;
 use App\Repository\OrderStateRepository;
 use App\Repository\StateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,7 +37,8 @@ class OrderManager
         private StateRepository $stateRepository,
         private EntityManagerInterface $entityManager,
         private Security $security,
-        private UserNotifierService $notifierService
+        private UserNotifierService $notifierService,
+        private FlashBagInterface $flashBag
     )
     {
     }
@@ -93,6 +96,62 @@ class OrderManager
             ->setComments("Création de la commande -> elle passe par conséquent au status \"En attente\".");
     }
 
+    public function canChangeState($current, $target)
+    {
+        if($current instanceof OrderState){
+            $current = $current->getState()->getSlug();
+        } elseif ($current instanceof Order){
+            $current = $current->getCurrentStatus()->getState()->getSlug();
+        }
+
+
+        if($target instanceof State) {
+            $target = $target->getSlug();
+        }
+        elseif ($target instanceof OrderState){
+            $target = $target->getState()->getSlug();
+        }
+
+        $from = [
+            'accepted' => [
+                'refused',
+                'cancelled',
+                'in_progress',
+                'pending',
+            ],
+            'pending' => [
+                'refused',
+                'accepted',
+                'cancelled',
+            ],
+            'refused' => [
+                'cancelled',
+                'pending',
+            ],
+            'error' => [
+                'cancelled',
+                'late',
+                'in_progress',
+                'terminated',
+            ],
+            'late' => [
+                'cancelled',
+                'terminated',
+            ],
+            'terminated' => [],
+            'in_progress' => [
+                'cancelled',
+                'error',
+                'terminated',
+            ],
+            'cancelled' => [
+                'pending'
+            ]
+        ];
+
+        return in_array($target, $from[$current]);
+    }
+
     public function pendingOrder(OrderState $orderState, Order $order)
     {
         $accept = $this->stateRepository->findOneBySlug('pending');
@@ -120,7 +179,7 @@ class OrderManager
 
     public function refuseOrder(OrderState $orderState, Order $order)
     {
-        if (!in_array($order->getCurrentStatus()->getState()->getSlug(), self::ASSERT_TO_REFUSE)) return false;
+        if (in_array($order->getCurrentStatus()->getState()->getSlug(), self::ASSERT_TO_REFUSE)) return false;
         $refuse = $this->stateRepository->findOneBySlug('refused');
         $orderState->setState($refuse);
         $orderState->setCreatedBy($this->security->getUser());
@@ -128,6 +187,8 @@ class OrderManager
 
         $this->entityManager->persist($orderState);
         $this->entityManager->flush();
+        $this->notifierService->clientOrderStatusChange($order->getId());
+        return true;
     }
 
     public function cancelOrder(OrderState $orderState, Order $order)
@@ -139,6 +200,7 @@ class OrderManager
 
         $this->entityManager->persist($orderState);
         $this->entityManager->flush();
+        $this->notifierService->clientOrderStatusChange($order->getId());
     }
 
     public function equipmentPending(OrderState $orderState, Order $order)
@@ -172,6 +234,38 @@ class OrderManager
 
         $this->entityManager->persist($orderState);
         $this->entityManager->flush();
+    }
+
+    public function orderShipped(OrderState $orderState, Order $order)
+    {
+        $equipmentPending = $this->stateRepository->findOneBySlug('in_progress');
+        $orderState->setState($equipmentPending);
+        $orderState->setCreatedBy($this->security->getUser());
+        $order->addOrderState($orderState);
+
+        $this->entityManager->persist($orderState);
+        $this->entityManager->flush();
+    }
+
+    public function changeState(string $stateSlug, OrderState &$orderState, Order $order)
+    {
+        $state = $this->stateRepository->findOneBySlug($stateSlug);
+        if(is_null($state)){
+            $this->flashBag->add('error', 'Une erreur est survenue !');
+            return false;
+        }
+
+        if(!$this->canChangeState($order, $state)){
+            $this->flashBag->add('error', 'La commande ne peut pas avoir ce statut actuellement !');
+            return false;
+        }
+
+        $orderState->setState($state);
+        $order->addOrderState($orderState);
+        $orderState->setCreatedBy($this->security->getUser());
+        $this->flashBag->add('success', 'Le statut de la commande a été modifié avec succès');
+
+        return true;
     }
 
 }

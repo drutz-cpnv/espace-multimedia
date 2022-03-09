@@ -1,4 +1,4 @@
-{{ form_start(form, {attr: {class: 'stacked'}}) }}
+{{ form_start(form, {attr: {class: 'stacked', style: 'min-width: 300px'}}) }}
 <section class="stack-large">
     <section>
         <div class="section-title">
@@ -7,7 +7,9 @@
         <div class="grid">
             {{ form_row(form.comments) }}
         </div>
-        <button type="submit" onclick="return confirm('Êtes-vous sûre de vouloir changer le status de la commande ? Le changement de status, engendrera l\'envoi d\'un email au client pour l\'avertir du changement de status de ça commande.')" class="btn-gradient">Enregistrer le status</button>
+        <div class="stack">
+            <button type="submit" onclick="return confirm('Êtes-vous sûre de vouloir changer le status de la commande ? Le changement de status, engendrera l\'envoi d\'un email au client pour l\'avertir du changement de statut de ça commande.')" class="btn-gradient">Enregistrer le statut</button>
+        </div>
     </section>
 </section>
 {{ form_end(form) }}

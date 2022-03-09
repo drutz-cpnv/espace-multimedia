@@ -42,11 +42,17 @@ security:
     access_control:
         - { path: ^/se-connecter, roles: PUBLIC_ACCESS }
         - { path: ^/inscription, roles: PUBLIC_ACCESS }
-        - { path: ^/admin/utilisateurs, roles: [ROLE_ADMIN, ROLE_WEBMASTER] }
-        - { path: ^/admin, roles: [ROLE_EDITOR, ROLE_ADMIN, ROLE_WEBMASTER] }
+        - { path: ^/admin/utilisateurs, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_EDITOR }
+        - { path: ^/tests, roles: ROLE_WEBMASTER }
         - { path: ^/, roles: ROLE_USER }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_BASE_USER:     ROLE_USER
+        ROLE_EDITOR:        ROLE_BASE_USER
+        ROLE_ADMIN:         ROLE_EDITOR
+        ROLE_WEBMASTER:     ROLE_ADMIN
+
 
 when@test:
     security:

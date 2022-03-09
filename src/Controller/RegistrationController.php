@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\SettingsRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserTypeRepository;
 use App\Security\EmailVerifier;
@@ -28,8 +29,10 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, UserRepository $userRepository, IntranetAPI $intranetAPI): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, UserRepository $userRepository, IntranetAPI $intranetAPI, SettingsRepository $settingsRepository): Response
     {
+
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

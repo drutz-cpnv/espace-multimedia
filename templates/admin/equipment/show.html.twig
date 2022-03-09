@@ -56,12 +56,14 @@
             <div class="content">
                 <table class="table js-search-table" style="margin: 20px 0">
                     <thead>
-                    <tr>
-                        <th>Tag</th>
-                        <th>État</th>
-                        <th>Dernière mise à jour</th>
-                        <th>Ajouté par</th>
-                    </tr>
+                        <tr>
+                            <th>Tag</th>
+                            <th>État</th>
+                            <th>Commentaires</th>
+                            <th>Dernière mise à jour</th>
+                            <th>Mis à jour par</th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
 
@@ -69,8 +71,10 @@
                         <tr>
                             <td>{{ item.tag }}</td>
                             <td>{{ item.stateText }}</td>
+                            <td>{{ item.comments | nl2br }}</td>
                             <td>{{ item.updatedAt | date("d.m.Y H:i") }}</td>
-                            <td>{{ item.createdBy.fullname }}</td>
+                            <td>{{ item.updatedBy.fullname }}</td>
+                            <td><a href="{{ path('admin.item.edit', {id: item.id}) }}" class="small-btn">Modifier</a></td>
                         </tr>
                     {% else %}
                         <tr>

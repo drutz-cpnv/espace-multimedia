@@ -1,7 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Mes commandes</h1>
-{% endblock %}
+{% set lightBody = true %}
+{% set headerLight = true %}
 
+{% block body %}
+    <div class="page-header container">
+        <h1 class="h1">Mes commandes</h1>
+    </div>
+    <div class="orders-page py3">
+        <div class="orders-page__sidebar stack">
+            <a href="#" class="btn-primary">Nouvelle commande {{ feather('plus') }}</a>
+            <ul class="orders-status">
+                <li>
+                    <a href="#">Afficher tout</a>
+                </li>
+                {% for state in states %}
+                <li>
+                    <a href="#"><span style="background-color: #{{ state.color }}"></span>{{ state.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <main class="orders-page__main stack">
+
+        </main>
+    </div>
+
+
+{% endblock %}
 

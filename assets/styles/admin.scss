@@ -11,6 +11,7 @@
 @import "components/dots";
 @import "components/pill";
 @import "components/card";
+@import "components/flash";
 
 @keyframes dropdown {
     from {
@@ -1111,9 +1112,20 @@ body.admin-page > aside nav .nav-btn.is-active {
     border-left: 4px solid #f96669;
     color: #f96669;
     background-color: #fff9f9;
+
+    svg{
+        stroke: #f96669;
+
+        & * {
+            stroke: #f96669;
+        }
+    }
 }
 body.admin-page > aside nav .nav-btn .icon {
     margin-right: 10px;
+    svg{
+        stroke: #000;
+    }
 }
 body.admin-page > aside nav .nav-btn:hover {
     background-color: #fafafa;

@@ -1,0 +1,3 @@
+{% if is_granted('ROLE_ADMIN') %}
+<a href="{{ path('admin.order.change_state', {id: order.id, slug: 'cancelled'}) }}" class="btn-primary-outlined btn-small js-modal-btn flex-x-center">Annuler la commande</a>
+{% endif %}

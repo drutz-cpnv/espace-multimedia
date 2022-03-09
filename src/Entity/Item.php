@@ -75,6 +75,11 @@ class Item
      */
     private $orders;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -204,6 +209,18 @@ class Item
         if ($this->orders->removeElement($order)) {
             $order->removeItem($this);
         }
+
+        return $this;
+    }
+
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?string $comments): self
+    {
+        $this->comments = $comments;
 
         return $this;
     }

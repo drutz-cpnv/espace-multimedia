@@ -17,6 +17,7 @@ class AdminShortItemType extends AbstractType
             ->add('state', ChoiceType::class, [
                 'choices' => $this->getChoices(Item::STATES)
             ])
+            ->add('comments')
         ;
     }
 
