@@ -12,6 +12,8 @@ use App\Services\OrderManager;
 use App\Services\UserNotifierService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +24,21 @@ class OrderController extends AbstractController
 {
 
     #[Route("/mes-commandes", name: "orders.user")]
-    public function myOrders(StateRepository $stateRepository): Response
+    public function myOrders(StateRepository $stateRepository, OrderRepository $orderRepository): Response
     {
         return $this->render('pages/my-orders.html.twig', [
+            'orders' => $orderRepository->findByUser($this->getUser()),
             'states' => $stateRepository->findAll(),
+            'menu' => 'myOrder'
+        ]);
+    }
+
+    #[Route("/mes-commandes/{id}", name: "orders.user.show")]
+    public function myOrder(Order $order, StateRepository $stateRepository, OrderRepository $orderRepository): Response
+    {
+        if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
+        return $this->render('pages/show-order.html.twig', [
+            'order' => $order,
             'menu' => 'myOrder'
         ]);
     }
@@ -58,6 +71,7 @@ class OrderController extends AbstractController
             $entityManager->flush();
 
             $notifierService->clientOrderReceived($order->getId());
+            $notifierService->staffOrderReceived($order->getId());
 
             $this->addFlash('success', "Votre commande a été créé, vérifier vos emails !");
             return $this->redirectToRoute('equipment', [], Response::HTTP_SEE_OTHER);

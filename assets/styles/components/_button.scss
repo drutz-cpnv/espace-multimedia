@@ -287,3 +287,14 @@
   color: #FFF;
   background: #47639e;
 }
+
+.filter-btn{
+  @extend %btn;
+  box-shadow: none;
+  color: var(--gray-500);
+
+  &:hover{
+    color: #000;
+    background-color: #FFF;
+  }
+}

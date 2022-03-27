@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\SettingsRepository;
+use App\Repository\TeacherRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserTypeRepository;
 use App\Security\EmailVerifier;
@@ -29,23 +30,30 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, UserRepository $userRepository, IntranetAPI $intranetAPI, SettingsRepository $settingsRepository): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserTypeRepository $userTypeRepository, UserRepository $userRepository, IntranetAPI $intranetAPI, SettingsRepository $settingsRepository, TeacherRepository $teacherRepository): Response
     {
-
-
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $acr = explode('@', $form->get("email")->getData())[0];
+            if(strlen($acr) === 3){
+                $teacher = $teacherRepository->findOneByFriendlyId(strtolower($acr));
 
-            if(strlen(explode('@', $form->get("email")->getData())[0]) === 3){
-                $teacher = $intranetAPI->teacher($form->get("email")->getData());
+                if(is_null($teacher)){
+                    return $this->json([
+                        'type' => 'error',
+                        'error' => "Vous n'est pas enregistrer en tant qu'enseignant. Si vous pensez que c'est une erreur veuillez contacter un administrateur."
+                    ]);
+                }
 
                 $user
                     ->setEmail($teacher->getEmail())
                     ->setFamilyName($teacher->getLastname())
-                    ->setGivenName($teacher->getFirstname());
+                    ->setGivenName($teacher->getFirstname())
+                    ->setTeacher($teacher)
+                    ;
 
                 $userType = $userTypeRepository->findOneBySlug("teacher");
 
@@ -68,8 +76,6 @@ class RegistrationController extends AbstractController
                 $userType = $userTypeRepository->findOneBySlug("student");
             }
 
-
-
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasherInterface->hashPassword(
@@ -77,9 +83,6 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-
-
 
             $user->setType($userType);
 

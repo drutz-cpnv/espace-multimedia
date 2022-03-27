@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\OrderState;
 use App\Entity\State;
 use App\Entity\User;
+use App\Repository\OrderRepository;
 use App\Repository\OrderStateRepository;
 use App\Repository\StateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,7 +39,8 @@ class OrderManager
         private EntityManagerInterface $entityManager,
         private Security $security,
         private UserNotifierService $notifierService,
-        private FlashBagInterface $flashBag
+        private FlashBagInterface $flashBag,
+        private OrderRepository $orderRepository
     )
     {
     }
@@ -266,6 +268,12 @@ class OrderManager
         $this->flashBag->add('success', 'Le statut de la commande a été modifié avec succès');
 
         return true;
+    }
+
+    public function verifyLateOrder()
+    {
+        $lateOrders = $this->orderRepository->findLate();
+        dd($lateOrders);
     }
 
 }

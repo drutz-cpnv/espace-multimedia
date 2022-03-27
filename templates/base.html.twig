@@ -18,7 +18,12 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body class="{% if lightBody is defined %}bodyLight{% endif %} {% if headerLight is defined %}header-light{% endif %}" {% block bodyAttributes %}{% endblock %}>
+<body class="{% if lightBody is defined %}bodyLight{% endif %} {% if headerLight is defined %}header-light{% endif %} {% if headerContrast is defined %}header-contrast{% endif %}" {% block bodyAttributes %}{% endblock %}>
+    <div class="beta-banner">
+        <div class="beta__banner">
+            <span>BETA</span>
+        </div>
+    </div>
     <div class="page-warper">
         {{ include('components/_header-nav.html.twig') }}
         {% block body %}{% endblock %}

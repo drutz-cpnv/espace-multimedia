@@ -22,7 +22,6 @@ class Item
         4 => "Innutilisable",
         5 => "En réparation",
         6 => "Épave"
-
     ];
 
     /**

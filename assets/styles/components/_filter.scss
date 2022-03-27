@@ -1,0 +1,44 @@
+.filters{
+  position: relative;
+
+  &.open {
+
+    .filter-btn{
+      background-color: #FFFFFF;
+      color: #000;
+    }
+
+    .filter{
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+.filter {
+  @extend %card;
+  display: flex;
+  transform: scale(0);
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  z-index: 4;
+  min-width: 400px;
+  margin-top: space(1);
+  transition-duration: .1s;
+  transition-property: transform, opacity;
+  transform-origin: top right;
+
+  & > * {
+    padding: space(2) space(2);
+  }
+
+}
+
+.filter__header{
+  border-bottom: 1px solid var(--border-light);
+}
+
+.filter__form {
+  @extend .grid;
+}

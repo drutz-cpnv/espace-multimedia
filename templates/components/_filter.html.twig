@@ -1,0 +1,13 @@
+<div class="filter">
+    <div class="filter__header">
+        <h4 class="h3">Filtres</h4>
+    </div>
+    {{ form_start(form, {attr: { class: 'filter__form' }}) }}
+        {{ form_row(form.categories) }}
+        {{ form_row(form.brands) }}
+        {{ form_row(form.types) }}
+        <div class="hstack flex-end">
+            <button class="btn-primary-outlined">Appliquer</button>
+        </div>
+    {{ form_end(form) }}
+</div>

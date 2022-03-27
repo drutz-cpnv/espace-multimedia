@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Entity\Content;
 use App\Entity\Paragraph;
 use App\Entity\Section;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ContentManager
 {
@@ -30,6 +32,33 @@ class ContentManager
         return (new Paragraph())
             ->setName("Paragraphe à remplir !")
             ->setText("Vous pouvez ajouter du contenu à ce paragraphe ici !");
+    }
+
+    public function arrayToContent(ArrayCollection $arrayContent): Content {
+        $content = new Content();
+        $content->setKey($arrayContent->last());
+
+        foreach ($arrayContent as $contentTitle => $sections) {
+            if($contentTitle === 0) continue;
+            $content->setName($contentTitle);
+
+            $sPos = 1;
+            foreach ($sections as $sectionName => $paragraphs) {
+                $section = (new Section())->setName($sectionName)->setPosition($sPos);
+                $content->addSection($section);
+
+                $pPos = 1;
+                foreach ($paragraphs as $paragraphName => $p) {
+                    $section->addParagraph((new Paragraph())->setName($paragraphName)->setText($p)->setPosition($pPos));
+                    $pPos++;
+                }
+                $sPos++;
+            }
+
+        }
+
+        return $content;
+
     }
 
 }

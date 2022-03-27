@@ -26,6 +26,11 @@ class Content
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $contentKey;
+
+    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $createdAt;
@@ -169,4 +174,24 @@ class Content
     {
         return $this->getName();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->contentKey;
+    }
+
+    /**
+     * @param mixed $contentKey
+     * @return Content
+     */
+    public function setKey($contentKey)
+    {
+        $this->contentKey = $contentKey;
+        return $this;
+    }
+
+
 }

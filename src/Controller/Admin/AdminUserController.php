@@ -28,6 +28,10 @@ class AdminUserController extends AbstractController
     #[Route("/edit/{id}", name: "admin.user.edit")]
     public function edit(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
+        if(in_array('ROLE_WEBMASTER', $user->getRoles())){
+            $this->addFlash("error", "Cet utilisateur ne peut être modifier.");
+            return $this->redirectToRoute('admin.index', [], Response::HTTP_SEE_OTHER);
+        }
         $form = $this->createForm(AdminUserType::class, $user);
         $form->handleRequest($request);
 

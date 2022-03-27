@@ -40,7 +40,7 @@ class State
     private $orderStates;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Content::class)
+     * @ORM\ManyToOne(targetEntity=Content::class, cascade={"persist"})
      */
     private $content_template;
 

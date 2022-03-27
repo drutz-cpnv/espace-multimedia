@@ -1,0 +1,13 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'copyright',
+            title: 'Modifier l\'armoire',
+        } %}
+        <div class="content">
+            {{ include('admin/cabinet/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

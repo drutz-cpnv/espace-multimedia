@@ -3,24 +3,35 @@
 namespace App\Controller;
 
 use App\Entity\Equipment;
+use App\Form\EquipmentSearchType;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
 
     #[Route("/profil", name: "user.profil")]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasherInterface): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $fullUser = $userRepository->find($user->getId());
+            $fullUser->setPassword(
+                $userPasswordHasherInterface->hashPassword(
+                    $fullUser,
+                    $form->get('password')->getData()
+                )
+            );
+
             $entityManager->flush();
             $this->addFlash('success', "Votre profil a été mis à jour !");
             return $this->redirectToRoute('user.profil', [], Response::HTTP_SEE_OTHER);

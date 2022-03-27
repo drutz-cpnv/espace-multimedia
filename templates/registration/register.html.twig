@@ -10,11 +10,27 @@
 
 {% block body %}
     <div class="auth-container">
+
         {% for flashError in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
 
         <h1 class="auth-title hero-title">S'inscrire</h1>
+        <div class="mb3">
+            <div class="mb2">
+            {% include 'components/_alert.html.twig' with {
+                title: "Enregistrement suspendu",
+                text: "Le site web étant encore en cours de développement, son accès y est restreint. Peuvent y accéder, uniquement les étudiants des classes de premières années, qui seront en chargent de la gestion de la présente application."
+            } %}
+            </div>
+            <div class="mb3">
+                {% include 'components/_alert.html.twig' with {
+                    title: "Inscription enseignant",
+                    text: "Afin de pouvoir créer un compte enseignant, lors de l'inscription, vous devrez utiliser pour adresse mail, votre adresse composée de votre acronyme (ex. bfr@cpnv.ch).",
+                    isClose: true
+                } %}
+            </div>
+        </div>
 
         <div class="auth-form">
             {{ form_start(registrationForm) }}
@@ -23,8 +39,11 @@
                 {{ form_row(registrationForm.plainPassword) }}
                 {{ form_rest(registrationForm) }}
             </section>
-            <div class="mt2 text-right">
-                <button type="submit" class="btn-primary">S'inscrire</button>
+            <div class="hstack mt3 align-center-y">
+                <a href="{{ path('app.login') }}" class="text-muted small-text">Je ai déjà un compte.</a>
+                <button class="btn-primary mla" type="submit">
+                    S'inscrire
+                </button>
             </div>
             {{ form_end(registrationForm) }}
         </div>

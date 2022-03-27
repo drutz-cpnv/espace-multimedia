@@ -5,15 +5,32 @@ flash-message{
   transition-duration: .4s;
   bottom: -100%;
   visibility: hidden;
+  background-color: var(--background-light);
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  padding: space(1) 0;
 
   & > div {
-    background-color: var(--flash-color);
-    padding: space(1.5) space(2);
     display: flex;
     align-items: center;
-    border-radius: 13px;
-    color: #FFFFFF;
+    color: #272727;
     font-weight: 500;
+    padding: space(1.5) space(3) space(1.5) space(2);
+    margin-left: space(1);
+    position: relative;
+
+    &::before{
+      content: '';
+      height: 80%;
+      width: 3px;
+      background-color: var(--flash-color);
+      border-radius: 5px;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &.visible{

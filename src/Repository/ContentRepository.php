@@ -19,6 +19,16 @@ class ContentRepository extends ServiceEntityRepository
         parent::__construct($registry, Content::class);
     }
 
+    public function findOneByKey($key): ?Content
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.contentKey = :val')
+            ->setParameter('val', $key)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Content[] Returns an array of Content objects
     //  */

@@ -25,6 +25,14 @@ class UpdateTeachers
             if(is_null($dbTeacher)) {
                 $this->entityManager->persist($teacher);
             }
+            else {
+                $dbTeacher->setLastname($teacher->getLastname());
+                $dbTeacher->setFirstname($teacher->getFirstname());
+                $dbTeacher->setEmail($teacher->getEmail());
+                $dbTeacher->setAcronym($teacher->getAcronym());
+                $dbTeacher->setFriendlyID($teacher->getFriendlyId());
+                $dbTeacher->setUpdatedAt(new \DateTimeImmutable());
+            }
         }
 
         $this->entityManager->flush();

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entity\Content;
 use App\Entity\Order;
 use App\Entity\User;
+use App\Repository\ContentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -12,24 +13,22 @@ use Symfony\Component\Mime\Address;
 
 class UserNotifierService
 {
-    private Address $sender;
 
     public function __construct(
-        private MailerInterface $mailer,
-        private EntityManagerInterface $entityManager
+        private MailerService $mailerService,
+        private EntityManagerInterface $entityManager,
+        private ContentRepository $contentRepository
     )
     {
-        $this->sender = Address::create('Espace Multimédia <no-reply@multimedia.mediamatique.ch>');
     }
 
     public function clientOrderReceived(int $orderId): bool
     {
         $order = $this->entityManager->find(Order::class, $orderId);
         if($order->getCurrentStatus()->getState()->getSlug() === "pending") {
-            $content = $this->entityManager->find(Content::class, 3);
+            $content = $order->getCurrentStatus()->getState()->getContentTemplate();
             $email = (new TemplatedEmail())
                 ->subject("Commande N°{$order->getInitialZeroId()}: Reçue")
-                ->from($this->sender)
                 ->to($order->getClient()->getEmail())
                 ->htmlTemplate('email/order/new_client.html.twig')
                 ->context([
@@ -37,7 +36,7 @@ class UserNotifierService
                     'order' => $order
                 ]);
 
-            $this->mailer->send($email);
+            $this->mailerService->send($email);
 
             return true;
         }
@@ -52,7 +51,6 @@ class UserNotifierService
             $subject = "Mise à jour de la commande N°{$order->getInitialZeroId()}";
             $email = (new TemplatedEmail())
                 ->subject($subject)
-                ->from($this->sender)
                 ->to($order->getClient()->getEmail())
                 ->htmlTemplate('email/order/simple.html.twig')
                 ->context([
@@ -63,7 +61,31 @@ class UserNotifierService
                     'order' => $order
                 ]);
 
-            $this->mailer->send($email);
+            $this->mailerService->send($email);
+
+            return true;
+        }
+        return false;
+    }
+
+    public function staffOrderReceived(int $orderId) {
+        $order = $this->entityManager->find(Order::class, $orderId);
+        if($order->getCurrentStatus()->getState()->getSlug() === "pending") {
+            $userRepository = $this->entityManager->getRepository(User::class);
+            $content = $this->contentRepository->findOneByKey('email.order.staff.new');
+            $staff = $userRepository->findByRoles(['ROLE_WEBMASTER']);
+            $email = (new TemplatedEmail())
+                ->subject("Une nouvelle commande a été effectuée (n°{$order->getInitialZeroId()})")
+                ->htmlTemplate('email/order/new_staff.html.twig')
+                ->context([
+                    'content' => $content,
+                    'order' => $order
+                ]);
+
+            foreach ($staff as $user) {
+                $email->to($user->getEmail());
+                $this->mailerService->send($email);
+            }
 
             return true;
         }

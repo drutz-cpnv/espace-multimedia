@@ -1,0 +1,37 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'door_sliding',
+            title: 'Inventaire',
+        } %}
+
+        {% for cabinet in cabinets %}
+        <div class="content mb4">
+            <h4 class="h4">{{ cabinet }}</h4>
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Tag</th>
+                        <th>Marque</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equipment in cabinet.equipment %}
+                        {% for item in equipment.items %}
+                            <tr>
+                                <td>{{ equipment.name }}</td>
+                                <td>{{ item.tag }}</td>
+                                <td>{{ equipment.brand }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

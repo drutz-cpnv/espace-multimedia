@@ -1,6 +1,6 @@
 .orders-page{
   display: grid;
-  grid-gap: space(3);
+  grid-gap: space(8);
   grid-template-columns: 1fr;
   @extend %container;
 
@@ -31,3 +31,17 @@
   }
 
 }
+
+.show-order-page{
+  @extend %container;
+
+  .order-card{
+    width: 100%;
+    height: 100vh;
+    background-color: #FFF;
+    border-radius: 20px;
+    transform: translateY(-150px);
+  }
+
+}
+

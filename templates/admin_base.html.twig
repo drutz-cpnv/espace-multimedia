@@ -71,6 +71,20 @@
         </section>
         <section>
             <div class="section-title">
+                <span>Stock</span>
+            </div>
+
+            <a href="{{ path('admin.inventory.index') }}" class="nav-btn" {{ menu_active('admin.inventory') }}>
+                <span class="icon"><i data-feather="clipboard"></i></span>
+                <span class="text">Inventaire</span>
+            </a>
+            <a href="{{ path('admin.cabinet.index') }}" class="nav-btn" {{ menu_active('admin.cabinet') }}>
+                <span class="icon"><i data-feather="package"></i></span>
+                <span class="text">Armoires</span>
+            </a>
+        </section>
+        <section>
+            <div class="section-title">
                 <span>Commandes</span>
             </div>
             <a href="{{ path('admin.order.index') }}" class="nav-btn" {{ menu_active('admin.order') }}>
@@ -86,7 +100,7 @@
                 <span class="icon"><i data-feather="users"></i></span>
                 <span class="text">Utilisateurs</span>
             </a>
-            <a href="#" class="nav-btn">
+            <a href="{{ path('admin.settings.index') }}" class="nav-btn" {{ menu_active('admin.settings') }}>
                 <span class="icon"><i data-feather="sliders"></i></span>
                 <span class="text">Réglages</span>
             </a>

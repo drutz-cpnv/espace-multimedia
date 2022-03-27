@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Order|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private UserRepository $userRepository, private OrderStateRepository $orderStateRepository, private StateRepository $stateRepository)
     {
         parent::__construct($registry, Order::class);
     }
@@ -39,7 +41,6 @@ class OrderRepository extends ServiceEntityRepository
     /**
      * @return Order[] Returns an array of Order objects
      */
-
     public function findBetweenDates($dates)
     {
         return $this->createQueryBuilder('o')
@@ -51,6 +52,52 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function findLate()
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o', 'os', 's')
+            ->join('o.orderStates', 'os')
+            ->join('os.state', 's')
+            ->andWhere('o.end >= CURRENT_DATE()')
+            ->andWhere('s.slug = :slug')
+            ->setParameter('slug', 'in_progress')
+            ->orderBy('os.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function reset()
+    {
+        $tableName = $this->getClassMetadata()->getTableName();
+        $connection = $this->getEntityManager()->getConnection();
+        $connection->exec("ALTER TABLE `". $tableName ."` AUTO_INCREMENT = 1");
+    }
+
+
+    /**
+     * @return Order[] Returns an array of Order objects
+     */
+    public function findByUser($user)
+    {
+        if($user instanceof UserInterface) {
+            $user = $this->userRepository->find($user->getId());
+        }
+
+        return $this->createQueryBuilder('o')
+            ->where('o.client = :user')
+            ->setParameter('user', $user)
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 

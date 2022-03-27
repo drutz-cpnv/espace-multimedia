@@ -1,0 +1,44 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'door_sliding',
+            title: 'Armoires',
+            button: {
+                path: 'admin.cabinet.new',
+                label: 'Nouvelle armoire'
+            }
+        } %}
+        <div class="content">
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Emplacement</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for cabinet in cabinets %}
+                    <tr>
+                        <td>{{ cabinet.id }}</td>
+                        <td>{{ cabinet.name }}</td>
+                        <td>{{ cabinet.location }}</td>
+                        <td>
+                            <a class="small-btn" href="{{ path('admin.cabinet.edit', {'id': cabinet.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucune armoire enregistrée</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

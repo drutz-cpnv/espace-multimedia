@@ -203,18 +203,15 @@ class IntranetAPI
      * @param bool[] $extra
      * @return \App\Entity\Teacher
      */
-    public function teacher(string $user, array $extra = ['SECTION' => true, 'CURRENT_CLASS_MASTERIES' => true]): \App\Entity\Teacher
+    public function teacher(string $user, array $extra = ['CURRENT_CLASS_MASTERIES' => true]): \App\Entity\Teacher
     {
         $extra = new ArrayCollection($extra);
 
         if($extra->contains(true)) {
             $extras = "";
 
-            if ($extra->get('SECTION')) {
-                $extras .= "section";
-            }
             if ($extra->get('CURRENT_CLASS_MASTERIES')) {
-                $extras .= ",current_class_masteries";
+                $extras .= "current_class_masteries";
             }
 
             $this->query['alter[extra]'] = $extras;
@@ -291,7 +288,8 @@ class IntranetAPI
     {
         $entity = new \App\Entity\Teacher();
         $entity->setFriendlyId($teacher->friendly_id ?? null);
-        $entity->setFullname($teacher->firstname . " " . $teacher->lastname);
+        $entity->setFirstname($teacher->firstname);
+        $entity->setLastname($teacher->lastname);
         $entity->setEmail($teacher->email ?? null);
         $entity->setAcronym($teacher->acronym ?? null);
 

@@ -39,6 +39,7 @@ class AdminUserType extends AbstractType
 
     private function getChoices($choices)
     {
+        if (isset($choices['ROLE_WEBMASTER'])) unset($choices['ROLE_WEBMASTER']);
         return array_flip($choices);
     }
 }

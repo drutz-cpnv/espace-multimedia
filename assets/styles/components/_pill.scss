@@ -53,13 +53,12 @@ a.pill:hover::after {
 
 // Sizes
 // =============
-.pill.small {
+%pill-small{
   font-size: 11px;
   height: 18px;
   padding: 0 5px;
   font-weight: normal;
   line-height: 18px;
-  border-radius: 3px;
 
   .icon {
     transform: none;
@@ -69,6 +68,17 @@ a.pill:hover::after {
     width: 12px;
     height: 12px;
   }
+}
+
+.pill.small{
+  @extend %pill-small;
+  border-radius: 3px;
+}
+
+.pill.small-round{
+  @extend %pill-small;
+  padding-left: space(1);
+  padding-right: space(1);
 }
 
 // Colors

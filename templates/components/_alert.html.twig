@@ -1,0 +1,16 @@
+<alert-block class="alert-warning{% if isClose is defined %} closed{% endif %}">
+    <div class="alert-header">
+        <div class="alert__title">
+            {{ icon('warning') }}
+            <span class="alert__title-title">{{ title }}</span>
+        </div>
+        <div class="alert-minimize">
+            <a href="#" class="alert__minimize-btn">
+                {{ feather('chevron-down') }}
+            </a>
+        </div>
+    </div>
+    <div class="alert-body">
+        <p>{{ text }}</p>
+    </div>
+</alert-block>

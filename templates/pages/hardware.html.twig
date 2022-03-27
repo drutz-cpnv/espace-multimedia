@@ -3,6 +3,14 @@
 
 {% block body %}
     <div class="container py5">
+        <div class="hstack flex-end pb5">
+            <div class="filters" data-controller="filter">
+                <a href="#" class="filter-btn js-toggle-filter">
+                    {{ feather('filter') }} Filtrer
+                </a>
+                {{ include('components/_filter.html.twig') }}
+            </div>
+        </div>
         <div class="hardware">
             <div class="equipment-hero">
                 <h1 class="hero-title">
@@ -15,10 +23,10 @@
             {% for equipment in equipments %}
                 {{ include('components/_equipment_card.html.twig') }}
             {% else %}
-                <div class="card">
+                <div class="">
                     <div class="card__body stack">
                         <h2 class="card__title">
-                            <a href="#">Aucun équipement n'est actuellment disponible.</a>
+                            <span>Aucun n'équipement ne corresponds à vos critères</span>
                         </h2>
                     </div>
                 </div>

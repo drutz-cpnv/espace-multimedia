@@ -3,6 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Repository\StateRepository;
+use App\Repository\UserRepository;
+use App\Services\ContentManager;
+use App\Services\SetupService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +18,7 @@ class AdminController extends AbstractController
 {
 
     #[Route("", name: "admin.index")]
-    public function index(ChartBuilderInterface $chartBuilder, StateRepository $stateRepository): Response
+    public function index(ChartBuilderInterface $chartBuilder, StateRepository $stateRepository, SetupService $setupService): Response
     {
         $chart = $chartBuilder->createChart(Chart::TYPE_PIE);
         $data = [];

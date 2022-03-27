@@ -68,6 +68,7 @@ nav.header {
   background-color: var(--background-light);
 }
 
+
 .header-nav {
   height: 26px;
   margin-top: -5px;
@@ -156,4 +157,16 @@ nav.header {
 .header button:hover,
 .header a[aria-current] {
   color: var(--contrast);
+}
+
+.header-contrast .header {
+  --border-header: rgba(255, 255, 255, 0.3);
+  background-color: var(--contrast);
+  color: rgba(255, 255, 255, 0.70);
+
+  li > a:hover,
+  button:hover,
+  a[aria-current] {
+    color: rgba(255, 255, 255, 1);
+  }
 }

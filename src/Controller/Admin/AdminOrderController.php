@@ -10,6 +10,7 @@ use App\Form\AdminType\OrderDocumentType;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
 use App\Services\OrderManager;
+use App\Services\SetupService;
 use App\Services\UserNotifierService;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
@@ -26,6 +27,11 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 #[Route("/admin/commandes")]
 class AdminOrderController extends AbstractController
 {
+
+    public function __construct(
+    )
+    {
+    }
 
     #[Route("", name: "admin.order.index")]
     public function index(OrderRepository $orderRepository): Response

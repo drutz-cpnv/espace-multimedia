@@ -3,6 +3,11 @@ export function strToDom(str) {
 }
 
 
+/**
+ * @param e
+ * @param {HTMLElement} target
+ * @returns {*}
+ */
 export const isTarget = (e, target) => {
-    return e.path.includes(target)
+    return e.composedPath().includes(target)
 }

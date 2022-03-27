@@ -19,6 +19,17 @@ class SettingsRepository extends ServiceEntityRepository
         parent::__construct($registry, Settings::class);
     }
 
+
+    public function findOneByKey($key): ?Settings
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.settingKey = :val')
+            ->setParameter('val', $key)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Settings[] Returns an array of Settings objects
     //  */

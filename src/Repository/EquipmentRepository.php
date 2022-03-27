@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Equipment;
+use App\Entity\EquipmentSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,6 +31,36 @@ class EquipmentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findSearch(EquipmentSearch $search) {
+        $query = $this->getSearchQuery($search)->getQuery();
+        return $query->getResult();
+    }
+
+    private function getSearchQuery(EquipmentSearch $search) {
+        $query = $this->createQueryBuilder('e')
+            ->select('e', 'c', 'b', 't')
+            ->join('e.categories', 'c')
+            ->join('e.brand', 'b')
+            ->join('e.type', 't');
+
+        if(!$search->getCategories()->isEmpty()){
+            $query = $query->andWhere('c.id in (:categories)')
+                ->setParameter('categories', $search->getCategories());
+        }
+
+        if(!$search->getBrands()->isEmpty()){
+            $query = $query->andWhere('b.id in (:brands)')
+                ->setParameter('brands', $search->getBrands());
+        }
+
+        if(!$search->getTypes()->isEmpty()){
+            $query = $query->andWhere('t.id in (:types)')
+                ->setParameter('types', $search->getTypes());
+        }
+
+        return $query;
     }
 
 

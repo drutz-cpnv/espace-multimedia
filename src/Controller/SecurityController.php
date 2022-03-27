@@ -1,4 +1,7 @@
 <?php
+/**
+ * TODO: Système de récupération de mot de passe
+ */
 
 namespace App\Controller;
 
@@ -14,9 +17,8 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-
             $this->addFlash('success', "Connexion réussie");
-             return $this->redirectToRoute('app.home');
+            return $this->redirectToRoute('app.home');
         }
 
         // get the login error if there is one

@@ -1,0 +1,33 @@
+.beta-banner{
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100px;
+  width: 100px;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+
+  .beta__banner{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  span{
+    position: absolute;
+    right: -80px;
+    width: 200px;
+    height: 40px;
+    padding-top: 14px;
+    top: 0;
+    transform: rotate(45deg);
+    background-color: var(--contrast);
+    text-align: center;
+    color: #FFF;
+    font-weight: 700;
+    font-family: "Space Mono", monospace;
+  }
+
+}

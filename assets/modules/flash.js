@@ -29,21 +29,36 @@ class Flash extends HTMLElement{
             this.classList.add("visible")
 
 
-            setTimeout(() => {
-                this.classList.remove("visible")
-            }, 5000)
+            let timeOut = setTimeout(this.out, 5000)
+
+            let mouseIsIn = false
+
+            this.addEventListener("mouseenter", e => {
+                if(!mouseIsIn) {
+                    mouseIsIn = true
+                    clearTimeout(timeOut)
+                }
+            })
+
+            this.addEventListener("mouseleave", e => {
+                if(mouseIsIn){
+                    timeOut = setTimeout(this.out, 5000)
+                    mouseIsIn = false
+                }
+            })
 
         }, 100)
 
 
     }
 
+    out = () => {
+        this.classList.remove("visible")
+    }
+
     construct ()
     {
         return strToDom(`<div style="--flash-color: ${this.type.color}">
-    <div class="icon">
-        <i data-feather="${this.type.icon}"></i>
-    </div>
     <span>${this.data.message}</span>
 </div>`)
     }

@@ -30,7 +30,11 @@ services:
 
     App\Services\ContentManager:
 
-    App\Services\SettingService:
+    App\Services\SettingsAccessCheckerService:
+        autowire: true
+
+    App\Services\SetupService:
+        autowire: true
 
     tasks.teachers_update:
         class: App\Services\Tasks\UpdateTeachers

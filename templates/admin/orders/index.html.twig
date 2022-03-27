@@ -26,7 +26,7 @@
                         <td>{{ order.client }}</td>
                         <td>{{ order.title }}</td>
                         <td>{{ order.createdAt ? order.createdAt|date('d.m.Y H:i:s') : '' }}</td>
-                        <td>{{ dot(order) }}</td>
+                        <td><span class="pill-small pill" style="color: #{{ order.currentStatus.state.color }}">{{ order.currentStatus }}</span></td>
                         <td>
                             <a class="small-btn" href="{{ path('admin.order.show', {'id': order.id}) }}">Afficher</a>
                         </td>

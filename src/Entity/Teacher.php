@@ -22,11 +22,6 @@ class Teacher
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $fullname;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $email;
 
     /**
@@ -59,6 +54,16 @@ class Teacher
      */
     private $orders;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -73,14 +78,7 @@ class Teacher
 
     public function getFullname(): ?string
     {
-        return $this->fullname;
-    }
-
-    public function setFullname(string $fullname): self
-    {
-        $this->fullname = $fullname;
-
-        return $this;
+        return $this->lastname . " " . $this->firstname;
     }
 
     public function getEmail(): ?string
@@ -188,5 +186,29 @@ class Teacher
     public function __toString(): string
     {
         return $this->getFullname();
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
     }
 }

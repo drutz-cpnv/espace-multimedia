@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    <div class="auth-container">
+        <h1 class="auth-title hero-title">Nouveau mot de passe</h1>
+        <div class="mb3">
+            {% for flashError in app.flashes('reset_password_error') %}
+                <div class="mb2">
+                    {% include 'components/_alert.html.twig' with {
+                        title: "Une erreur est survenue",
+                        text: flashError
+                    } %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="auth-form">
+            {{ form_start(requestForm) }}
+            <section>
+                {{ form_row(requestForm.email) }}
+            </section>
+            <div class="hstack mt3 align-center-y">
+                <button class="btn-primary mla" type="submit">
+                    Envoyer l'email de réinitialisation
+                </button>
+            </div>
+            {{ form_end(requestForm) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TODO: Faire la page pour la cabine son, le fond vert et l'imprimante 3D
+ */
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

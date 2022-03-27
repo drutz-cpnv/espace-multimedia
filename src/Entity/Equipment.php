@@ -100,14 +100,14 @@ class Equipment
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $cabinet;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="equipment")
      */
     private $orders;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Cabinet::class, inversedBy="equipment")
+     */
+    private $cabinet;
 
     public function __construct()
     {
@@ -360,21 +360,6 @@ class Equipment
         return $string;
     }
 
-    public function getCabinet(): ?string
-    {
-        if(is_null($this->cabinet) || $this->cabinet === ""){
-            return "Aucune armoire définie pour cet équipement.";
-        }
-        return $this->cabinet;
-    }
-
-    public function setCabinet(?string $cabinet): self
-    {
-        $this->cabinet = $cabinet;
-
-        return $this;
-    }
-
     public function getSimilar(): ArrayCollection
     {
         $similar = new ArrayCollection();
@@ -413,6 +398,18 @@ class Equipment
         if ($this->orders->removeElement($order)) {
             $order->removeEquipment($this);
         }
+
+        return $this;
+    }
+
+    public function getCabinet(): ?Cabinet
+    {
+        return $this->cabinet;
+    }
+
+    public function setCabinet(?Cabinet $cabinet): self
+    {
+        $this->cabinet = $cabinet;
 
         return $this;
     }

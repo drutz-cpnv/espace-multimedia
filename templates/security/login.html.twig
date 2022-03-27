@@ -12,6 +12,21 @@
 
         <h1 class="auth-title hero-title">Se connecter</h1>
 
+        <div class="mb3">
+            <div class="mb2">
+                {% include 'components/_alert.html.twig' with {
+                    title: "Accès restreint",
+                    text: "Le site web étant encore en cours de développement, son accès y est restreint. Peuvent y accéder, uniquement les étudiants des classes de premières années, qui seront en chargent de la gestion de la présente application."
+                } %}
+            </div>
+            <div class="mb3">
+                {% include 'components/_alert.html.twig' with {
+                    title: "Connexion enseignant",
+                    text: "Pour vous connecter, vous devez utiliser l'adresse email du CPNV composée de votre prénom et nom de famille. (ex. prenom.nom@cpnv.ch)",
+                    isClose: true
+                } %}
+            </div>
+        </div>
         <div class="auth-form">
             <form method="post">
                 <section class="mb2">
@@ -38,10 +53,14 @@
                     </div>
                 </section>
 
-                <div class="text-right mt1">
-                    <button class="btn-primary" type="submit">
+                <div class="hstack mt2 align-center-y">
+                    <a href="{{ path('app_register') }}" class="text-muted small-text">Je n'ai pas de compte.</a>
+                    <button class="btn-primary mla" type="submit">
                         Se connecter
                     </button>
+                </div>
+                <div class="text-center mt2">
+                    <a href="{{ path('app.forgot_password_request') }}" class="link-color text-small">J'ai oublié mon mot de passe</a>
                 </div>
             </form>
         </div>

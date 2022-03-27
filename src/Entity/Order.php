@@ -52,12 +52,12 @@ class Order
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderState::class, mappedBy="order", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=OrderState::class, mappedBy="order", cascade={"persist"}, orphanRemoval=true)
      */
     private $orderStates;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderDocument::class, mappedBy="document_order")
+     * @ORM\OneToMany(targetEntity=OrderDocument::class, mappedBy="document_order", orphanRemoval=true)
      */
     private $documents;
 
@@ -314,7 +314,7 @@ class Order
 
     public function getInitialZeroId(): string
     {
-        $base = "000000";
+        $base = "0000";
         $base = substr($base, -0, -strlen((string)$this->getId()));
         $base .= $this->getId();
         return $base;

@@ -1,0 +1,15 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Nouvelle armoire{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'door_sliding',
+            title: 'Ajouter une armoire',
+        } %}
+        <div class="content">
+            {{ include('admin/cabinet/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

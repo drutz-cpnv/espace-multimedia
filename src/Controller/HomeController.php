@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\UserType;
 use App\Repository\ContentRepository;
+use App\Repository\StateRepository;
 use App\Repository\UserRepository;
 use App\Services\IntranetAPI;
 use App\Services\Tasks\UpdateTeachers;
@@ -16,8 +17,6 @@ class HomeController extends AbstractController
     #[Route('', name: 'app.home')]
     public function index(): Response
     {
-
-
         return $this->render('pages/index.html.twig', [
             'menu' => 'home'
         ]);
@@ -28,7 +27,7 @@ class HomeController extends AbstractController
     {
         return $this->render('pages/support.html.twig', [
             'menu' => 'support',
-            'content' => $contentRepository->find(1)
+            'content' => $contentRepository->findOneByKey("page.support")
         ]);
     }
 }

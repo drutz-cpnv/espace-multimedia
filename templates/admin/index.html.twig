@@ -1,22 +1,22 @@
 {% extends 'admin_base.html.twig' %}
 
 {% block body %}
-<div class="container">
-    <div class="admi-page__page-header">
-        <div class="title">
+    <div class="container">
+        <div class="admi-page__page-header">
+            <div class="title">
             <span class="icon material-icons-round">
                 dashboard
             </span>
-            <h1>Dashboard</h1>
+                <h1>Dashboard</h1>
+            </div>
         </div>
-    </div>
-    <div class="content">
-        <div class="grid">
-            <div class="flat-card p3">
-                <h4 class="h4 mb2">Nombre de commandes par statut</h4>
-                {{ render_chart(chart) }}
+        <div class="content">
+            <div class="grid">
+                <div class="flat-card p3">
+                    <h4 class="h4 mb2">Nombre de commandes par statut</h4>
+                    {{ render_chart(chart) }}
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

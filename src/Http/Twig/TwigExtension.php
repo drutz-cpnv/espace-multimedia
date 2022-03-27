@@ -20,6 +20,7 @@ class TwigExtension extends AbstractExtension
             new TwigFunction('feather', [$this, 'feather'], ['is_safe' => ['html']]),
             new TwigFunction('menu_active', [$this, 'menuActive'], ['is_safe' => ['html'], 'needs_context' => true]),
             new TwigFunction('dot', [$this, 'getStateDot'], ['is_safe' => ['html']]),
+            new TwigFunction('alert', [$this, 'alert'], ['is_safe' => ['html']]),
             new TwigFunction('status_choices', [$this, 'statusChoices'], ['is_safe' => ['bool']]),
         ];
     }
@@ -110,6 +111,11 @@ HTML;
         ];
 
         return in_array($state->getSlug(), $from[$orderState->getState()->getSlug()]);
+    }
+
+    public function alert($type, $message)
+    {
+
     }
 
 }

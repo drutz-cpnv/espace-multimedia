@@ -1,0 +1,42 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="admi-page__page-header">
+            <div class="title">
+            <span class="icon material-icons-round">
+                settings
+            </span>
+                <h1>Réglages</h1>
+            </div>
+        </div>
+        <div class="p2">
+            <div class="grid">
+                <div class="action-card">
+                    <div class="action-card__title">
+                        <h5>Réinitialiser le site</h5>
+                    </div>
+                    <div class="action-card__btn">
+                        <a href="#" class="action-btn">
+                            Réinitialisé
+                        </a>
+                    </div>
+                </div>
+
+                {% for setting in settings %}
+
+                    <div class="action-card">
+                        <div class="action-card__title">
+                            <h5>{{ setting.name }}</h5>
+                        </div>
+                        <div class="action-card__btn">
+                            <a href="#" class="action-btn">
+                                Activé
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

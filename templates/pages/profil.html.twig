@@ -24,10 +24,9 @@
         <main class="stack-large">
             {{ form_start(form, {attr: {class: 'stack-large stacked'}}) }}
             <div class="stack">
-                <h2 class="h3 align-center-y"><span class="material-icons-round">person</span> Mes informations</h2>
+                <h2 class="h3 align-center-y"><span class="material-icons-round">lock</span> Sécurité</h2>
                 <div class="card p3 grid">
-                    {{ form_row(form.family_name) }}
-                    {{ form_row(form.given_name) }}
+                    {{ form_row(form.password) }}
                 </div>
                 <div class="text-right">
                     <button type="submit" class="btn-primary">Mettre à jour</button>

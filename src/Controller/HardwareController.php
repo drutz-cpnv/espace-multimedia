@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Equipment;
+use App\Entity\EquipmentSearch;
+use App\Form\EquipmentSearchType;
 use App\Repository\EquipmentRepository;
 use App\Repository\EquipmentTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,11 +17,17 @@ class HardwareController extends AbstractController
 {
 
     #[Route("", name: "equipment")]
-    public function index(EquipmentRepository $equipmentRepository): Response
+    public function index(EquipmentRepository $equipmentRepository, Request $request): Response
     {
-        return $this->render('pages/hardware.html.twig', [
+        $search = new EquipmentSearch();
+        $form = $this->createForm(EquipmentSearchType::class, $search);
+        $form->handleRequest($request);
+        $equipments = $equipmentRepository->findSearch($search);
+
+        return $this->renderForm('pages/hardware.html.twig', [
             'menu' => 'hardware',
-            'equipments' => $equipmentRepository->findAllEnabled()
+            'equipments' => $equipments,
+            'form' => $form
         ]);
     }
 

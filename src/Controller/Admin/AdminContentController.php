@@ -10,6 +10,7 @@ use App\Form\AdminType\AdminAddSectionType;
 use App\Form\AdminType\AdminContentType;
 use App\Form\AdminType\AdminParagraphType;
 use App\Repository\ContentRepository;
+use App\Repository\StateRepository;
 use App\Services\ContentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +23,9 @@ class AdminContentController extends AbstractController
 {
 
     #[Route("", name: "admin.content.index")]
-    public function index(ContentRepository $contentRepository, EntityManagerInterface $entityManager): Response
+    public function index(ContentRepository $contentRepository, StateRepository $stateRepository): Response
     {
+
         return $this->render("admin/content/index.html.twig", [
             'menu' => 'admin.content',
             'contents' => $contentRepository->findAll()
