@@ -6,6 +6,7 @@ use App\Entity\Order;
 use App\Entity\OrderState;
 use App\Entity\State;
 use App\Entity\User;
+use App\Repository\ItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\OrderStateRepository;
 use App\Repository\StateRepository;
@@ -40,12 +41,35 @@ class OrderManager
         private Security $security,
         private UserNotifierService $notifierService,
         private FlashBagInterface $flashBag,
-        private OrderRepository $orderRepository
+        private OrderRepository $orderRepository,
+        private ItemRepository $itemRepository
     )
     {
     }
 
-    public function checkConflicts(Order $order): array
+    public function checkConflicts(Order $order)
+    {
+        $Allitems = $this->itemRepository->findSelectedItems($order);
+        
+        $items = [];
+
+        foreach ($Allitems as $item) {
+            if($item->getState() > 4) continue;
+            if($item->getOrders()->count() === 0) {
+                $items[] = $item;
+                continue;
+            }
+            foreach ($item->getOrders() as $orderForItem) {
+                if(!$orderForItem->isConfilct($order->getStart(), $order->getEnd())) {
+                    $items[] = $item;
+                }
+            }
+
+        }
+
+    }
+
+    /*public function checkConflicts(Order $order): array
     {
         $conflicts = new ArrayCollection();
         $usedItems = new ArrayCollection();
@@ -86,7 +110,7 @@ class OrderManager
             'conflicts' => $conflicts,
             'usedItems' => $usedItems
         ];
-    }
+    }*/
 
     public function getPendingState(UserInterface|User $user)
     {

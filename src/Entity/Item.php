@@ -79,11 +79,17 @@ class Item
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UsedItem::class, mappedBy="item")
+     */
+    private $usedItems;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
         $this->setUpdatedAt(new \DateTimeImmutable());
         $this->setCreatedAt(new \DateTimeImmutable());
+        $this->usedItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +226,36 @@ class Item
     public function setComments(?string $comments): self
     {
         $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UsedItem[]
+     */
+    public function getUsedItems(): Collection
+    {
+        return $this->usedItems;
+    }
+
+    public function addUsedItem(UsedItem $usedItem): self
+    {
+        if (!$this->usedItems->contains($usedItem)) {
+            $this->usedItems[] = $usedItem;
+            $usedItem->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsedItem(UsedItem $usedItem): self
+    {
+        if ($this->usedItems->removeElement($usedItem)) {
+            // set the owning side to null (unless already changed)
+            if ($usedItem->getItem() === $this) {
+                $usedItem->setItem(null);
+            }
+        }
 
         return $this;
     }

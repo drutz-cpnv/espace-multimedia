@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Item;
+use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,23 @@ class ItemRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Item::class);
+    }
+
+    /**
+     * @param Order $order
+     * @return Item[]
+     */
+    public function findSelectedItems(Order $order): array
+    {
+        return $this->createQueryBuilder('i')
+            ->where('i.equipment IN (:equipments)')
+            ->setParameter('equipments', $order->getEquipment())
+            ->orderBy('i.id', 'ASC')
+            ->setMaxResults(20)
+            ->getQuery()
+            ->getResult()
+            ;
+        
     }
 
     // /**

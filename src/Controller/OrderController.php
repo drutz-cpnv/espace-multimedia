@@ -6,6 +6,7 @@ use App\Entity\Equipment;
 use App\Entity\Order;
 use App\Entity\OrderState;
 use App\Form\OrderType;
+use App\Repository\ItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
 use App\Services\OrderManager;
@@ -36,6 +37,7 @@ class OrderController extends AbstractController
     #[Route("/mes-commandes/{id}", name: "orders.user.show")]
     public function myOrder(Order $order, StateRepository $stateRepository, OrderRepository $orderRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
         return $this->render('pages/show-order.html.twig', [
             'order' => $order,
@@ -44,7 +46,7 @@ class OrderController extends AbstractController
     }
 
     #[Route("/nouvelle-commande", name: "order.new")]
-    public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, UserNotifierService $notifierService): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, UserNotifierService $notifierService, ItemRepository $itemRepository): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
@@ -54,15 +56,15 @@ class OrderController extends AbstractController
             $order->setClient($this->getUser());
             $order->setEquipment($this->getUser()->getCart());
 
-            $check = $orderManager->checkConflicts($order);
-
+            $orderManager->checkConflicts($order);
+/*
             if(count($check['conflicts']) !== 0){
-                $this->addFlash('error', "Un ou plusieurs objets sélectionner ne sont pas disponible !");
+                $this->addFlash('error', "Un ou plusieurs objets sélectionné ne sont pas disponible !");
                 return $this->render("pages/order/conflicts_order.html.twig", [
                     'conflicts' => $check['conflicts'],
                     'order' => $order
                 ], (new Response())->setStatusCode(Response::HTTP_SEE_OTHER));
-            }
+            }*/
 
             $order->addOrderState($orderManager->getPendingState($this->getUser()));
 
@@ -73,9 +75,8 @@ class OrderController extends AbstractController
             $notifierService->clientOrderReceived($order->getId());
             $notifierService->staffOrderReceived($order->getId());
 
-            $this->addFlash('success', "Votre commande a été créé, vérifier vos emails !");
-            return $this->redirectToRoute('equipment', [], Response::HTTP_SEE_OTHER);
-
+            $this->addFlash('success', "Votre commande a été crée, vérifier vos emails !");
+            return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm("pages/order/new.html.twig", [

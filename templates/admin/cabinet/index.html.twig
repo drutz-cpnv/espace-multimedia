@@ -14,19 +14,19 @@
             <table class="table js-search-table" style="margin: 20px 0">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Emplacement</th>
+                    <th>Modification</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 {% for cabinet in cabinets %}
-                    <tr>
-                        <td>{{ cabinet.id }}</td>
+                    <tr data-item="{{ cabinet.id }}">
                         <td>{{ cabinet.name }}</td>
                         <td>{{ cabinet.location }}</td>
+                        <td>le {{ cabinet.updatedAt | date("d.m.Y H:i") }} par {{ cabinet.updatedBy }}</td>
                         <td>
                             <a class="small-btn" href="{{ path('admin.cabinet.edit', {'id': cabinet.id}) }}">Modifier</a>
                         </td>

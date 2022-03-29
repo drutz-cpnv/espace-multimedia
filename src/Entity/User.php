@@ -110,12 +110,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $cart;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->setUpdatedAt(new \DateTimeImmutable());
         $this->orders = new ArrayCollection();
         $this->cart = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -399,5 +405,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         elseif (in_array("ROLE_ADMIN", $this->getRoles())) return true;
         elseif (in_array("ROLE_EDITOR", $this->getRoles())) return true;
         else return false;
+    }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setUser($this);
+        }
+
+        return $this;
     }
 }

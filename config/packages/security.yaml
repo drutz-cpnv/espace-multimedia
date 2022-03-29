@@ -23,6 +23,7 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
+            user_checker: App\Security\UserChecker
             logout:
                 path: app.logout
             remember_me:

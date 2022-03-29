@@ -81,6 +81,11 @@ class Order
      */
     private $equipment;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UsedItem::class, mappedBy="ordr")
+     */
+    private $usedItems;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -88,6 +93,7 @@ class Order
         $this->documents = new ArrayCollection();
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->equipment = new ArrayCollection();
+        $this->usedItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -322,5 +328,35 @@ class Order
 
     public function getCurrentStatus(): OrderState {
         return $this->getOrderStates()->last();
+    }
+
+    /**
+     * @return Collection|UsedItem[]
+     */
+    public function getUsedItems(): Collection
+    {
+        return $this->usedItems;
+    }
+
+    public function addUsedItem(UsedItem $usedItem): self
+    {
+        if (!$this->usedItems->contains($usedItem)) {
+            $this->usedItems[] = $usedItem;
+            $usedItem->setOrdr($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsedItem(UsedItem $usedItem): self
+    {
+        if ($this->usedItems->removeElement($usedItem)) {
+            // set the owning side to null (unless already changed)
+            if ($usedItem->getOrdr() === $this) {
+                $usedItem->setOrdr(null);
+            }
+        }
+
+        return $this;
     }
 }
