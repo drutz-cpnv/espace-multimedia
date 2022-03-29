@@ -12,6 +12,7 @@
 @import "components/pill";
 @import "components/card";
 @import "components/flash";
+@import "components/progressBar";
 
 @keyframes dropdown {
     from {
@@ -1608,5 +1609,11 @@ body.admin-page .admi-page__page-header .header-actions a:active {
             background-color: var(--contrast);
 
         }
+    }
+}
+
+td[data-verification-indicator] {
+    svg {
+        stroke: currentColor;
     }
 }

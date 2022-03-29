@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\AdminType\AdminUserType;
 use App\Repository\UserRepository;
+use App\Services\IntranetAPI;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,21 @@ class AdminUserController extends AbstractController
             'menu' => 'admin.user',
             'user' => $user
         ]);
+    }
+
+    #[
+        Route("/verify/{id}", name: "admin.user.verify"),
+    ]
+    public function verify(User $user, EntityManagerInterface $entityManager, IntranetAPI $intranetAPI): Response
+    {
+        $student = $intranetAPI->student($user->getEmail());
+
+        if(is_null($student)) {
+            $user->setStatus(3);
+            $entityManager->flush();
+            return $this->json(['verification' => ['result' => 'invalid', 'user' => $user->getId()]]);
+        }
+        return $this->json(['verification' => ['result' => 'valid', 'user' => $user->getId()]]);
     }
 
 }

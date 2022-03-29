@@ -1,0 +1,17 @@
+
+
+
+progress-bar{
+  --progress: 0;
+  --duration: 5s;
+  padding: space(.1);
+  min-width: 200px;
+  display: flex;
+
+  .indicator{
+    height: 10px;
+    width: var(--progress);
+    background-color: var(--contrast);
+    transition-duration: var(--duration);
+  }
+}

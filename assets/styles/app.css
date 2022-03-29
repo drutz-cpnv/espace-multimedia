@@ -2727,6 +2727,20 @@ article.order > :first-child {
   stroke: #2a0708;
 }
 
+progress-bar {
+  --progress: 0;
+  --duration: 5s;
+  padding: calc(0.1 * var(--space));
+  min-width: 200px;
+  display: flex;
+}
+progress-bar .indicator {
+  height: 10px;
+  width: var(--progress);
+  background-color: var(--contrast);
+  transition-duration: var(--duration);
+}
+
 label {
   text-transform: uppercase;
   font-weight: 300;

@@ -4,6 +4,7 @@ import {Cart} from "./modules/cart";
 import Flash from "./modules/flash";
 import feather from "feather-icons"
 import Alert from "./modules/alert";
+import ProgressBar from "./components/ProgressBar";
 
 document.documentElement.addEventListener("turbo:load", evt => {
     let multiselect = Array.from(document.querySelectorAll("select[multiple]"))
@@ -32,7 +33,6 @@ document.documentElement.addEventListener("turbo:load", evt => {
     feather.replace()
 })
 customElements.define('flash-message', Flash)
-
-
 customElements.define('alert-block', Alert)
+customElements.define('progress-bar', ProgressBar)
 

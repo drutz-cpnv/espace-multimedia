@@ -1961,6 +1961,20 @@ flash-message .icon svg {
   stroke: var(--flash-color);
 }
 
+progress-bar {
+  --progress: 0;
+  --duration: 5s;
+  padding: calc(0.1 * var(--space));
+  min-width: 200px;
+  display: flex;
+}
+progress-bar .indicator {
+  height: 10px;
+  width: var(--progress);
+  background-color: var(--contrast);
+  transition-duration: var(--duration);
+}
+
 @keyframes dropdown {
   from {
     top: -100%;
@@ -3662,6 +3676,10 @@ body.admin-page .admi-page__page-header .header-actions a:active {
   text-align: center;
   width: 100%;
   background-color: var(--contrast);
+}
+
+td[data-verification-indicator] svg {
+  stroke: currentColor;
 }
 
 /*# sourceMappingURL=admin.css.map */

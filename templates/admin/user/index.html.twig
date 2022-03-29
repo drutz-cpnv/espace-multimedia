@@ -13,17 +13,22 @@
                     <th>ID</th>
                     <th>Nom complet</th>
                     <th>Type</th>
+                    <th>Accès</th>
+                    <th></th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 {% for user in users %}
-                <tr>
+                <tr{# {% if user.type.slug is same as("student")%}  #} data-student="{{ user.id }}"{# {% endif %} #}>
                     <td>{{ user.id }}</td>
                     <td class="js-search-result">{{ user }}</td>
                     <td class="js-search-result">{{ user.type.name }}</td>
+                    <td class="js-search-result">{{ user.roleName }}</td>
+                    <td data-verification-indicator><progress-bar></progress-bar></td>
                     <td>
+                        {#{% if user.type.slug is same as("student")%}#}<a href="{{ path('admin.user.verify', {'id': user.id}) }}" data-verify-btn class="small-btn">Vérifier</a>{#{% endif %}#}
                         <a href="{{ path('admin.user.edit', {'id': user.id}) }}" class="small-btn">Modifier</a>
                     </td>
                 </tr>
