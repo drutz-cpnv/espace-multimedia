@@ -5,9 +5,14 @@ namespace App\Services;
 use App\Entity\Intranet\Classes;
 use App\Entity\Intranet\Student;
 use App\Entity\Intranet\Teacher;
+use App\Entity\Room;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class IntranetAPI
@@ -20,6 +25,7 @@ class IntranetAPI
     const CLASS_ENDPOINT = "/classes";
     const STUDENT_ENDPOINT = "/current_students";
     const TEACHERS_ENDPOINT = "/teachers";
+    const ROOMS_ENDPOINT = "/salles";
 
     const RESPONSE_FORMAT = ".json";
 
@@ -28,6 +34,7 @@ class IntranetAPI
     private array $requests = [];
     private string $api_secret;
     private string $api_key;
+    private int $responseCode;
 
 
     public function __construct(string $api_secret, string $api_key, private HttpClientInterface $httpClient)
@@ -168,12 +175,13 @@ class IntranetAPI
         return new ArrayCollection($this->fetch($query));
     }
 
+
     /**
      * @param string $user
      * @param bool[] $extra
-     * @return Student
+     * @return Student|null
      */
-    public function student(string $user, array $extra = ['CLASS' => true]): Student
+    public function student(string $user, array $extra = ['CLASS' => true]): ?Student
     {
         $extra = new ArrayCollection($extra);
         if($extra->contains(true)) {
@@ -194,8 +202,12 @@ class IntranetAPI
 
         $query = self::BASE_URI . self::STUDENT_ENDPOINT . "/" . $friendly_id . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
 
+        $result = $this->fetch($query);
+
+        if($this->responseCode === 404) return null;
+
         $student = new Student();
-        return $this->studentToEntity($student, $this->fetch($query));
+        return $this->studentToEntity($student, $result);
     }
 
     /**
@@ -227,6 +239,15 @@ class IntranetAPI
         $query = self::BASE_URI . self::TEACHERS_ENDPOINT . "/" . $friendly_id . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
 
         return $this->teacherToEntity($this->fetch($query));
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function rooms(): ArrayCollection
+    {
+        $query = self::BASE_URI . self::ROOMS_ENDPOINT . self::RESPONSE_FORMAT . '?' . $this->getQueryString();
+        return new ArrayCollection($this->fetch($query));
     }
 
     private function studentFromEmail(string $email)
@@ -347,6 +368,15 @@ class IntranetAPI
             'method' => $method,
             'queryParams' => $this->query
         ];
+
+        $this->responseCode = $result->getStatusCode();
+        try {
+            return json_decode($result->getContent());
+        } catch (ClientExceptionInterface $e) {
+            if($e->getCode() === 404) {
+                return json_decode('{"error": true}');
+            }
+        }
         return json_decode($result->getContent());
     }
 

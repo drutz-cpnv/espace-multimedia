@@ -31,6 +31,8 @@ class AdminCabinetController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $cabinet->setUpdatedAt(new \DateTimeImmutable());
+            $cabinet->setUpdatedBy($this->getUser());
             $entityManager->flush();
             return $this->redirectToRoute('admin.cabinet.index', [], Response::HTTP_SEE_OTHER);
         }
@@ -48,6 +50,9 @@ class AdminCabinetController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $cabinet->setUpdatedAt(new \DateTimeImmutable());
+            $cabinet->setCreatedBy($this->getUser());
+            $cabinet->setUpdatedBy($this->getUser());
             $entityManager->persist($cabinet);
             $entityManager->flush();
             return $this->redirectToRoute('admin.cabinet.index', [], Response::HTTP_SEE_OTHER);

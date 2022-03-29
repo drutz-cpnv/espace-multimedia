@@ -25,18 +25,40 @@ class Cabinet
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $location;
-
-    /**
      * @ORM\OneToMany(targetEntity=Equipment::class, mappedBy="cabinet")
      */
     private $equipment;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $createdBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $updatedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="cabinets")
+     */
+    private $location;
+
     public function __construct()
     {
         $this->equipment = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable());
     }
 
     public function getId(): ?int
@@ -52,18 +74,6 @@ class Cabinet
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): self
-    {
-        $this->location = $location;
 
         return $this;
     }
@@ -102,4 +112,65 @@ class Cabinet
     {
         return $this->getName() . " - " . $this->getLocation();
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy($createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy($updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    public function getLocation(): ?Room
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Room $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
 }
