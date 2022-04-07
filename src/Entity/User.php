@@ -106,21 +106,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $teacher;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Equipment::class)
-     */
-    private $cart;
-
-    /**
      * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user", orphanRemoval=true)
      */
     private $carts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $updatedBy;
 
     public function __construct()
     {
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->setUpdatedAt(new \DateTimeImmutable());
         $this->orders = new ArrayCollection();
-        $this->cart = new ArrayCollection();
         $this->carts = new ArrayCollection();
     }
 
@@ -295,6 +294,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getStatusName()
+    {
+        return self::STATUS[$this->getStatus()];
+    }
+
+    public function getRoleString()
+    {
+        $string = "";
+        $roles = new ArrayCollection($this->getRoles());
+        $last = $roles->count() - 1;
+        /** @var string[] $roles */
+        foreach ($roles as $key => $role){
+            if($key === $last){
+                $string .= $role;
+            }
+            elseif($key === $last-1) {
+                $string .= $role . " et ";
+            }
+            else{
+                $string .= $role . ", ";
+            }
+        }
+        return $string;
+    }
+
     /**
      * @return Collection|Order[]
      */
@@ -363,42 +387,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Equipment[]
-     */
-    public function getCart(): Collection
-    {
-        return $this->cart;
-    }
-
-    public function addToCart(Equipment $cart): self
-    {
-        if (!$this->cart->contains($cart)) {
-            $this->cart[] = $cart;
-        }
-
-        return $this;
-    }
-
-    public function removeCart(Equipment $cart): self
-    {
-        $this->cart->removeElement($cart);
-
-        return $this;
-    }
-
-    public function getCartCount()
-    {
-        return $this->cart->count();
-    }
-
-    public function flushCart()
-    {
-        foreach ($this->getCart() as $carte){
-            $this->cart->removeElement($carte);
-        }
-    }
-
     public function isAdmin()
     {
         if (in_array("ROLE_WEBMASTER", $this->getRoles())) return true;
@@ -423,5 +411,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getUpdatedBy(): ?self
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy($updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    public function getEquipmentCart(Equipment $equipment): Cart|null
+    {
+        foreach ($this->getCarts() as $cart) {
+            if($cart->getEquipment()->getId() === $equipment->getId()) return $cart;
+        }
+        return null;
+    }
+
+    public function isInCart(Equipment $equipment): bool
+    {
+        return !is_null($this->getEquipmentCart($equipment));
+    }
+
+    public function getCartEquipment()
+    {
+        $output = new ArrayCollection();
+
+        foreach ($this->getCarts() as $cart) {
+            $output->add($cart->getEquipment());
+        }
+
+        return $output;
     }
 }

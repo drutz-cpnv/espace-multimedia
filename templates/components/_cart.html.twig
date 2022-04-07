@@ -1,4 +1,4 @@
-<a href="#" class="cart-btn js-cart-toggle" {% if app.user.cartCount > 0 %}data-is-filled{% endif %}>{{ icon('shopping_cart') }}</a>
+<a href="#" class="cart-btn js-cart-toggle" {% if not app.user.carts.empty %}data-is-filled{% endif %}>{{ icon('shopping_cart') }}</a>
 <div class="cart js-cart-container">
     <div>
         <div class="cart__header">
@@ -7,24 +7,24 @@
             </div>
         </div>
         <div class="cart__body">
-            {% if app.user.cart.count > 0 %}
-                {% for cartEquipment in app.user.cart %}
-                    <a href="{{ path('equipment.show', {id: cartEquipment.id, slug: cartEquipment.slug}) }}" class="cart-item">
-                        <div>
-                            {{ cartEquipment.categoriesCS }} <br>
-                            <strong>{{ cartEquipment.name }}</strong>
-                            <strong> ({{ cartEquipment.type.name }})</strong>
-                        </div>
-                        <small class="text-muted">{{ cartEquipment.brand.name }}</small>
-                    </a>
-                {% endfor %}
-                <div class="cart-item text-center">
-                    <a href="{{ path('user.cart') }}" class="btn-gradient">Confirmer le panier</a>
-                </div>
-            {% else %}
+            {% if app.user.carts.empty %}
                 <div class="cart-item">Aucun équipement n'a été ajouté au panier !</div>
                 <div class="cart-item text-center">
                     <a href="{{ path('equipment') }}" class="btn-gradient">Découvrer l'équipement disponible</a>
+                </div>
+            {% else %}
+                {% for cart in app.user.carts %}
+                    <a href="{{ path('equipment.show', {id: cart.equipment.id, slug: cart.equipment.slug}) }}" class="cart-item">
+                        <div>
+                            {{ cart.equipment.categoriesCS }} <br>
+                            <strong>{{ cart.equipment.name }}</strong>
+                            <strong> ({{ cart.equipment.type.name }})</strong>
+                        </div>
+                        <small class="text-muted">{{ cart.equipment.brand.name }}</small>
+                    </a>
+                {% endfor %}
+                <div class="cart-item text-center">
+                    <a href="{{ path('user.cart') }}" class="btn-gradient">Afficher le panier</a>
                 </div>
             {% endif %}
         </div>

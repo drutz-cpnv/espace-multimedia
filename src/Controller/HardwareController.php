@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\Equipment;
 use App\Entity\EquipmentSearch;
+use App\Form\CartFormType;
 use App\Form\EquipmentSearchType;
 use App\Repository\EquipmentRepository;
 use App\Repository\EquipmentTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,20 +35,45 @@ class HardwareController extends AbstractController
     }
 
 
-
     #[Route("/{slug<[a-z0-9A-Z\-]+>}-{id<\d+>}", name: "equipment.show", priority: 10)]
-    public function show(Equipment $equipment, string $slug, EquipmentRepository $equipmentRepository): Response
+    public function show(Equipment $equipment, string $slug, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($equipment->getSlug() !== $slug){
             return $this->redirectToRoute("equipment.show", [
                 'slug' => $equipment->getSlug(),
                 'id' => $equipment->getId()
-            ]);
+            ], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render("pages/equipment_show.html.twig", [
+        $cart = new Cart();
+        $form = $this->createForm(CartFormType::class, $cart);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            if($this->getUser()->isInCart($equipment)) {
+                $entityManager->remove($this->getUser()->getEquipmentCart($equipment));
+            }
+            else{
+                $cart->setUser($this->getUser());
+                $cart->setEquipment($equipment);
+                $entityManager->persist($cart);
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute("equipment.show", [
+                'slug' => $equipment->getSlug(),
+                'id' => $equipment->getId()
+            ], Response::HTTP_SEE_OTHER);
+
+        }
+
+        return $this->renderForm("pages/equipment_show.html.twig", [
             'menu' => 'hardware',
-            'equipment' => $equipment
+            'equipment' => $equipment,
+            'cartForm' => $form
         ]);
     }
 

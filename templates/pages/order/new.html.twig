@@ -11,17 +11,19 @@
     </div>
     <div class="layout-sidebar py5" style="--gap: 5">
         <main class="stack-large">
+            {% if conflicts is defined %}
+                <div class="mb2">
+                    <alert-block
+                            alert-title="Équipement(s) non diponible"
+                            message="{% for conflict in conflicts %}{% if conflict.isConflict %}<p><strong class='bold'>{{ conflict.message }}</strong>{% else %}{{ conflict.message }}{% endif%} </p>{% endfor %}"
+                            class="alert-warning"
+                    ></alert-block>
+                </div>
+            {% endif %}
             {{ include('pages/order/_new_order_form.html.twig') }}
         </main>
         <aside class="stack">
-            <div class="mb2">
-                <div>
-                    <h2 class="h5 mb2">
-                        Étape suivante
-                    </h2>
-                    <p>Vérifier la disponibilité</p>
-                </div>
-            </div>
+
         </aside>
     </div>
 

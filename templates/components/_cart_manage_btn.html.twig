@@ -1,3 +1,15 @@
+{% if app.user.inCart(equipment) %}
+    {{ form_start(cartForm, { attr: { class: "form-button" }}) }}
+        {{ form_row(cartForm.quantity, {attr: {style: "display: none;"}}) }}
+        <button class="btn-gradient btn-big">{{ icon('remove_shopping_cart') }}Retirer du panier</button>
+    {{ form_end(cartForm) }}
+{% else %}
+    {{ form_start(cartForm, { attr: { class: "form-button cart-form" }}) }}
+        {{ form_row(cartForm.quantity) }}
+        <button class="btn-gradient btn-big">{{ icon('shopping_cart') }}Ajouter au panier</button>
+    {{ form_end(cartForm) }}
+{% endif %}
+{#
 {% if app.user.cart.contains(equipment) %}
     <form action="{{ path("user.cart.remove", {id: equipment.id}) }}" method="POST" class="form-button">
         <button class="btn-gradient btn-big">{{ icon('remove_shopping_cart') }}Retirer du panier</button>
@@ -6,4 +18,4 @@
     <form action="{{ path("user.cart.add", {id: equipment.id}) }}" method="POST" class="form-button">
         <button class="btn-gradient btn-big">{{ icon('shopping_cart') }}Ajouter au panier</button>
     </form>
-{% endif %}
+{% endif %}#}

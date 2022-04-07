@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CartRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Cart
 {
@@ -41,6 +42,11 @@ class Cart
      */
     private $createdAt;
 
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,7 +57,7 @@ class Cart
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser($user): self
     {
         $this->user = $user;
 

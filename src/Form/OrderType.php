@@ -17,17 +17,23 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
+                'data' => "hello"
             ])
             ->add('start', DateType::class, [
                 'widget' => 'single_text',
+                'data' => (new \DateTimeImmutable())->modify("+2 days")
             ])
             ->add('end', DateType::class, [
                 'widget' => 'single_text',
+                'data' => (new \DateTimeImmutable())->modify("+10 days")
             ])
             ->add('description', TextareaType::class, [
                 'label' => false,
+                'data' => "Hello World"
             ])
-            ->add('teacher')
+            ->add('teacher', null, [
+                'required' => false
+            ])
         ;
     }
 

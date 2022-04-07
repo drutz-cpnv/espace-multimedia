@@ -9,6 +9,7 @@ use App\Form\OrderType;
 use App\Repository\ItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
+use App\Services\CartManagerService;
 use App\Services\OrderManager;
 use App\Services\UserNotifierService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -46,7 +47,7 @@ class OrderController extends AbstractController
     }
 
     #[Route("/nouvelle-commande", name: "order.new")]
-    public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, UserNotifierService $notifierService, ItemRepository $itemRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, UserNotifierService $notifierService, CartManagerService $cartManagerService): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
@@ -54,21 +55,21 @@ class OrderController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $order->setClient($this->getUser());
-            $order->setEquipment($this->getUser()->getCart());
+            $order->setEquipment($this->getUser()->getCartEquipment());
 
-            $orderManager->checkConflicts($order);
-/*
-            if(count($check['conflicts']) !== 0){
+            $checkResult = $orderManager->checkConflicts($order);
+
+            if($checkResult['hasConflict']){
                 $this->addFlash('error', "Un ou plusieurs objets sélectionné ne sont pas disponible !");
-                return $this->render("pages/order/conflicts_order.html.twig", [
-                    'conflicts' => $check['conflicts'],
-                    'order' => $order
+                return $this->renderForm("pages/order/new.html.twig", [
+                    'form' => $form,
+                    'conflicts' => $checkResult['conflict'],
                 ], (new Response())->setStatusCode(Response::HTTP_SEE_OTHER));
-            }*/
+            }
 
-            $order->addOrderState($orderManager->getPendingState($this->getUser()));
+            $order = $orderManager->createOrder($order, $checkResult['conflict']);
 
-            $this->getUser()->flushCart();
+            $cartManagerService->flushUserCart();
             $entityManager->persist($order);
             $entityManager->flush();
 

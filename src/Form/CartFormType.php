@@ -14,7 +14,17 @@ class CartFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('quantity')
+            ->add('quantity', NumberType::class, [
+                'required' => false,
+                'label' => false,
+                'empty_data' => 1,
+                'html5' => true,
+                'data' => 1,
+                'constraints' => new GreaterThanOrEqual(1),
+                'attr' => [
+                    'min' => 1
+                ]
+            ])
         ;
     }
 

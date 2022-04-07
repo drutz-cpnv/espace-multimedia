@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Entity\Cart;
+use App\Entity\Internal\Conflict;
+use App\Entity\Internal\Needed;
 use App\Entity\Order;
 use App\Entity\OrderState;
 use App\Entity\State;
@@ -10,14 +13,29 @@ use App\Repository\ItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\OrderStateRepository;
 use App\Repository\StateRepository;
+use DateInterval;
+use DatePeriod;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpKernel\Log\Logger;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class OrderManager
 {
+
+    private const ACCEPT_ITEM_STATE = 4;
+
+    private const NOT_AVAILABLE = [
+        'late',
+        'error',
+        'terminated',
+        'accepted',
+        'in_progress',
+        'pending'
+    ];
 
     private const ASSERT_TO_ACCEPT = [
         'late',
@@ -42,32 +60,149 @@ class OrderManager
         private UserNotifierService $notifierService,
         private FlashBagInterface $flashBag,
         private OrderRepository $orderRepository,
-        private ItemRepository $itemRepository
+        private ItemRepository $itemRepository,
     )
     {
     }
 
-    public function checkConflicts(Order $order)
+    public static function getOrderPeriod(Order $order): DatePeriod
     {
-        $Allitems = $this->itemRepository->findSelectedItems($order);
-        
-        $items = [];
+        return new DatePeriod($order->getStart(), new DateInterval("P1D"), $order->getEnd()->modify("1 day"));
+    }
 
-        foreach ($Allitems as $item) {
-            if($item->getState() > 4) continue;
-            if($item->getOrders()->count() === 0) {
-                $items[] = $item;
-                continue;
-            }
-            foreach ($item->getOrders() as $orderForItem) {
-                if(!$orderForItem->isConfilct($order->getStart(), $order->getEnd())) {
-                    $items[] = $item;
-                }
-            }
 
+    public static function periodsDays(DatePeriod $datePeriod): array
+    {
+        $output = [];
+        foreach ($datePeriod as $day) {
+            $output[] = $day;
+        }
+        return $output;
+    }
+
+    /**
+     * @param Collection|Order[] $orders
+     * @return array|Collection|Order[]
+     */
+    public function filterOrders(Collection|array $orders)
+    {
+        return $orders->filter(fn($v, $k) => in_array($v->getCurrentStatus()->getState()->getSlug(), self::NOT_AVAILABLE));
+    }
+
+
+    public function checkConflicts(Order $order): array
+    {
+        /** @var Cart[] $userCart */
+        $userCart = $this->security->getUser()->getCarts();
+        $needed = [];
+
+        $out = [];
+
+        $period = self::getOrderPeriod($order);
+        $periodDays = self::periodsDays($period);
+
+        foreach ($userCart as $cart) {
+            $needed[] = (new Needed())
+                ->setEquipment($cart->getEquipment())
+                ->setItems($cart->getEquipment()->getItems()->toArray())
+                ->setQuantity($cart->getQuantity())
+                ;
         }
 
+        foreach ($needed as &$need) {
+            $items = $need->getItems();
+            $need->setConflict((new Conflict())
+                ->setName($need->getEquipment()->getName())
+                ->setNeeded($need->getQuantity())
+            )
+            ;
+            foreach ($items as $item) {
+                if($item->getState() >= self::ACCEPT_ITEM_STATE) continue;
+
+                if($item->getOrders()->isEmpty()) {
+                    $need->addAvailableItem($item);
+                    continue;
+                }
+
+                $need->getConflict()->newItemDates($item->getTag());
+
+                $itemsOrders = self::filterOrders($item->getOrders());
+
+                $ok = [];
+                foreach ($itemsOrders as $itemsOrder) {
+                    $orderPeriod = self::getOrderPeriod($itemsOrder);
+                    $orderDays = self::periodsDays($orderPeriod);
+                    foreach ($orderDays as $orderDay) {
+                        if(in_array($orderDay, $periodDays)){
+                            $need->getConflict()->addDate($item->getTag() ,$orderDay);
+                            $ok[] = true;
+                        }
+                        else{
+                            $ok[] = false;
+                        }
+                    }
+                }
+
+                if(in_array(true, $ok)) continue;
+                $need->addAvailableItem($item);
+            }
+        }
+        unset($need);
+
+        foreach ($needed as $need) {
+            $availableCount = count($need->getAvailableItems());
+            $need->getConflict()
+                ->setAvailable($availableCount)
+                ->setAvailableItems($need->getAvailableItems())
+            ;
+
+            if($availableCount < $need->getQuantity()) {
+                $need->getConflict()
+                    ->setIsConflict(true)
+                    ->setMessage("L'équipement {$need->getEquipment()->getName()} n'est disponible qu'en {$availableCount} exemplaires aux dates demandées.")
+                ;
+            }
+            else {
+                $need->getConflict()
+                    ->setIsConflict(false)
+                    ->setMessage("L'équipement {$need->getEquipment()->getName()} est disponible au nombre demander.")
+                ;
+            }
+
+            $out['conflict'][] = $need->getConflict();
+        }
+
+        $out['hasConflict'] = false;
+        foreach ($out['conflict'] as $result) {
+            if ($out['hasConflict']) continue;
+            $out['hasConflict'] = $result->isConflict();
+        }
+
+        return $out;
+
     }
+
+    /**
+     * @param Order $order
+     * @param Conflict[] $conflicts
+     * @return Order
+     */
+    public function createOrder(Order $order, array $conflicts): Order
+    {
+        foreach ($conflicts as $conflict) {
+            $items = array_slice($conflict->getAvailableItems(), 0, $conflict->getNeeded());
+            foreach ($items as $item) {
+                $order->addItem($item);
+            }
+        }
+
+        $order->addOrderState($this->getPendingState($this->security->getUser()));
+
+        return $order;
+    }
+
+
+
 
     /*public function checkConflicts(Order $order): array
     {

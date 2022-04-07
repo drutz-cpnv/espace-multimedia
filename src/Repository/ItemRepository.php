@@ -30,7 +30,6 @@ class ItemRepository extends ServiceEntityRepository
             ->where('i.equipment IN (:equipments)')
             ->setParameter('equipments', $order->getEquipment())
             ->orderBy('i.id', 'ASC')
-            ->setMaxResults(20)
             ->getQuery()
             ->getResult()
             ;

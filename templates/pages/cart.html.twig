@@ -12,7 +12,8 @@
     <div class="layout-sidebar py5" style="--gap: 5">
         <main class="stack-large">
             <div class="hardware">
-                {% for equipment in app.user.cart %}
+                {% for cart in app.user.carts %}
+                    {% set equipment = cart.equipment %}
                     {{ include('components/_equipment_action_card.html.twig') }}
                 {% else %}
                     <div class="card">
