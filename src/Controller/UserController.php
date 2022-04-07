@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\Equipment;
 use App\Form\EquipmentSearchType;
 use App\Form\UserType;
@@ -48,23 +49,17 @@ class UserController extends AbstractController
         return $this->render('pages/cart.html.twig');
     }
 
-    #[Route("/cart/add/{id}", name: "user.cart.add", methods: ["POST"])]
-    public function newCartItem(Equipment $equipment, EntityManagerInterface $entityManager): Response
-    {
-        $user = $this->getUser();
-        $user->addToCart($equipment);
-        $entityManager->flush();
-        $this->addFlash('success', "L'équipement a été ajouté à votre panier !");
-        return $this->redirectToRoute('equipment.show', ['id' => $equipment->getId(), 'slug' => $equipment->getSlug()], Response::HTTP_SEE_OTHER);
-    }
-
     #[Route("/cart/remove/{id}", name: "user.cart.remove", methods: ["POST"])]
-    public function removeCartItem(Equipment $equipment, EntityManagerInterface $entityManager, Request $request): Response
+    public function removeCartItem(Cart $cart, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $user = $this->getUser();
-        $user->removeCart($equipment);
-        $entityManager->flush();
-        $this->addFlash('success', "L'équipement a été retiré de votre panier !");
+        if($this->getUser()->getId() === $cart->getUser()->getId()) {
+            $entityManager->remove($cart);
+            $entityManager->flush();
+            $this->addFlash('success', "L'équipement a été retiré de votre panier !");
+        }
+        else{
+            $this->addFlash('error', "Vous n'êtes pas autorisé à retirer cet équipement de ce panier.");
+        }
         return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 

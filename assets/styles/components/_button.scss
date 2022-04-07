@@ -70,6 +70,7 @@
 .btn-gradient {
   @extend %btn;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%) var(--contrast);
+  color: #ffffff !important;
 }
 
 .btn-primary {
@@ -104,7 +105,7 @@
 
 .btn-danger {
   @extend %btn;
-  background: var(--red);
+  background: var(--contrast);
 }
 
 .btn-secondary {

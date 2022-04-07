@@ -46,6 +46,7 @@ class HardwareController extends AbstractController
         }
 
         $cart = new Cart();
+        $cart->setEquipment($equipment);
         $form = $this->createForm(CartFormType::class, $cart);
 
         $form->handleRequest($request);
@@ -68,6 +69,13 @@ class HardwareController extends AbstractController
                 'id' => $equipment->getId()
             ], Response::HTTP_SEE_OTHER);
 
+        }
+        elseif($form->isSubmitted() && !$form->isValid()) {
+            return $this->renderForm("pages/equipment_show.html.twig", [
+                'menu' => 'hardware',
+                'equipment' => $equipment,
+                'cartForm' => $form
+            ], (new Response())->setStatusCode(303));
         }
 
         return $this->renderForm("pages/equipment_show.html.twig", [

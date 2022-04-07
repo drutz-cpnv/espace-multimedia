@@ -11,23 +11,38 @@
     </div>
     <div class="layout-sidebar py5" style="--gap: 5">
         <main class="stack-large">
-            <div class="hardware">
-                {% for cart in app.user.carts %}
-                    {% set equipment = cart.equipment %}
-                    {{ include('components/_equipment_action_card.html.twig') }}
-                {% else %}
-                    <div class="card">
-                        <div class="card__body stack">
-                            <h2 class="card__title">
-                                Votre panier est vide.
-                            </h2>
-                            <p>
-                                <a href="{{ path('equipment') }}" class="btn-gradient btn-small">Découvrer l'équipement disponible</a>
-                            </p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Équipement</th>
+                        <th>Marque</th>
+                        <th>Quantité</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cart in app.user.carts %}
+                        {% set equipment = cart.equipment %}
+                        <tr>
+                            <td>{{ equipment.name }}</td>
+                            <td>{{ equipment.brand }}</td>
+                            <td>x{{ cart.quantity }}</td>
+                            <td>
+                                <form method="post" action="{{ path('user.cart.remove', { id: cart.id } ) }}" class="form-button">
+                                   <button class="btn-small btn-danger">Retirer du panier</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Votre panier est vide.</td>
+                            <td>
+                                <a href="{{ path('equipment') }}" class="btn-gradient">Découvrer l'équipement disponible</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </main>
         <aside class="stack">
             <div class="mb2">
@@ -46,7 +61,13 @@
                     <p class="mb2">
                         Afin de rendre le processus de commande plus simple, nous vous prions de vérifier que tous l'équipement dont avez besoins se trouve dans votre panier. Si cela est le cas nous pouvons commencer.
                     </p>
-                    <p class="text-right"><a href="{{ path('order.new') }}" class="btn-gradient">Commencer</a></p>
+                    <p class="text-right">
+                        {% if not app.user.isCartEmpty %}
+                            <a href="{{ path('order.new') }}" class="btn-gradient">Commencer</a>
+                        {% else %}
+                            <a href="#" class="btn-gradient" disabled="disabled">Commencer</a>
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </aside>

@@ -7,6 +7,7 @@ import Alert from "./modules/alert";
 import ProgressBar from "./components/ProgressBar";
 import {$$, bindCreateOptionSelect} from "./functions/dom";
 
+
 document.documentElement.addEventListener("turbo:load", evt => {
     let multiselect = Array.from(document.querySelectorAll("select[multiple]:not([data-create-option])"))
 

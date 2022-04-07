@@ -34,6 +34,7 @@ class Cart
     /**
      * @ORM\Column(type="integer")
      * @Assert\GreaterThanOrEqual(value=1)
+     * @Assert\LessThanOrEqual(propertyPath="equipment.getItemCount")
      */
     private $quantity;
 

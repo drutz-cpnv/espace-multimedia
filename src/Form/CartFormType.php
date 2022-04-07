@@ -20,7 +20,6 @@ class CartFormType extends AbstractType
                 'empty_data' => 1,
                 'html5' => true,
                 'data' => 1,
-                'constraints' => new GreaterThanOrEqual(1),
                 'attr' => [
                     'min' => 1
                 ]

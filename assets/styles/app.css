@@ -1890,6 +1890,7 @@ button:not([class]):hover .icon-delete {
 
 .btn-gradient {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%) var(--contrast);
+  color: #ffffff !important;
 }
 
 .btn-primary {
@@ -1918,7 +1919,7 @@ button:not([class]):hover .icon-delete {
 }
 
 .btn-danger {
-  background: var(--red);
+  background: var(--contrast);
 }
 
 .btn-secondary {
@@ -3194,6 +3195,14 @@ button:not([class]):hover .icon-delete {
 
 .cart-form {
   display: flex;
+  position: relative;
+}
+.cart-form .form-error {
+  position: absolute;
+  top: 100%;
+}
+.cart-form .form-error p {
+  font-size: 0.8rem;
 }
 .cart-form input[type=number] {
   width: 3.5em;
@@ -3206,6 +3215,10 @@ button:not([class]):hover .icon-delete {
 }
 .cart-form input[type=number]:focus {
   background-color: var(--background-light);
+}
+.cart-form input[type=number].is-invalid {
+  color: red;
+  border: 3px solid red;
 }
 .cart-form button {
   border-bottom-left-radius: 0;

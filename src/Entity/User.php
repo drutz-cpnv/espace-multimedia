@@ -438,6 +438,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return !is_null($this->getEquipmentCart($equipment));
     }
 
+    public function isCartEmpty(): bool
+    {
+        return $this->getCarts()->isEmpty();
+    }
+
     public function getCartEquipment()
     {
         $output = new ArrayCollection();

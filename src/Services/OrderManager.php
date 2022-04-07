@@ -128,6 +128,8 @@ class OrderManager
 
                 $itemsOrders = self::filterOrders($item->getOrders());
 
+                dump($itemsOrders);
+
                 $ok = [];
                 foreach ($itemsOrders as $itemsOrder) {
                     $orderPeriod = self::getOrderPeriod($itemsOrder);
