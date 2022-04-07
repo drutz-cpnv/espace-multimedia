@@ -1763,7 +1763,7 @@ textarea:focus,
 form button:focus,
 input:focus + label .switch {
   border-color: var(--contrast);
-  box-shadow: 0 0 0 3px var(--contrast25);
+  box-shadow: 0 0 0 3px rgba(255, 36, 42, 0.2);
 }
 
 button:not([class]):hover .icon-delete {
@@ -2987,7 +2987,7 @@ textarea:focus,
 form button:focus,
 input:focus + label .switch {
   border-color: var(--contrast);
-  box-shadow: 0 0 0 3px var(--contrast25);
+  box-shadow: 0 0 0 3px rgba(255, 36, 42, 0.2);
 }
 
 button:not([class]):hover .icon-delete {

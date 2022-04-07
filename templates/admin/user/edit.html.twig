@@ -48,6 +48,15 @@
                     <th>Modifier par</th>
                     <td>{{ user.updatedBy ?? 'null' }}</td>
                 </tr>
+                <tr>
+                    <th>Panier</th>
+                </tr>
+                {% for cart in user.carts %}
+                <tr>
+                    <th></th>
+                    <td>{{ cart.equipment.name }}</td>
+                </tr>
+                {% endfor %}
             </table>
         </div>
         {% endif %}
