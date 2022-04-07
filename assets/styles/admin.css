@@ -1914,6 +1914,11 @@ a .card__title:hover {
   z-index: 3;
 }
 
+.card__image img {
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
 flash-message {
   position: fixed;
   left: calc(3 * var(--space));

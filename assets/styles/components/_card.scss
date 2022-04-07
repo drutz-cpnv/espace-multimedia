@@ -162,3 +162,10 @@ a.flat-card:active{
   align-items: center;
   z-index: 3;
 }
+
+.card__image{
+  img {
+    aspect-ratio: 1/1;
+    object-fit: contain;
+  }
+}
