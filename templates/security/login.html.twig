@@ -14,17 +14,10 @@
 
         <div class="mb3">
             <div class="mb2">
-                {% include 'components/_alert.html.twig' with {
-                    title: "Accès restreint",
-                    text: "Le site web étant encore en cours de développement, son accès y est restreint. Peuvent y accéder, uniquement les étudiants des classes de premières années, qui seront en chargent de la gestion de la présente application."
-                } %}
+                <alert-block message="Le site web étant encore en cours de développement, son accès y est restreint. Peuvent y accéder, uniquement les étudiants des classes de premières années, qui seront en chargent de la gestion de la présente application." alert-title="Accès restreint" class="alert-warning"></alert-block>
             </div>
             <div class="mb3">
-                {% include 'components/_alert.html.twig' with {
-                    title: "Connexion enseignant",
-                    text: "Pour vous connecter, vous devez utiliser l'adresse email du CPNV composée de votre prénom et nom de famille. (ex. prenom.nom@cpnv.ch)",
-                    isClose: true
-                } %}
+                <alert-block message="Pour vous connecter, vous devez utiliser l'adresse email du CPNV composée de votre prénom et nom de famille. (ex. prenom.nom@cpnv.ch)" alert-title="Connexion enseignant" class="alert-warning closed"></alert-block>
             </div>
         </div>
         <div class="auth-form">

@@ -46,6 +46,7 @@ security:
         - { path: ^/reset-password, roles: PUBLIC_ACCESS }
         - { path: ^/admin/utilisateurs, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_EDITOR }
+        - { path: ^/tasks, roles: ROLE_ADMIN }
         - { path: ^/tests, roles: ROLE_WEBMASTER }
         - { path: ^/, roles: ROLE_USER }
 

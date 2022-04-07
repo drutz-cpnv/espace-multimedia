@@ -46,3 +46,26 @@
   background-color: var(--background-light);
   border-top: 1px solid var(--border) ;
 }
+
+.cart-form{
+  display: flex;
+
+  input[type=number] {
+    width: 3.5em;
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+    border: 3px solid var(--border);
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding-left: space(1.5);
+
+    &:focus {
+      background-color: var(--background-light);
+    }
+  }
+
+  button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}

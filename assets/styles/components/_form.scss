@@ -45,8 +45,15 @@ input:disabled {
 
 .ts-control{
   padding: space(1.5) space(1) !important;
-  background: var(--background);
+  background: var(--background) !important;
   border: 1px solid var(--border);
+  align-items: center;
+  min-height: 48px;
+
+  .item {
+    font-size: 1rem;
+    color: var(--color);
+  }
 }
 
 .ts-control input {

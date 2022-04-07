@@ -9,7 +9,7 @@
 
         {% for cabinet in cabinets %}
         <div class="content mb4">
-            <h4 class="h4">{{ cabinet }}</h4>
+            <h4 class="h4">{{ cabinet }} <span class="accent">•</span> {{ cabinet.location.name }}</h4>
             <table class="table js-search-table" style="margin: 20px 0">
                 <thead>
                     <tr>

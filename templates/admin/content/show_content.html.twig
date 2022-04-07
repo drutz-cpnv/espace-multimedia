@@ -25,7 +25,7 @@
                             {% for p in section.paragraphs %}
                                 <div class="sections__item {% if paragraph.id == p.id %}current{% endif %}">
                                     <div class="sections__icon">
-                                        <form method="post" class="form-button" action="{{ path('admin.content.paragraph.delete', {'id': p.id}) }}" onsubmit="return confirm('Êtes-vous sûre de vouloir supprimer ce type d\'équipement ?');">
+                                        <form method="post" class="form-button" action="{{ path('admin.content.paragraph.delete', {'id': p.id}) }}">
                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ p.id) }}">
                                             <button>{{ icon("delete") }}</button>
                                         </form>

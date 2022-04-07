@@ -64,4 +64,15 @@ class AdminCabinetController extends AbstractController
         ]);
     }
 
+    #[Route("/{id}", name: "delete", methods: ["POST"])]
+    public function delete(Cabinet $cabinet, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if($this->isCsrfTokenValid('delete'.$cabinet->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($cabinet);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin.category.index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TODO: Minifier les objets dans les armoires par Equipement
+ */
+
 namespace App\Controller\Admin;
 
 use App\Repository\CabinetRepository;

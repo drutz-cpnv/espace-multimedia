@@ -5,9 +5,10 @@ import Flash from "./modules/flash";
 import feather from "feather-icons"
 import Alert from "./modules/alert";
 import ProgressBar from "./components/ProgressBar";
+import {$$, bindCreateOptionSelect} from "./functions/dom";
 
 document.documentElement.addEventListener("turbo:load", evt => {
-    let multiselect = Array.from(document.querySelectorAll("select[multiple]"))
+    let multiselect = Array.from(document.querySelectorAll("select[multiple]:not([data-create-option])"))
 
     if (multiselect) {
         multiselect.map(v => {
@@ -29,6 +30,8 @@ document.documentElement.addEventListener("turbo:load", evt => {
             let modal = new ModalForm(v)
         })
     }
+
+   $$("[data-create-option]").map(bindCreateOptionSelect)
 
     feather.replace()
 })

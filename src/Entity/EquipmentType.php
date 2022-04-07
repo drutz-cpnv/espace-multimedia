@@ -2,15 +2,24 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EquipmentTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
  * @ORM\Entity(repositoryClass=EquipmentTypeRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
+#[ApiResource(
+    collectionOperations: ['get', 'post'],
+    itemOperations: ['get'],
+    denormalizationContext: ['groups' => ['write:EquipmentType']],
+    normalizationContext: ['groups' => ['read:EquipmentType']]
+)]
 class EquipmentType
 {
     /**
@@ -18,11 +27,13 @@ class EquipmentType
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:EquipmentType'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['read:EquipmentType', 'write:EquipmentType'])]
     private $name;
 
     /**
@@ -33,11 +44,20 @@ class EquipmentType
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['read:EquipmentType', 'write:EquipmentType'])]
     private $slug;
 
     public function __construct()
     {
         $this->equipments = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function onPrePersist()
+    {
+        $this->setSlug();
     }
 
     public function getId(): ?int

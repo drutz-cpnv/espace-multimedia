@@ -1572,8 +1572,14 @@ input:disabled {
 
 .ts-control {
   padding: calc(1.5 * var(--space)) calc(1 * var(--space)) !important;
-  background: var(--background);
+  background: var(--background) !important;
   border: 1px solid var(--border);
+  align-items: center;
+  min-height: 48px;
+}
+.ts-control .item {
+  font-size: 1rem;
+  color: var(--color);
 }
 
 .ts-control input {
@@ -2182,29 +2188,33 @@ button:not([class]):hover .icon-delete {
 
 .table td {
   vertical-align: middle;
-  padding: 16px 16px 16px 0;
+  padding: calc(2 * var(--space)) calc(2 * var(--space)) calc(2 * var(--space)) 0;
 }
 
 .table td:last-child {
   text-align: right;
   padding-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: calc(1 * var(--space));
 }
 
 .table tbody tr {
   border-bottom: 1px solid #f3f3f3;
 }
 
-.table a:not([class^=btn]) svg, .table button:not([class^=btn]) svg {
+/*.table a:not([class^="btn"]) svg, .table button:not([class^="btn"]) svg {
   display: block;
   width: 16px;
   height: 16px;
   opacity: 0.15;
   transition: 0.3s;
-}
-.table a:not([class^=btn]) svg:hover, .table button:not([class^=btn]) svg:hover {
-  opacity: 1;
-}
 
+  &:hover {
+    opacity: 1;
+  }
+}*/
 .table a:not([class^=btn]):hover {
   color: #f96669;
 }
@@ -2242,6 +2252,10 @@ button:not([class]):hover .icon-delete {
 .table .checkbox input:checked ~ label span {
   display: block;
   color: #FFF;
+}
+
+.vtable th {
+  padding: calc(2 * var(--space)) calc(2 * var(--space)) calc(2 * var(--space)) 0;
 }
 
 .badge {
@@ -2609,6 +2623,7 @@ flash-message .icon svg {
 .alert-warning .alert-body p {
   font-size: 0.8125rem;
   line-height: 1.2;
+  margin-bottom: calc(0.8 * var(--space));
 }
 .alert-warning > * {
   padding: 0 calc(1.5 * var(--space));
@@ -2780,8 +2795,14 @@ input:disabled {
 
 .ts-control {
   padding: calc(1.5 * var(--space)) calc(1 * var(--space)) !important;
-  background: var(--background);
+  background: var(--background) !important;
   border: 1px solid var(--border);
+  align-items: center;
+  min-height: 48px;
+}
+.ts-control .item {
+  font-size: 1rem;
+  color: var(--color);
 }
 
 .ts-control input {
@@ -3169,6 +3190,26 @@ button:not([class]):hover .icon-delete {
 .equipment-page {
   background-color: var(--background-light);
   border-top: 1px solid var(--border);
+}
+
+.cart-form {
+  display: flex;
+}
+.cart-form input[type=number] {
+  width: 3.5em;
+  height: 100%;
+  border-radius: 8px 0 0 8px;
+  border: 3px solid var(--border);
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding-left: calc(1.5 * var(--space));
+}
+.cart-form input[type=number]:focus {
+  background-color: var(--background-light);
+}
+.cart-form button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .support .support-hero {

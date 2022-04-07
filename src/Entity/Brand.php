@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BrandRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -15,6 +18,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable()
  * @ORM\HasLifecycleCallbacks
  */
+#[ApiResource(
+    collectionOperations: ['get', 'post'],
+    itemOperations: ['get'],
+    denormalizationContext: ['groups' => ['write:Brand']],
+    normalizationContext: ['groups' => ['read:Brand']]
+)]
 class Brand
 {
     /**
@@ -22,16 +31,20 @@ class Brand
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:Brand'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="This field is missing.")
      */
+    #[Groups(['read:Brand', 'write:Brand'])]
     private $name;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
+    #[Groups(['read:Brand'])]
     private $updatedAt;
 
     /**

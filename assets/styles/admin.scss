@@ -13,6 +13,8 @@
 @import "components/card";
 @import "components/flash";
 @import "components/progressBar";
+@import "components/tables";
+
 
 @keyframes dropdown {
     from {
@@ -168,7 +170,6 @@
     display: block;
     width: 16px;
     height: 16px;
-    opacity: 0.15;
     transition: 0.3s;
 }
 .table a:not([class^=btn]) svg:hover, .table button:not([class^=btn]) svg:hover {
@@ -283,7 +284,9 @@
 
 .small-btn-danger{
     @extend %small-btn;
-    color: var(--error) !important;
+    svg{
+        stroke: #E01313FF;
+    }
     box-shadow: 0 1px 2px rgba(141, 36, 36, 0.4) !important;
     border: 1px solid #ecd5d5 !important;
 
@@ -297,7 +300,9 @@
     &:hover{
         background-color: var(--error);
         border: 1px solid var(--error) !important;
-        color: #FFF !important;
+        svg{
+            stroke: #FFF;
+        }
     }
 
     &:active, &:focus{
@@ -637,10 +642,6 @@
 }
 .snackbar.success {
     background-color: #4cd137;
-}
-
-.accent {
-    color: #f96669;
 }
 
 .support-section {

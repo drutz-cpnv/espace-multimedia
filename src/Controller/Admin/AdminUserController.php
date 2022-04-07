@@ -37,6 +37,7 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $user->setUpdatedBy($this->getUser());
             $entityManager->flush();
             return $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
         }

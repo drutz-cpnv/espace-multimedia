@@ -28,6 +28,7 @@ class Equipment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="This field is missing.")
      */
     private $name;
 

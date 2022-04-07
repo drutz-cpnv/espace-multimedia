@@ -29,6 +29,7 @@
                         <td>le {{ cabinet.updatedAt | date("d.m.Y H:i") }} par {{ cabinet.updatedBy }}</td>
                         <td>
                             <a class="small-btn" href="{{ path('admin.cabinet.edit', {'id': cabinet.id}) }}">Modifier</a>
+                            {{ include('admin/cabinet/_delete_form.html.twig') }}
                         </td>
                     </tr>
                 {% else %}

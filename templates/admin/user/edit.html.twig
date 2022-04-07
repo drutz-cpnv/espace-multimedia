@@ -9,5 +9,47 @@
         <div class="content">
             {{ include('admin/user/_form.html.twig') }}
         </div>
+        {% if is_granted('ROLE_WEBMASTER') %}
+        <div class="content mt4">
+            <table class="table vtable">
+                <tr>
+                    <th>ID</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ user.familyName }}</td>
+                </tr>
+                <tr>
+                    <th>Prénom</th>
+                    <td>{{ user.givenName }}</td>
+                </tr>
+                <tr>
+                    <th>Roles</th>
+                    <td>{{ user.roleString }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>{{ user.statusName }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Date de création</th>
+                    <td>{{ user.createdAt | date("d.m.Y H:i") }}</td>
+                </tr>
+                <tr>
+                    <th>Date de mise à jour</th>
+                    <td>{{ user.updatedAt | date("d.m.Y H:i") }}</td>
+                </tr>
+                <tr>
+                    <th>Modifier par</th>
+                    <td>{{ user.updatedBy ?? 'null' }}</td>
+                </tr>
+            </table>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
