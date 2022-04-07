@@ -1,4 +1,4 @@
-<form method="post" class="form-button" action="{{ path('admin.brand.delete', {'id': brand.id}) }}" onsubmit="return confirm('Êtes-vous sûre de vouloir supprimer cette marque ?');">
+<form method="post" class="form-button" action="{{ path('admin.brand.delete', {'id': brand.id}) }}">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ brand.id) }}">
-    <button class="small-btn-danger icon-btn" type="submit">{{ icon('delete') }}</button>
+    <button class="small-btn-danger icon-btn" type="submit">{{ feather('trash') }}</button>
 </form>
