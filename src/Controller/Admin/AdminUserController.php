@@ -29,7 +29,8 @@ class AdminUserController extends AbstractController
     #[Route("/edit/{id}", name: "admin.user.edit")]
     public function edit(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
-        if(in_array('ROLE_WEBMASTER', $user->getRoles())){
+        $original = $user->getRoles();
+        if(in_array('ROLE_WEBMASTER', $user->getRoles()) && !$this->isGranted('ROLE_WEBMASTER')){
             $this->addFlash("error", "Cet utilisateur ne peut être modifier.");
             return $this->redirectToRoute('admin.index', [], Response::HTTP_SEE_OTHER);
         }
@@ -37,6 +38,9 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            if(in_array('ROLE_WEBMASTER', $original)){
+                $user->setRoles($original);
+            }
             $user->setUpdatedBy($this->getUser());
             $entityManager->flush();
             return $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
