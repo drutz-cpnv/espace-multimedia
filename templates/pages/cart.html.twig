@@ -45,22 +45,22 @@
             </table>
         </main>
         <aside class="stack">
-            <div class="mb2">
-                <div>
-                    <h2 class="h5 mb2">
-                        Conditions de commmande
-                    </h2>
-                    <p>TODO: Rédiger informations sur les commandes.</p>
+
+            {% for section in content.sections %}
+                <div class="mb2">
+                    <div>
+                        <h2 class="h5 mb2">
+                            {{ section.name }}
+                        </h2>
+                        {% for paragraph in section.paragraphs %}
+                            <p>{{ paragraph }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="mb2">
+            {% endfor %}
+
+            <div>
                 <div>
-                    <h2 class="h5 mb2">
-                        Commander
-                    </h2>
-                    <p class="mb2">
-                        Afin de rendre le processus de commande plus simple, nous vous prions de vérifier que tous l'équipement dont avez besoins se trouve dans votre panier. Si cela est le cas nous pouvons commencer.
-                    </p>
                     <p class="text-right">
                         {% if not app.user.isCartEmpty %}
                             <a href="{{ path('order.new') }}" class="btn-gradient">Commencer</a>

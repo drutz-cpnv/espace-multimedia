@@ -6,6 +6,7 @@ use App\Entity\Cart;
 use App\Entity\Equipment;
 use App\Form\EquipmentSearchType;
 use App\Form\UserType;
+use App\Repository\ContentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,9 +45,11 @@ class UserController extends AbstractController
     }
 
     #[Route("/cart", name: "user.cart")]
-    public function confirmCart(): Response
+    public function confirmCart(ContentRepository $contentRepository): Response
     {
-        return $this->render('pages/cart.html.twig');
+        return $this->render('pages/cart.html.twig', [
+            'content' => $contentRepository->findOneByKey('page.order.new')
+        ]);
     }
 
     #[Route("/cart/remove/{id}", name: "user.cart.remove", methods: ["POST"])]
