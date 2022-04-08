@@ -365,7 +365,8 @@
 }
 
 .page-header-accent{
-  background-color: var(--contrast);
+  //background-color: var(--contrast);
+  background-color: var(--primary);
   padding-bottom: space(6);
   padding-top: space(6);
   border-bottom: 1px solid var(--border);

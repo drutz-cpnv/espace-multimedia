@@ -1,4 +1,4 @@
-import './styles/admin.css';
+import './styles/admin.scss';
 import './bootstrap';
 import './controllers/activePage'
 import './main'

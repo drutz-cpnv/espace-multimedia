@@ -75,7 +75,7 @@ class HardwareController extends AbstractController
                 'menu' => 'hardware',
                 'equipment' => $equipment,
                 'cartForm' => $form
-            ], (new Response())->setStatusCode(303));
+            ]);
         }
 
         return $this->renderForm("pages/equipment_show.html.twig", [

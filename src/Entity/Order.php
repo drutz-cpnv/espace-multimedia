@@ -155,6 +155,11 @@ class Order
         return $this;
     }
 
+    public function getItemsCount(): int
+    {
+        return $this->items->count();
+    }
+
     public function removeItem(Item $item): self
     {
         $this->items->removeElement($item);
@@ -216,7 +221,7 @@ class Order
     {
         if (!$this->documents->contains($document)) {
             $this->documents[] = $document;
-            $document->setDocumetOrder($this);
+            $document->setDocumentOrder($this);
         }
 
         return $this;
@@ -226,8 +231,8 @@ class Order
     {
         if ($this->documents->removeElement($document)) {
             // set the owning side to null (unless already changed)
-            if ($document->getDocumetOrder() === $this) {
-                $document->setDocumetOrder(null);
+            if ($document->getDocumentOrder() === $this) {
+                $document->setDocumentOrder(null);
             }
         }
 

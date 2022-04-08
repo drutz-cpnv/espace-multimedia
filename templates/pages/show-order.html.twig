@@ -10,7 +10,90 @@
     <div class="show-order-page">
         <div class="order-card">
             <div class="order-card__header">
-                Hello
+                <nav class="order-card__nav">
+                    <a href="#" class="order-card__nav-element active">Résumé</a>
+                    <a href="#" class="order-card__nav-element">Équipement</a>
+                    <a href="#" class="order-card__nav-element">Chronologie</a>
+                    <a href="#" class="order-card__nav-element">Actions</a>
+                </nav>
+            </div>
+            <div class="order-card__body">
+                <h2 class="order-card__title h2 mb2">Résumé</h2>
+                <p class="order-card__paragraph hero-paragraph">{{ order.description }}</p>
+                <div class="hstack mt3" style="--gap: 6">
+
+                    <div class="order-card__list">
+                        <div class="card__list-icon">
+                            {{ feather('hash') }}
+                        </div>
+                        <div>
+                            <div class="card__list-label text-muted">
+                                Numéro de commande
+                            </div>
+                            <div class="card__list-value">
+                                {{ order.initialZeroId }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-card__list">
+                        <div class="card__list-icon">
+                            {{ feather('calendar') }}
+                        </div>
+                        <div>
+                            <div class="card__list-label text-muted">
+                                Dates
+                            </div>
+                            <div class="card__list-value">
+                                {{ order.start | date("d.m.Y") }} -> {{ order.end | date("d.m.Y") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-card__list">
+                        <div class="card__list-icon">
+                            {{ feather('user') }}
+                        </div>
+                        <div>
+                            <div class="card__list-label text-muted">
+                                Enseignant
+                            </div>
+                            <div class="card__list-value">
+                                {{ order.teacher ?? 'Aucun enseignant' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-card__list">
+                        <div class="card__list-icon">
+                            {{ feather('info') }}
+                        </div>
+                        <div>
+                            <div class="card__list-label text-muted">
+                                Statut
+                            </div>
+                            <div class="card__list-value">
+                                {{ order.currentStatus.state.name }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-card__list">
+                        <div class="card__list-icon">
+                            {{ feather('clock') }}
+                        </div>
+                        <div>
+                            <div class="card__list-label text-muted">
+                                Dernière mise à jour
+                            </div>
+                            <div class="card__list-value">
+                                le {{ order.currentStatus.createdAt | date("d.m.Y à H:i") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hstack mt3">
+                    <a href="#" class="order-dl-btn">{{ feather('arrow-down-circle') }} Bon de commande</a>
+                </div>
             </div>
         </div>
     </div>

@@ -1,7 +1,4 @@
 <?php
-/**
- * TODO: Système de récupération de mot de passe
- */
 
 namespace App\Controller;
 

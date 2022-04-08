@@ -161,7 +161,9 @@ nav.header {
 
 .header-contrast .header {
   --border-header: rgba(255, 255, 255, 0.3);
-  background-color: var(--contrast);
+
+  background-color: var(--primary);
+  //background-color: var(--contrast);
   color: rgba(255, 255, 255, 0.70);
 
   li > a:hover,

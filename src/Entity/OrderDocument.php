@@ -184,5 +184,9 @@ class OrderDocument
         return $base;
     }
 
+    public function setDocumetOrder(Order $param)
+    {
+    }
+
 
 }

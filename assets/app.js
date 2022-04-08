@@ -1,4 +1,4 @@
-import './styles/app.css';
+import './styles/app.scss';
 import './bootstrap';
 import './controllers/activePage'
 import './main'
