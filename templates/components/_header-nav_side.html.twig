@@ -4,7 +4,7 @@
             {{ include('components/_cart.html.twig') }}
         </li>
         <li class="header__account">
-            <a href="{{ path('user.profil') }}" {{ menu_active('profil') }}>{{ icon('person_outline') }} {{ app.user }}</a>
+            <a href="{{ path('user.profil') }}" {{ menu_active('profil') }}>{{ icon('person_outline') }}<span class="header__account-username">{{ app.user }}</span></a>
         </li>
         <li class="header__logout">
             <a href="{{ path('app.logout') }}">{{ icon('logout') }}</a>
@@ -16,4 +16,7 @@
             <a href="{{ path('app_register') }}" {{ menu_active('register') }}>S'inscrire</a>
         </li>
     {% endif %}
+    <li>
+        <a href="#" class="mobile-menu-toggle">{{ icon('menu') }}</a>
+    </li>
 </ul>

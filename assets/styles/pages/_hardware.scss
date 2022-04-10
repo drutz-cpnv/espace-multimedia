@@ -3,6 +3,13 @@
   grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
   grid-gap: space(4);
   grid-auto-flow: dense;
+
+  @include down(562) {
+    display: flex;
+    flex-direction: column;
+    gap: space(4);
+
+  }
 }
 
 .equipment-hero{
@@ -83,5 +90,13 @@
   button {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+  }
+}
+
+.equipment-control{
+  @include down(600) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: space(2);
   }
 }

@@ -1027,11 +1027,17 @@ body.admin-page {
     height: 100vh;
     font-family: "Inter", sans-serif;
     overflow-y: auto;
-    overflow-x: hidden;
     background-color: #f8f9fc;
     display: grid;
     grid-template-columns: 275px 1fr;
     grid-template-rows: 70px 1fr;
+
+    @include down(900) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 70px 1fr;
+        grid-template-areas: "header"
+        "main";
+    }
     /*main{
       display: none;
     }*/
@@ -1042,6 +1048,17 @@ body.admin-page.no-scroll {
 body.admin-page header.admin-header {
     background-color: #FFF;
     border-bottom: 1px solid #E4E5E8;
+    .mobile-menu-toggle{
+        display: none;
+    }
+
+    @include down(900) {
+        grid-area: header;
+
+        .mobile-menu-toggle{
+            display: block;
+        }
+    }
 }
 body.admin-page header.admin-header .container {
     display: flex;
@@ -1084,6 +1101,19 @@ body.admin-page > aside {
     border-right: 1px solid #E4E5E8;
     grid-column: 1;
     grid-row: 1/span 2;
+
+    @include down(900) {
+        grid-area: aside;
+        position: fixed;
+        left: -100%;
+        transition-duration: .2s;
+        top: 70px;
+        z-index: 2;
+
+        &.is-open{
+            left: 0;
+        }
+    }
 }
 body.admin-page > aside nav {
     padding: 10px 0;
@@ -1123,6 +1153,25 @@ body.admin-page > aside nav .nav-btn.is-active {
         }
     }
 }
+@include down(900) {
+    .admin-page .main-content {
+        grid-area: main;
+        position: relative;
+
+        .menu-overlay{
+            position: absolute;
+            inset: 0;
+            background-color: rgba(255, 128, 128, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            &.hide {
+                display: none;
+            }
+        }
+    }
+}
+
 body.admin-page > aside nav .nav-btn .icon {
     margin-right: 10px;
     svg{

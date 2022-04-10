@@ -11,6 +11,8 @@
   opacity: 0;
   visibility: hidden;
 
+
+
   &.visible{
     top: calc(100% + 20px);
     opacity: 1;
@@ -83,4 +85,39 @@
 
 .header__cart{
   position: relative;
+}
+
+@include down(600) {
+
+  .header__cart{
+    position: unset;
+  }
+
+  .cart {
+    position: fixed;
+    left: unset;
+    right: 0;
+    --gap: 10px;
+
+    &::after, &::before{
+      right: 116px;
+    }
+
+    &::before{
+      right: calc(116px - 2px);
+    }
+
+    &.visible {
+      position: fixed;
+      top: 0;
+      left: unset;
+      right: 0;
+      bottom: 0;
+
+      & > div, .cart__body{
+        height: max-content;
+      }
+    }
+
+  }
 }
