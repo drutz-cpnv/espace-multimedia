@@ -147,7 +147,14 @@ class AdminOrderController extends AbstractController
             if($orderManager->changeState($slug, $orderState, $order) !== false){
                 $entityManager->persist($orderState);
                 $entityManager->flush();
-                $userNotifier->clientOrderStatusChange($order->getId());
+
+                if($orderState->getState()->getSlug() === "error"){
+                    $userNotifier->clientOrderError($order->getId());
+                }
+                else{
+                    $userNotifier->clientOrderStatusChange($order->getId());
+                }
+
             }
             return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
         }

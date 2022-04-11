@@ -45,6 +45,11 @@ class OrderState
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=OrderMessage::class, mappedBy="orderState", cascade={"persist", "remove"})
+     */
+    private $message;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTimeImmutable());
@@ -119,6 +124,28 @@ class OrderState
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getMessage(): ?OrderMessage
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?OrderMessage $message): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($message === null && $this->message !== null) {
+            $this->message->setOrderState(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($message !== null && $message->getOrderState() !== $this) {
+            $message->setOrderState($this);
+        }
+
+        $this->message = $message;
 
         return $this;
     }

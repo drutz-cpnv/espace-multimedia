@@ -86,6 +86,7 @@ class Order
      */
     private $usedItems;
 
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -94,6 +95,7 @@ class Order
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->equipment = new ArrayCollection();
         $this->usedItems = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int

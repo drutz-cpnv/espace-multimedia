@@ -1,0 +1,31 @@
+{% extends 'message/message_base.html.twig' %}
+
+
+
+{% block body %}
+    <div class="container py5">
+        <div class="support">
+            <div class="support-hero">
+                <h1 class="hero-title">
+                    Formulaire de réponse
+                </h1>
+                <p class="hero-infos">
+                    {{ messageRequest.createdAt | format_datetime('long', 'none') }} • Commande n°{{ messageRequest.order.initialZeroId }} • Espace Multimédia
+                </p>
+                <p class="hero-infos mt4">
+                    Voici la demande qui vous a été adressée</p>
+                <p class="hero-text">
+                    "{{ messageRequest.orderState.comments }}"
+                </p>
+            </div>
+            <div class="stack-large mt4">
+                {{ form_start(form) }}
+                    <section class="grid">
+                        {{ form_row(form.title, {attr: {disabled: "disabled"}}) }}
+                        {{ form_row(form.content) }}
+                        <button class="btn-gradient mla">Répondre</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+body.message-page{
+  background-color: var(--background-light);
+
+  form {
+    max-width: 600px;
+    width: clamp(200px, 100%, 600px);
+    margin: 0 auto;
+  }
+}
+
