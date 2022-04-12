@@ -4,7 +4,7 @@
             <a href="{{ path('equipment.show', {id: equipment.id, slug: equipment.slug}) }}">{{ equipment.name }}</a>
         </h2>
         <div class="card__image">
-            <img src="{{ vich_uploader_asset(equipment) }}" alt="">
+            <img src="{% if equipment.filename is not null %}{{ vich_uploader_asset(equipment) }}{% else %}{{ asset('images/default.png') }}{% endif %}" alt="">
         </div>
     </div>
     <footer class="card__footer text-small">

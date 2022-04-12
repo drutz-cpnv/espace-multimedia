@@ -7,7 +7,6 @@
             title: 'Commandes'
         } %}
         <div class="pills-filter mt2 mb2 hstack-large" style="--gap: 2">
-            {% dump(filter) %}
             <a href="{{ path('admin.order.index') }}" class="pill{% if filter is null %} pill-active{% endif %}" style="color: #FF292D; --after-back: #FF292D;">Tout afficher</a>
             {% for state in states %}
                 <a href="{{ path('admin.order.index') }}?filter={{ state.slug }}" class="pill{% if filter is same as(state.slug) %} pill-active{% endif %}" style="color: #{{ state.color }}; --after-back: #{{ state.color }};">{{ state.name }}</a>

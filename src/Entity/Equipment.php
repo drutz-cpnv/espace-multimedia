@@ -123,6 +123,7 @@ class Equipment
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->setEnabled(false);
         $this->orders = new ArrayCollection();
+        $this->setIsRoom(false);
     }
 
     public function getId(): ?int
@@ -378,7 +379,7 @@ class Equipment
             }
         }
 
-        return $similar;
+        return new ArrayCollection($similar->slice(0, 4));
     }
 
     /**
