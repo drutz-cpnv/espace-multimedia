@@ -30,9 +30,11 @@
                             <h5>{{ setting.name }}</h5>
                         </div>
                         <div class="action-card__btn">
-                            <a href="#" class="action-btn">
-                                Activé
-                            </a>
+                            <form action="{{ path('admin.settings.switch', {'id': setting.id}) }}" method="post" class="form-button">
+                                <button class="action-btn{% if setting.isActive is same as(false) %} disabled-btn{% endif %}">
+                                    {% if setting.isActive is same as(false) %}Desactivé{% else %}Activé{% endif %}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}

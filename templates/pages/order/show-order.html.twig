@@ -11,10 +11,11 @@
         <div class="order-card">
             <div class="order-card__header">
                 <nav class="order-card__nav">
-                    <a href="#" class="order-card__nav-element active">Résumé</a>
-                    <a href="#" class="order-card__nav-element">Équipement</a>
-                    <a href="#" class="order-card__nav-element">Chronologie</a>
-                    <a href="#" class="order-card__nav-element">Actions</a>
+                    <a href="{{ path('orders.user.show', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.summary') }}>Résumé</a>
+                    {# {% if order.currentStatus.state.slug is same as("error") %}<a href="{{ path('orders.user.show.equipment', {id: order.id}) }}" class="order-card__nav-element nav-element-error" {{ tab_active('show.equipment') }}>{{ feather('alert-octagon') }} Erreur</a>{% endif %} #}
+                    <a href="{{ path('orders.user.show.equipment', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.equipment') }}>Équipement</a>
+                    <a href="{{ path('orders.user.show.chronology', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.chronology') }}>Chronologie</a>
+                    <a href="{{ path('orders.user.show.actions', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.actions') }}>Actions</a>
                 </nav>
             </div>
             <div class="order-card__body">

@@ -34,11 +34,29 @@ class AdminOrderController extends AbstractController
     }
 
     #[Route("", name: "admin.order.index")]
-    public function index(OrderRepository $orderRepository): Response
+    public function index(Request $request, OrderRepository $orderRepository, StateRepository $stateRepository): Response
     {
+        $filter = $request->get("filter");
+
+        $orders = $orderRepository->findAll();
+
+        if(!is_null($filter)) {
+            $filterState = $stateRepository->findOneBySlug($filter);
+            if (is_null($filterState)) {
+                return $this->redirectToRoute('admin.order.index', [], Response::HTTP_SEE_OTHER);
+            }
+            else{
+                $orders = $orderRepository->findByState($filterState);
+            }
+        }
+
+
+
         return $this->render('admin/orders/index.html.twig', [
             'menu' => 'admin.order',
-            'orders' => $orderRepository->findAll()
+            'orders' => $orders,
+            'states' => $stateRepository->findAll(),
+            'filter' => $filter
         ]);
     }
 

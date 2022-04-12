@@ -36,13 +36,50 @@ class OrderController extends AbstractController
     }
 
     #[Route("/mes-commandes/{id}", name: "orders.user.show")]
-    public function myOrder(Order $order, StateRepository $stateRepository, OrderRepository $orderRepository): Response
+    public function myOrder(Order $order): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
-        return $this->render('pages/show-order.html.twig', [
+        return $this->render('pages/order/show-order.html.twig', [
             'order' => $order,
-            'menu' => 'myOrder'
+            'menu' => 'myOrder',
+            'tab' => 'show.summary'
+        ]);
+    }
+
+    #[Route("/mes-commandes/{id}/equipement", name: "orders.user.show.equipment")]
+    public function myOrderEquipment(Order $order): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
+        return $this->render('pages/order/show-order.html.twig', [
+            'order' => $order,
+            'menu' => 'myOrder',
+            'tab' => 'show.equipment'
+        ]);
+    }
+
+    #[Route("/mes-commandes/{id}/chronologie", name: "orders.user.show.chronology")]
+    public function myOrderChronology(Order $order): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
+        return $this->render('pages/order/show-order.html.twig', [
+            'order' => $order,
+            'menu' => 'myOrder',
+            'tab' => 'show.chronology'
+        ]);
+    }
+
+    #[Route("/mes-commandes/{id}/action", name: "orders.user.show.actions")]
+    public function myOrderActions(Order $order): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if($order->getClient()->getId() !== $this->getUser()->getId() || !$this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
+        return $this->render('pages/order/show-order.html.twig', [
+            'order' => $order,
+            'menu' => 'myOrder',
+            'tab' => 'show.actions'
         ]);
     }
 

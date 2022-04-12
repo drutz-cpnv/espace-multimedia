@@ -110,6 +110,11 @@ class Equipment
      */
     private $cabinet;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isRoom;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -411,6 +416,18 @@ class Equipment
     public function setCabinet(?Cabinet $cabinet): self
     {
         $this->cabinet = $cabinet;
+
+        return $this;
+    }
+
+    public function getIsRoom(): ?bool
+    {
+        return $this->isRoom;
+    }
+
+    public function setIsRoom(?bool $isRoom): self
+    {
+        $this->isRoom = $isRoom;
 
         return $this;
     }

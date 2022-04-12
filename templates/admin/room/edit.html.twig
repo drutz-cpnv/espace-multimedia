@@ -1,0 +1,15 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}Modification de la catégorie{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'tag',
+            title: 'Modification de la catégorie',
+        } %}
+        <div class="content">
+            {{ include('admin/category/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

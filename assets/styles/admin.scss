@@ -1651,9 +1651,13 @@ body.admin-page .admi-page__page-header .header-actions a:active {
     .action-card__btn{
         margin-top: auto;
 
-        a.action-btn{
+        form{
+            width: 100%;
+        }
+
+        .action-btn{
             @extend %btn;
-            display: block;
+            display: inline-block;
             text-align: center;
             width: 100%;
             background-color: var(--contrast);

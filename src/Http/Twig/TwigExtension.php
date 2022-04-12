@@ -19,6 +19,7 @@ class TwigExtension extends AbstractExtension
             new TwigFunction('icon', [$this, 'icon'], ['is_safe' => ['html']]),
             new TwigFunction('feather', [$this, 'feather'], ['is_safe' => ['html']]),
             new TwigFunction('menu_active', [$this, 'menuActive'], ['is_safe' => ['html'], 'needs_context' => true]),
+            new TwigFunction('tab_active', [$this, 'tabActive'], ['is_safe' => ['html'], 'needs_context' => true]),
             new TwigFunction('dot', [$this, 'getStateDot'], ['is_safe' => ['html']]),
             new TwigFunction('alert', [$this, 'alert'], ['is_safe' => ['html']]),
             new TwigFunction('status_choices', [$this, 'statusChoices'], ['is_safe' => ['bool']]),
@@ -65,6 +66,14 @@ HTML;
     {
         if (($context['menu'] ?? null) === $name) {
             return ' aria-current="page"';
+        }
+        return '';
+    }
+
+    public function tabActive(array $context, string $name): string
+    {
+        if (($context['tab'] ?? null) === $name) {
+            return ' aria-current="tab"';
         }
         return '';
     }

@@ -1,11 +1,11 @@
 
 const currentPage = () => {
     document.documentElement.addEventListener("turbo:load", evt => {
-        let currentPageElementMenu = document.querySelector(".nav-element[aria-current]") || document.querySelector(".nav-btn[aria-current]")
+        let currentPageElementsMenu = [...document.querySelectorAll("[aria-current]")]
 
-        if (currentPageElementMenu) {
-            currentPageElementMenu.classList.add("is-active")
-        }
+        currentPageElementsMenu.forEach(el => {
+            el.classList.add("is-active")
+        })
     })
 }
 

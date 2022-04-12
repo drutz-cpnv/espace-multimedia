@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Equipment;
 use App\Entity\EquipmentSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,40 +23,50 @@ class EquipmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipment::class);
     }
 
-     /**
-      * @return Equipment[] Returns an array of Equipment objects
-    */
+    /**
+     * @return Equipment[] Returns an array of Equipment objects
+     */
     public function findAllEnabled()
     {
         return $this->findVisibleQuery()
+            ->andWhere('e.isRoom = false')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-    public function findSearch(EquipmentSearch $search) {
+    public function findAllEquipment()
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.isRoom = false')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSearch(EquipmentSearch $search)
+    {
         $query = $this->getSearchQuery($search)->getQuery();
         return $query->getResult();
     }
 
-    private function getSearchQuery(EquipmentSearch $search) {
+    private function getSearchQuery(EquipmentSearch $search)
+    {
         $query = $this->createQueryBuilder('e')
             ->select('e', 'c', 'b', 't')
             ->join('e.categories', 'c')
             ->join('e.brand', 'b')
             ->join('e.type', 't');
 
-        if(!$search->getCategories()->isEmpty()){
+        if (!$search->getCategories()->isEmpty()) {
             $query = $query->andWhere('c.id in (:categories)')
                 ->setParameter('categories', $search->getCategories());
         }
 
-        if(!$search->getBrands()->isEmpty()){
+        if (!$search->getBrands()->isEmpty()) {
             $query = $query->andWhere('b.id in (:brands)')
                 ->setParameter('brands', $search->getBrands());
         }
 
-        if(!$search->getTypes()->isEmpty()){
+        if (!$search->getTypes()->isEmpty()) {
             $query = $query->andWhere('t.id in (:types)')
                 ->setParameter('types', $search->getTypes());
         }
@@ -69,6 +80,15 @@ class EquipmentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.enabled = :val')
             ->setParameter('val', true);
+    }
+
+    public function findRoom()
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.isRoom = true')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     /*

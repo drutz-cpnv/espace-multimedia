@@ -23,7 +23,7 @@ class AdminEquipmentController extends AbstractController
     {
         return $this->render('admin/equipment/index.html.twig', [
             'menu' => 'admin.equipment',
-            'equipments' => $equipmentRepository->findAll()
+            'equipments' => $equipmentRepository->findAllEquipment()
         ]);
     }
 

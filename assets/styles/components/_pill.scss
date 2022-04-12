@@ -51,6 +51,15 @@ a.pill:hover::after {
   margin-right: space(1);
 }
 
+.pill-active{
+  color: #FFF !important;
+
+  &::after {
+    background-color: var(--after-back);
+    opacity: 1;
+  }
+}
+
 // Sizes
 // =============
 %pill-small{

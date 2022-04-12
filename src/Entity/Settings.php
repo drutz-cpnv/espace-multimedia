@@ -72,6 +72,11 @@ class Settings
         return $this;
     }
 
+    public function isActive(): bool
+    {
+        return filter_var($this->getValue(), FILTER_VALIDATE_BOOLEAN);
+    }
+
     public function getValue(): ?string
     {
         return $this->value;
