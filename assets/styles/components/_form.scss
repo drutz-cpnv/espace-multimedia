@@ -1,6 +1,6 @@
 // Label
 // ==================
-label {
+label, legend {
   text-transform: uppercase;
   font-weight: 300;
   font-size: 0.85em;
@@ -64,7 +64,7 @@ input:disabled {
 .form-group textarea {
   min-height: 150px;
 }
-.form-group label {
+.form-group label, .form-group legend {
   display: block;
   margin-bottom: space(1);
 }

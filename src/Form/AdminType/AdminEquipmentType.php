@@ -14,6 +14,7 @@ use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AdminEquipmentType extends AbstractType
 {
@@ -23,7 +24,9 @@ class AdminEquipmentType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('type')
-            ->add('imageFile')
+            ->add('imageFile', VichImageType::class, [
+                'required' => false
+            ])
             ->add('categories', CreateOptionEntityType::class, [
                 'class' => Category::class,
                 'post' => '/api/categories'
