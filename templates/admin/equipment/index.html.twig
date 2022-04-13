@@ -14,11 +14,11 @@
             <table class="table js-search-table" style="margin: 20px 0">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Marque</th>
+                    <th>Disponiblité</th>
                     <th>Dernière mise à jour</th>
-                    <th>Ajouté par</th>
+                    <th>Mis à jour par</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -26,11 +26,11 @@
 
                 {% for equipment in equipments %}
                     <tr>
-                        <td>{{ equipment.id }}</td>
                         <td>{{ equipment.name }}</td>
                         <td>{{ equipment.brand.name }}</td>
+                        <td>{% if equipment.enabled %}{{ dot("00FF00") }}{% else %}{{ dot("FF0000") }}{% endif %}</td>
                         <td>{{ equipment.updatedAt ? equipment.updatedAt|date('d.m.Y H:i:s') : '' }}</td>
-                        <td>{{ equipment.createdBy.fullname }}</td>
+                        <td>{{ equipment.updatedBy.fullname }}</td>
                         <td>
                             <a class="small-btn" href="{{ path('admin.equipment.show', {'id': equipment.id}) }}">Afficher</a>
                             <a class="small-btn" href="{{ path('admin.equipment.edit', {'id': equipment.id}) }}">Modifier</a>

@@ -52,11 +52,11 @@ HTML;
 
     }
 
-    public function getStateDot(Order $order): string
+    public function getStateDot($color, $title = null): string
     {
         return <<<HTML
 <div class="dots">
-    <div class="dot" style="--dot-color: #{$order->getOrderStates()->last()->getState()->getColor()}" title="{$order->getOrderStates()->last()->getState()->getName()}"></div>
+    <div class="dot" style="--dot-color: #{$color}" title="{$title}"></div>
 </div>
 HTML;
 
