@@ -10,7 +10,7 @@
     <div class="equipment py5" style="--gap: 5">
         <main class="stack-large">
             <div class="card p3">
-                <img src="{{ vich_uploader_asset(equipment) }}" alt="{{ equipment.name }}">
+                <img src="{% if equipment.filename is not null %}{{ vich_uploader_asset(equipment) }}{% else %}{{ asset('images/default.png') }}{% endif %}" alt="{{ equipment.name }}">
             </div>
         </main>
         <aside class="stack">
@@ -19,7 +19,11 @@
                     <h1 class="h1">{{ equipment.name }}</h1>
                     <h3 class="hero-text">{{ equipment.type.name }}</h3>
                 </div>
-                {{ include('components/_cart_manage_btn.html.twig') }}
+                {% if equipment.itemCount > 0 %}
+                    {{ include('components/_cart_manage_btn.html.twig') }}
+                {% else %}
+                    <p class="text-muted">Ne peut pas être ajouté au panier</p>
+                {% endif %}
             </div>
             <div class="card p3">
                 <div class="mb2">
@@ -32,6 +36,12 @@
                     <div>
                         <h2 class="h5 mb2">Marque</h2>
                         <p>{{ equipment.brand.name }}</p>
+                    </div>
+                </div>
+                <div class="mb2">
+                    <div>
+                        <h2 class="h5 mb2">Nombre</h2>
+                        <p>{{ equipment.itemCount }}</p>
                     </div>
                 </div>
                 <div class="mb2">
