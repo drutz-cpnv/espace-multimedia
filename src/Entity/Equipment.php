@@ -76,11 +76,13 @@ class Equipment
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="equipment")
+     * @Assert\NotBlank()
      */
     private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="equipment")
+     * @Assert\NotBlank()
      */
     private $brand;
 
@@ -97,6 +99,7 @@ class Equipment
     /**
      * @ORM\ManyToOne(targetEntity=EquipmentType::class, inversedBy="equipments")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $type;
 
