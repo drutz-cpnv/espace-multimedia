@@ -48,15 +48,15 @@
                             <div class="text-muted mb2">Date de création de la commande</div>
                             <h4 class="h4">{{ order.createdAt | date("d.m.Y à H:i") }}</h4>
                         </div>
-                        <div class="p2">
+                        <div class="p2 ">
                             <div class="text-muted mb2">Document</div>
-                            <div>
-                                {% if order.currentStatus.state.slug is same as('accepted') %}<a href="{{ path('admin.order.document.1', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de commande</a>{% else %}<p>Veuillez accepter la commande pour générer le bon de commande.</p>{% endif %}
+                            <div class="">
+                                {% if order.currentStatus.state.slug is same as('accepted') %}<a href="{{ path('admin.order.doc', {id: order.id}) }}" class="btn-primary-outlined btn-small" target="_blank">Bon de commande</a>{% else %}<p>Veuillez accepter la commande pour générer le bon de commande.</p>{% endif %}
                             </div>
                         </div>
                         <div class="p2 full">
                             <div class="text-muted mb2">Changement de statut</div>
-                            <div class="grid">
+                            <div class="grid{% if canChangeState is same as(false) %} disabled-feature{% endif %}">
 
                                 {% for state in states %}
                                     {% if status_choices(order.currentStatus, state) %}

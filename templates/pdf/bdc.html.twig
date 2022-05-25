@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('print') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('print') }}
+    {% endblock %}
+
+    <title>Bon de livraison</title>
+</head>
+<body>
+    <div class="page-wraper">
+        <header>
+            <div>
+                <h1>Bon de commande</h1>
+                <h3 class="font-mono"><span class="bold">#</span>{{ order.initialZeroId }}</h3>
+            </div>
+            <div class="dates">
+                <p class="date">Dates : {{ order.start | date("d.m.Y") }}</p>
+                <p>-> <span class="date">{{ order.end | date("d.m.Y") }}</span></p>
+            </div>
+        </header>
+
+        <div class="details">
+            <div>
+                <div class="d-title">Émis par</div>
+                <div class="d-value">Espace Multimédia</div>
+            </div>
+
+            <div>
+                <div class="d-title">À l'attention de</div>
+                <div class="d-value">{{ order.client }}</div>
+            </div>
+
+            <div>
+                <div class="d-title">Informations</div>
+                <div class="d-table">
+                    <p>
+                        <span class="dt-title">Nom du compte</span><br>
+                        <span class="dt-value">{{ order.client }}</span>
+                    </p>
+                    <p>
+                        <span class="dt-title">Adresse e-mail</span><br>
+                        <span class="dt-value">{{ order.client.email }}</span>
+                    </p>
+                    <p>
+                        <span class="dt-title">Commande passée le</span><br>
+                        <span class="dt-value">{{ order.createdAt | date("d.m.Y à H:i") }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Quantité</th>
+                    <th class="col-name">Nom</th>
+                    <th>Staff</th>
+                    <th>Client</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipment in equipments %}
+                <tr>
+                    <td class="quantity">
+                        <div class="quantity-value font-mono">{{ equipment.items.count }}</div>
+                    </td>
+                    <td>
+                        <div class="font-mono">
+                            <p class="bold equipment-title">{{ equipment.equipment }}</p>
+                            {% for item in equipment.items %}
+                                <p class="item-tag">{{ item.tag }}</p>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td colspan="2">
+                        <div class="sign-form">
+                            <div class="form-title">Mise à disposition</div>
+
+                            <div class="input-group">
+                                <div class="input-control">
+                                    <div class="label">
+                                        <span>Signature</span>
+                                        <span>Date</span>
+                                    </div>
+                                    <div class="input">/</div>
+                                </div>
+
+                                <div class="input-control">
+                                    <div class="label">
+                                        <span>Signature</span>
+                                        <span>Date</span>
+                                    </div>
+                                    <div class="input">/</div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-title">Remise</div>
+                            <div class="input-group">
+                                <div class="input-control">
+                                    <div class="label">
+                                        <span>Signature</span>
+                                        <span>Date</span>
+                                    </div>
+                                    <div class="input">/</div>
+                                </div>
+
+                                <div class="input-control">
+                                    <div class="label">
+                                        <span>Signature</span>
+                                        <span>Date</span>
+                                    </div>
+                                    <div class="input">/</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

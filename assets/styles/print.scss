@@ -1,0 +1,192 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: calc(100vh - 3rem);
+  margin: 0;
+  padding: 0;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.bold{
+  font-weight: 700;
+}
+
+.page-wraper{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 3rem;
+  width: calc(100% - 2rem);
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+
+  h1{
+    width: 200px;
+  }
+
+  h3{
+    font-weight: 500;
+    font-size: 29px;
+    color: #FDCBCC;
+  }
+
+  .dates {
+    color: #969696;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    text-align: right;
+    font-weight: 300;
+
+    .date{
+      font-family: 'Poppins', sans-serif;
+    }
+  }
+}
+
+.details{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+
+  .d-title{
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    color: #969696;
+  }
+
+  .d-value {
+    font-size: 19px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .dt-title {
+    color: #969696;
+  }
+
+  .dt-value{
+    color: #A8A8A8;
+  }
+
+  .d-table {
+    margin-top: 8px;
+    font-size: 13px;
+    p{
+      margin-bottom: 8px;
+      line-height: 19px;
+    }
+  }
+}
+
+.table {
+  margin-top: 3rem;
+  border-collapse: collapse;
+  width: 100%;
+
+  thead {
+    border-bottom: 1px solid #d5e3ec;
+    text-align: left;
+
+    th{
+      padding: 8px 4px;
+    }
+  }
+
+  .equipment-title {
+    margin-bottom: 8px;
+  }
+
+  .item-tag {
+    color: #B2B2B2;
+    font-size: 13px;
+  }
+
+  tbody {
+    td {
+      vertical-align: top;
+      padding: 8px 4px;
+    }
+
+    tr{
+      border-bottom: 1px dashed #D3D3D3;
+    }
+
+    .quantity-value {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #F8F8F8;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .quantity {
+      text-align: center;
+    }
+  }
+}
+
+.sign-form {
+  .form-title {
+    font-size: 8px;
+    text-align: center;
+    color: #B2B2B2;
+  }
+
+  .input-control{
+    width: 200px !important;
+    position: relative;
+  }
+
+  .input-group {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin: 15px 0;
+  }
+
+  .input {
+    width: 100%;
+    border: 2px solid #EA2424;
+    border-radius: 3px;
+    padding: 8px 16px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: #BFBFBF;
+  }
+
+  .label {
+    position: absolute;
+    background-color: #FFF;
+    font-size: 8px;
+    display: flex;
+    width: calc(100% - 16px);
+    justify-content: space-between;
+    margin: 0 8px;
+    padding: 0 8px;
+    top: -3px;
+  }
+}
+
+.col-name{
+  width: 500px;
+}
+
+
+
+
