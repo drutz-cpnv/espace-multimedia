@@ -79,13 +79,25 @@ class EquipmentRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.enabled = :val')
-            ->setParameter('val', true);
+            ->setParameter('val', true)
+            ->andWhere('e.items > 0');
     }
 
     public function findRoom()
     {
         return $this->createQueryBuilder('e')
             ->where('e.isRoom = true')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findLast($count = 5)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.isRoom = false')
+            ->addOrderBy('e.createdAt', 'DESC')
+            ->setMaxResults($count)
             ->getQuery()
             ->getResult()
             ;

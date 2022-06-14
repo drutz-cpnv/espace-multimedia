@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Equipment;
+use App\Entity\Message;
 use App\Entity\Order;
 use App\Entity\OrderState;
+use App\Form\MessageFormType;
 use App\Form\OrderType;
 use App\Repository\ItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
 use App\Services\CartManagerService;
 use App\Services\OrderManager;
+use App\Services\SettingsAccessCheckerService;
 use App\Services\UserNotifierService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +27,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AbstractController
 {
+
+    public function __construct(
+        private SettingsAccessCheckerService $accessCheckerService
+    )
+    {
+    }
 
     #[Route("/mes-commandes", name: "orders.user")]
     public function myOrders(StateRepository $stateRepository, OrderRepository $orderRepository): Response
@@ -52,10 +61,57 @@ class OrderController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
-        return $this->render('pages/order/show-order.html.twig', [
+        return $this->render('pages/order/equipment-order.html.twig', [
             'order' => $order,
             'menu' => 'myOrder',
             'tab' => 'show.equipment'
+        ]);
+    }
+
+    #[Route("/mes-commandes/{id}/error", name: "orders.user.show.error")]
+    public function myOrderError(Order $order, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if($order->getClient()->getId() !== $this->getUser()->getId() && !$this->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
+        if(is_null($order->getErrorState())) return $this->redirectToRoute('orders.user.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
+        if(is_null($order->getErrorState()->getMessage())) {
+            $this->addFlash('error', "Un problème est survenu veuillez contacter un administrateur.");
+            return $this->redirectToRoute('orders.user.show', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
+        }
+        $orderMessage = $order->getErrorState()->getMessage();
+
+        if(!is_null($orderMessage->getMessage())) return $this->render('pages/order/error-order.html.twig', [
+            'order' => $order,
+            'menu' => 'myOrder',
+            'tab' => 'show.error',
+            'messageRequest' => $orderMessage
+        ]);
+
+
+        $message = (new Message())
+            ->setTitle("Réponse à l'erreur de la commande n°". $orderMessage->getOrder()->getInitialZeroId())
+            ->setCreatedBy($this->getUser())
+        ;
+
+        $form = $this->createForm(MessageFormType::class, $message);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $message
+                ->setTitle("Réponse à l'erreur de la commande n°". $orderMessage->getOrder()->getInitialZeroId())
+                ->setCreatedBy($this->getUser());
+            $orderMessage->setMessage($message);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('orders.user.show', ['id' => $orderMessage->getOrder()->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('pages/order/error-order_form.html.twig', [
+            'order' => $order,
+            'menu' => 'myOrder',
+            'tab' => 'show.error',
+            'form' => $form,
+            'messageRequest' => $orderMessage
         ]);
     }
 
@@ -64,7 +120,7 @@ class OrderController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if($order->getClient()->getId() !== $this->getUser()->getId()) return $this->redirectToRoute('orders.user', [], Response::HTTP_SEE_OTHER);
-        return $this->render('pages/order/show-order.html.twig', [
+        return $this->render('pages/order/chronology-order.html.twig', [
             'order' => $order,
             'menu' => 'myOrder',
             'tab' => 'show.chronology'
@@ -86,6 +142,12 @@ class OrderController extends AbstractController
     #[Route("/nouvelle-commande", name: "order.new")]
     public function new(Request $request, EntityManagerInterface $entityManager, OrderManager $orderManager, UserNotifierService $notifierService, CartManagerService $cartManagerService): Response
     {
+
+        if(!$this->accessCheckerService->access('authorize.order.new', )) {
+            $this->addFlash("error", "Les commandes ont été supendues temporairement.");
+            return $this->redirectToRoute('user.cart', [], Response::HTTP_SEE_OTHER);
+        }
+
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
@@ -121,5 +183,6 @@ class OrderController extends AbstractController
             'form' => $form
         ]);
     }
+
 
 }

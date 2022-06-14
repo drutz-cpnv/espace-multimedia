@@ -61,6 +61,7 @@ class OrderManager
         private FlashBagInterface $flashBag,
         private OrderRepository $orderRepository,
         private ItemRepository $itemRepository,
+        private SettingsAccessCheckerService $accessCheckerService,
     )
     {
     }
@@ -127,8 +128,6 @@ class OrderManager
                 $need->getConflict()->newItemDates($item->getTag());
 
                 $itemsOrders = self::filterOrders($item->getOrders());
-
-                dump($itemsOrders);
 
                 $ok = [];
                 foreach ($itemsOrders as $itemsOrder) {
@@ -204,51 +203,6 @@ class OrderManager
     }
 
 
-
-
-    /*public function checkConflicts(Order $order): array
-    {
-        $conflicts = new ArrayCollection();
-        $usedItems = new ArrayCollection();
-
-        foreach ($order->getEquipment() as $equipment) {
-            $equipmentItems = $equipment->getItems()->toArray();
-
-            if($equipment->getOrders()->isEmpty()) {
-                $order->addItem($equipmentItems[0]);
-                continue;
-            }
-
-            foreach ($equipment->getItems() as $key => $item) {
-                foreach ($item->getOrders() as $itemOrder){
-                    if ($itemOrder->isConfilct($order->getStart(), $order->getEnd())){
-                        unset($equipmentItems[$key]);
-                        $usedItems->add($item);
-                        if (count($equipmentItems) !== 0) {
-                            $order->addItem($equipmentItems[$key+1]);
-                        }
-                        else{
-                            $conflicts->add([$equipment, $itemOrder]);
-                        }
-                        continue;
-                    }
-
-                    if (count($equipmentItems) !== 0) {
-                        $order->addItem($item);
-                    }
-                    else{
-                        $conflicts->add([$equipment, $itemOrder]);
-                    }
-                }
-            }
-        }
-
-        return [
-            'conflicts' => $conflicts,
-            'usedItems' => $usedItems
-        ];
-    }*/
-
     public function getPendingState(UserInterface|User $user)
     {
         $pending = $this->stateRepository->findOneBySlug('pending');
@@ -256,11 +210,13 @@ class OrderManager
         return (new OrderState())
             ->setState($pending)
             ->setCreatedBy($user)
-            ->setComments("Création de la commande -> elle passe par conséquent au status \"En attente\".");
+            ->setComments("Création de la commande -> elle passe par conséquent au statut \"En attente\".");
     }
 
     public function canChangeState($current, $target)
     {
+        if(!$this->accessCheckerService->access('authorize.order.status_change')) return false;
+
         if($current instanceof OrderState){
             $current = $current->getState()->getSlug();
         } elseif ($current instanceof Order){

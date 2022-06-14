@@ -13,7 +13,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('title')
+            ->add('start', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('end', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => false
+            ])
+            ->add('teacher', null, [
+                'required' => false
+            ])
+        ;
+    }
+
+    /*public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title', TextType::class, [
@@ -35,7 +55,7 @@ class OrderType extends AbstractType
                 'required' => false
             ])
         ;
-    }
+    }*/
 
     public function configureOptions(OptionsResolver $resolver): void
     {

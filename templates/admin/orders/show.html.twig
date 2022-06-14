@@ -166,11 +166,15 @@
                             <h2 class="card__title">Changement de statut => <span style="color: #{{ status.state.color }}">{{ status.state.name }}</span></h2>
                             <p>{{ status.comments }}</p>
                             {% if status.state.slug is same as("error") %}
-                                {% if status.message.message is defined %}
+                                {% if status.message is not same as(null) %}
+                                {% if status.message.message is not same as(null) %}
                                     <p class="accent bold">Une réponse a été délivrée par le client.</p>
                                 {% else %}
                                     <p>En attent d'une réponse</p>
                                 {% endif %}
+                                    {% else %}
+                                        <p>En attent d'une réponse</p>
+                            {% endif %}
                             {% endif %}
                         </div>
                         <footer class="card__footer text-small">
@@ -183,7 +187,8 @@
                         </footer>
                     </div>
                     {% if status.state.slug is same as("error") %}
-                        {% if status.message.message is defined %}
+                        {% if status.message is not same as(null) %}
+                        {% if status.message.message is not same as(null) %}
                             {% set message = status.message.message %}
                             <div class="card full timeline-element">
                                 <div class="card__body stack">
@@ -199,6 +204,7 @@
                                     </div>
                                 </footer>
                             </div>
+                        {% endif %}
                         {% endif %}
                     {% endif %}
                     {% endfor %}

@@ -49,8 +49,9 @@
                     {{ icon('grid_view') }}
                     <h1>Objets</h1>
                 </div>
-                <div class="header-actions">
+                <div class="header-actions hstack">
                     <a href="{{ path('admin.equipment.itemform', {id: equipment.id}) }}" class="btn js-modal-btn">Ajouter un objet</a>
+                    <a href="{{ path('admin.equipment.add_multiple_items', {id: equipment.id}) }}" class="btn">Ajouter plusieurs objets</a>
                 </div>
             </div>
             <div class="content">
@@ -74,7 +75,10 @@
                             <td>{{ item.comments | nl2br }}</td>
                             <td>{{ item.updatedAt | date("d.m.Y H:i") }}</td>
                             <td>{{ item.updatedBy.fullname }}</td>
-                            <td><a href="{{ path('admin.item.edit', {id: item.id}) }}" class="small-btn">Modifier</a></td>
+                            <td>
+                                <a href="{{ path('admin.item.edit', {id: item.id}) }}" class="small-btn">Modifier</a>
+                                {{ include('admin/equipment/_delete_item_form.html.twig') }}
+                            </td>
                         </tr>
                     {% else %}
                         <tr>

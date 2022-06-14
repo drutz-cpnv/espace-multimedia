@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\UserType;
 use App\Repository\ContentRepository;
+use App\Repository\EquipmentRepository;
 use App\Repository\StateRepository;
 use App\Repository\UserRepository;
 use App\Services\IntranetAPI;
@@ -15,10 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('', name: 'app.home')]
-    public function index(): Response
+    public function index(EquipmentRepository $equipmentRepository): Response
     {
+        $last = $equipmentRepository->findLast();
         return $this->render('pages/index.html.twig', [
-            'menu' => 'home'
+            'menu' => 'home',
+            'equipments' => $last
         ]);
     }
 

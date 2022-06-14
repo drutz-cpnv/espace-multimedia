@@ -10,11 +10,14 @@ use App\Form\AdminType\OrderDocumentType;
 use App\Repository\OrderRepository;
 use App\Repository\StateRepository;
 use App\Services\OrderManager;
+use App\Services\SettingsAccessCheckerService;
 use App\Services\SetupService;
 use App\Services\UserNotifierService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use FontLib\Table\Type\name;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +32,7 @@ class AdminOrderController extends AbstractController
 {
 
     public function __construct(
+        private readonly SettingsAccessCheckerService $accessCheckerService
     )
     {
     }
@@ -189,7 +193,32 @@ class AdminOrderController extends AbstractController
         return $this->render('admin/orders/show.html.twig', [
             'menu' => 'admin.order',
             'order' => $order,
-            'states' => $stateRepository->findAll()
+            'states' => $stateRepository->findAll(),
+            'canChangeState' => $this->accessCheckerService->access('authorize.order.status_change')
+        ]);
+    }
+
+    #[Route("/{id}/doc", name: "admin.order.doc")]
+    public function orderDoc(Order $order): Response
+    {
+        $equipments = new ArrayCollection([]);
+
+        foreach ($order->getEquipment() as $equipment) {
+            $items = new ArrayCollection([]);
+            foreach ($order->getItems() as $item) {
+                if($equipment->getId() === $item->getEquipment()->getId()) {
+                    $items[] = $item;
+                }
+            }
+            $equipments->add([
+                'items' => $items,
+                'equipment' => $equipment
+            ]);
+         }
+
+        return $this->render('pdf/bdc.html.twig', [
+            'order' => $order,
+            'equipments' => $equipments
         ]);
     }
 

@@ -9,8 +9,8 @@
     </div>
     <div class="orders-page py3">
         <div class="orders-page__sidebar stack">
-            <a href="#" class="btn-primary">Nouvelle commande</a>
-            <ul class="orders-status">
+            <a href="{{ path('order.new') }}" class="btn-primary">Nouvelle commande</a>
+            {#<ul class="orders-status">
                 <li>
                     <a href="#">Afficher tout</a>
                 </li>
@@ -19,7 +19,7 @@
                     <a href="#"><span style="background-color: #{{ state.color }}"></span>{{ state.name }}</a>
                 </li>
                 {% endfor %}
-            </ul>
+            </ul>#}
         </div>
         <main class="orders-page__main stack">
             {% for order in orders %}
@@ -55,7 +55,7 @@
                         <span>Bon de commande</span>
                     </div>
                     <div class="order-col__value">
-                        <a href="#" class="order-dl-btn">{{ feather('clipboard') }} Télécharger</a>
+                        <a href="{{ path('pdf.order.client', {'id': order.id}) }}" class="order-dl-btn" target="_blank">{{ feather('clipboard') }} Télécharger</a>
                     </div>
                 </div>
 

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerContrast = true %}
+
+{% block body %}
+    <div class="page-header-accent container" style="padding-bottom: 200px">
+        <h1 class="h1">{{ order.title }}</h1>
+    </div>
+    <div class="show-order-page">
+        <div class="order-card">
+            <div class="order-card__header">
+                {{ include('components/_my-order_nav.html.twig') }}
+            </div>
+            <div class="order-card__body">
+                <h2 class="order-card__title h2 mb2">Erreur sur votre commande</h2>
+                <div class="support">
+                    <div class="support-hero">
+                        <p class="hero-infos mt4">
+                            Voici la demande qui vous a été adressée</p>
+                        <p class="hero-text">
+                            "{{ messageRequest.orderState.comments }}"
+                        </p>
+                    </div>
+                    <div class="support-hero">
+                        <p class="hero-infos mt4">Votre réponse</p>
+                        <p class="hero-text">
+                            <span class="text-muted text-big">"</span>{{ messageRequest.message.content }}<span class="text-muted text-big">"</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

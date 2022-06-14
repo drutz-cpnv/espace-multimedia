@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerContrast = true %}
+
+{% block body %}
+    <div class="page-header-accent container" style="padding-bottom: 200px">
+        <h1 class="h1">{{ order.title }}</h1>
+    </div>
+    <div class="show-order-page">
+        <div class="order-card">
+            <div class="order-card__header">
+                {{ include('components/_my-order_nav.html.twig') }}
+            </div>
+            <div class="order-card__body">
+                <h2 class="order-card__title h2 mb4">Équipement demandé</h2>
+                <div class="grid">
+                    {% for equipment in order.equipment %}
+                        {{ include('components/_equipment_card.html.twig') }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

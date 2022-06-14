@@ -16,15 +16,9 @@
         </div>
     </footer>
     <div class="card__pills">
-        {% if equipment.isNew %}
-            <div class="pill" style="color: #ff7b1e">
-                Nouveau
-            </div>
-        {% else %}
-            <div class="pill small pill-primary">
-                {{ equipment.type.name }}
-            </div>
-        {% endif %}
+        <div class="pill" style="color: #ff7b1e">
+            Nouveau
+        </div>
     </div>
     <a class="card__link" href="{{ path('equipment.show', {id: equipment.id, slug: equipment.slug}) }}"></a>
     {% if app.user.isInCart(equipment) %}<div class="inCart"><i data-feather="check"></i></div>{% endif %}

@@ -23,11 +23,13 @@ class MailerService
     public function send(TemplatedEmail $email)
     {
         $setting = $this->settingsRepository->findOneByKey('email.send');
-        if (is_null($setting)) return;
+        if (is_null($setting)) return false;
         if(filter_var($setting->getValue(), FILTER_VALIDATE_BOOLEAN)) {
             $email->from($this->sender);
             $this->mailer->send($email);
+            return true;
         }
+        return false;
     }
 
 }

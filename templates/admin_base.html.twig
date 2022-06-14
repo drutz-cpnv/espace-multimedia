@@ -46,10 +46,6 @@
                 <span class="icon"><i data-feather="trello"></i></span>
                 <span class="text">Dashboard</span>
             </a>
-            <a href="{{ path("admin.content.index") }}" class="nav-btn" {{ menu_active('admin.content') }}>
-                <span class="icon"><i data-feather="type"></i></span>
-                <span class="text">Contenu</span>
-            </a>
         </section>
         <section>
             <div class="section-title">
@@ -71,6 +67,19 @@
                 <span class="icon"><i data-feather="hash"></i></span>
                 <span class="text">Types</span>
             </a>
+        </section>
+        <section>
+            <div class="section-title">
+                <span>Contenu</span>
+            </div>
+            <a href="{{ path("admin.content.index") }}" class="nav-btn" {{ menu_active('admin.content') }}>
+                <span class="icon"><i data-feather="type"></i></span>
+                <span class="text">Contenu</span>
+            </a>
+            {#<a href="{{ path("admin.mail.index") }}" class="nav-btn" {{ menu_active('admin.mail') }}>
+                <span class="icon"><i data-feather="at-sign"></i></span>
+                <span class="text">Email</span>
+            </a>#}
         </section>
         <section>
             <div class="section-title">

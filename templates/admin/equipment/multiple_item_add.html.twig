@@ -1,0 +1,28 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'camera_alt',
+            title: 'Ajouter un objet',
+        } %}
+        <div class="content">
+            {{ form_start(form, {attr: {class: 'stacked'}}) }}
+            <section class="stack-large">
+                <section>
+                    <div class="section-title">
+                        Informations générales
+                    </div>
+                    <div class="grid">
+                        {{ form_row(form.count) }}
+                        {{ form_row(form.tag) }}
+                    </div>
+                </section>
+                <section>
+                    <button type="submit" class="btn-gradient">Enregistrer</button>
+                </section>
+            </section>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

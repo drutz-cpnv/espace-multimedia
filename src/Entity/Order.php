@@ -366,4 +366,12 @@ class Order
 
         return $this;
     }
+
+    public function getErrorState(): ?OrderState
+    {
+        foreach ($this->getOrderStates() as $orderState) {
+            if($orderState->getState()->getSlug() === "error") return $orderState;
+        }
+        return null;
+    }
 }

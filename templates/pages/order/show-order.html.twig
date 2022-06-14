@@ -10,13 +10,7 @@
     <div class="show-order-page">
         <div class="order-card">
             <div class="order-card__header">
-                <nav class="order-card__nav">
-                    <a href="{{ path('orders.user.show', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.summary') }}>Résumé</a>
-                    {# {% if order.currentStatus.state.slug is same as("error") %}<a href="{{ path('orders.user.show.equipment', {id: order.id}) }}" class="order-card__nav-element nav-element-error" {{ tab_active('show.equipment') }}>{{ feather('alert-octagon') }} Erreur</a>{% endif %} #}
-                    <a href="{{ path('orders.user.show.equipment', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.equipment') }}>Équipement</a>
-                    <a href="{{ path('orders.user.show.chronology', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.chronology') }}>Chronologie</a>
-                    <a href="{{ path('orders.user.show.actions', {id: order.id}) }}" class="order-card__nav-element" {{ tab_active('show.actions') }}>Actions</a>
-                </nav>
+                {{ include('components/_my-order_nav.html.twig') }}
             </div>
             <div class="order-card__body">
                 <h2 class="order-card__title h2 mb2">Résumé</h2>
@@ -91,9 +85,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="hstack mt3">
-                    <a href="#" class="order-dl-btn">{{ feather('arrow-down-circle') }} Bon de commande</a>
                 </div>
             </div>
         </div>

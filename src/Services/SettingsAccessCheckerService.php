@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Security;
 class SettingsAccessCheckerService
 {
 
-    public function __construct(private SettingsRepository $settingsRepository, private Security $security)
+    public function __construct(private readonly SettingsRepository $settingsRepository, private readonly Security $security)
     {
     }
 
@@ -23,11 +23,10 @@ class SettingsAccessCheckerService
         return filter_var($access->getValue(), FILTER_VALIDATE_BOOLEAN);
     }
 
-    public function access(string $key, FlashBagInterface $flashBag): bool
+    public function access(string $key): bool
     {
         if($this->checkAccess($key)) return true;
         if($this->security->isGranted('ROLE_ADMIN')) return true;
-        $flashBag->add('error', "L'accès à cette fonctionnalité a été restreint temporairement.");
         return false;
     }
 }

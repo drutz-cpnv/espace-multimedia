@@ -1,0 +1,35 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'alternate_email',
+            title: 'Nouvelle commande de test',
+        } %}
+
+        <div class="content mb4">
+            {{ form_start(form, {attr: {class: 'stacked'}}) }}
+            <section class="stack-large">
+                <section>
+                    <div class="section-title">
+                        Informations générales
+                    </div>
+                    <div class="grid">
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.start) }}
+                        {{ form_row(form.end) }}
+                        {{ form_row(form.items) }}
+                        {{ form_row(form.equipment) }}
+                        {{ form_row(form.state) }}
+                        {{ form_row(form.teacher) }}
+                    </div>
+                </section>
+                <section>
+                    <button type="submit" class="btn-gradient">Enregistrer</button>
+                </section>
+            </section>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

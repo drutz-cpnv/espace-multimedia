@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% set lightBody = true %}
+{% set headerContrast = true %}
+
+{% block body %}
+    <div class="page-header-accent container" style="padding-bottom: 200px">
+        <h1 class="h1">{{ order.title }}</h1>
+    </div>
+    <div class="show-order-page">
+        <div class="order-card">
+            <div class="order-card__header">
+                {{ include('components/_my-order_nav.html.twig') }}
+            </div>
+            <div class="order-card__body">
+                <h2 class="order-card__title h2 mb4">Chronologie</h2>
+                <div class="timeline grid">
+                    <div class="card full timeline-element">
+                        <div class="card__body stack">
+                            <h2 class="card__title">Création de la commande</h2>
+                        </div>
+                        <footer class="card__footer text-small">
+                            <div class="text-truncate">
+                                {{ icon('event') }} {{ order.createdAt | date("d.m.Y") }}
+                            </div>
+                            <div>
+                                {{ icon('person') }} {{ order.client }}
+                            </div>
+                        </footer>
+                    </div>
+                    {% for status in order.orderStates %}
+                        <div class="card full timeline-element">
+                            <div class="card__body stack">
+                                <h2 class="card__title">Changement de statut => <span style="color: #{{ status.state.color }}">{{ status.state.name }}</span></h2>
+                                <p>"{{ status.comments }}"</p>
+                                {% if status.state.slug is same as("error") %}
+                                    {% if status.message is not same as(null) %}
+                                        {% if status.message.message is not same as(null) %}
+                                            <p class="accent bold">Vous avez répondu à la demande du staff.</p>
+                                        {% endif %}
+                                    {% else %}
+                                        <p>Veuillez apporter une réponse.</p>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <footer class="card__footer text-small">
+                                <div class="text-truncate">
+                                    {{ icon('event') }} {{ status.createdAt | date("d.m.Y à H:i") }}
+                                </div>
+                                <div>
+                                    {{ icon('person') }} {{ status.createdBy }}
+                                </div>
+                            </footer>
+                        </div>
+                        {% if status.state.slug is same as("error") %}
+                            {% if status.message is not same as(null) %}
+                                {% if status.message.message is not same as(null) %}
+                                    {% set message = status.message.message %}
+                                    <div class="card full timeline-element">
+                                        <div class="card__body stack">
+                                            <h2 class="card__title">Réponse de {{ message.createdBy }} => {{ message.title }}</h2>
+                                            <p>"{{ message.content | nl2br }}"</p>
+                                        </div>
+                                        <footer class="card__footer text-small">
+                                            <div class="text-truncate">
+                                                {{ icon('event') }} {{ message.createdAt | date("d.m.Y à H:i") }}
+                                            </div>
+                                            <div>
+                                                {{ icon('person') }} {{ message.createdBy }}
+                                            </div>
+                                        </footer>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

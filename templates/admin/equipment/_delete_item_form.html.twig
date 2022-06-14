@@ -1,0 +1,4 @@
+<form method="post" class="form-button" action="{{ path('admin.item.delete', {'id': item.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+    <button class="small-btn-danger icon-btn" type="submit">{{ feather('trash') }}</button>
+</form>

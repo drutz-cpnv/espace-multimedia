@@ -37,7 +37,7 @@ class IntranetAPI
     private int $responseCode;
 
 
-    public function __construct(string $api_secret, string $api_key, private HttpClientInterface $httpClient)
+    public function __construct(string $api_secret, string $api_key, private readonly HttpClientInterface $httpClient)
     {
         $this->api_secret = $api_secret;
         $this->api_key = $api_key;

@@ -436,5 +436,15 @@ class Equipment
         return $this;
     }
 
+    public function isNew(): bool
+    {
+        return $this->getCreatedAt()->diff(new \DateTimeImmutable())->days <= 5;
+    }
+
+    public function getIsNew(): bool
+    {
+        return $this->getCreatedAt()->diff(new \DateTimeImmutable())->days <= 5;
+    }
+
 
 }

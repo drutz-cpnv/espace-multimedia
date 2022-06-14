@@ -1,0 +1,25 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'admin/_admin-page_header.html.twig' with {
+            icon: 'alternate_email',
+            title: 'Email',
+        } %}
+
+        <div class="content mb4">
+            <table class="table js-search-table" style="margin: 20px 0">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Tag</th>
+                    <th>Marque</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
