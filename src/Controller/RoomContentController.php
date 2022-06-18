@@ -6,6 +6,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Equipment;
+use App\Repository\EquipmentRepository;
+use App\Services\CartManagerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,11 +18,21 @@ class RoomContentController extends AbstractController
 {
 
     #[Route("", name: "room")]
-    public function index(): Response
+    public function index(EquipmentRepository $equipmentRepository): Response
     {
+        $rooms = $equipmentRepository->findRoom();
         return $this->render('pages/room-content.html.twig', [
-            'menu' => 'room'
+            'menu' => 'room',
+            'rooms' => $rooms
         ]);
+    }
+
+    #[Route("/{id}", name: "room.toggle")]
+    public function toggle(Equipment $equipment, CartManagerService $cartManagerService): Response
+    {
+        if(!$equipment->getIsRoom()) return $this->redirectToRoute('app.home', [], Response::HTTP_SEE_OTHER);
+        $cartManagerService->toggleRoomEquipmentToCart($equipment);
+        return $this->redirectToRoute('room', [], Response::HTTP_SEE_OTHER);
     }
 
 }

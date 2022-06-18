@@ -1,6 +1,28 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    <h1>Salle multimédia</h1>
+    <div class="container py5">
+        <div class="support">
+            <div class="support-hero">
+                <h1 class="hero-title">
+                    Salle Multimédia
+                </h1>
+                <p class="hero-infos">
+                    Éléments disponible pour location
+                </p>
+            </div>
+        </div>
+        <div class="rooms">
+            {% for room in rooms %}
+                <section>
+                    <img src="{{ vich_uploader_asset(room) }}" alt="{{ room }}">
+                    <div>
+                        <h2 class="h2">{{ room.name }}</h2>
+                        <p>{{ room.description }}</p>
+                        {{ include('components/_add_cart_room_btn.html.twig') }}
+                    </div>
+                </section>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

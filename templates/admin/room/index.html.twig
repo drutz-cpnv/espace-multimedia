@@ -4,7 +4,7 @@
     <div class="container">
         {% include 'admin/_admin-page_header.html.twig' with {
             icon: 'home_work',
-            title: 'Salle multimédia',
+            title: 'Équipement de la salle multimédia',
         } %}
         <div class="content">
             <table class="table js-search-table" style="margin: 20px 0">
@@ -22,11 +22,12 @@
                         <td>{{ room.name }}</td>
                         <td>{{ room.updatedAt ? room.updatedAt|date('d.m.Y H:i:s') : '' }}</td>
                         <td>
+                            <a class="small-btn" href="{{ path('admin.room.edit', {'id': room.id}) }}">Modifier</a>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5">Aucune catégories enregistrée</td>
+                        <td colspan="5">Aucun équipement de salle</td>
                     </tr>
                 {% endfor %}
 

@@ -1,0 +1,41 @@
+.rooms {
+  @extend %container;
+  margin-top: space(20);
+}
+
+.rooms > section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: space(3);
+  margin-bottom: space(10);
+
+  img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px var(--shadow);
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    margin-top: auto;
+    width: fit-content;
+    align-self: flex-end;
+  }
+
+  h2 {
+    font-size: 40px;
+    margin-bottom: space(2);
+  }
+
+  p {
+    @extend %hero-text;
+  }
+
+}

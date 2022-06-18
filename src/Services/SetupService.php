@@ -2,10 +2,15 @@
 
 namespace App\Services;
 
+use App\Entity\Equipment;
+use App\Entity\EquipmentType;
+use App\Entity\Item;
 use App\Entity\Settings;
 use App\Entity\State;
 use App\Entity\User;
 use App\Entity\UserType;
+use App\Repository\BrandRepository;
+use App\Repository\EquipmentRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +27,9 @@ class SetupService
         private EntityManagerInterface $entityManager,
         private ContentManager $contentManager,
         private KernelInterface $kernel,
-        private UserTypeRepository $userTypeRepository
+        private UserTypeRepository $userTypeRepository,
+        private BrandRepository $brandRepository,
+        private EquipmentRepository $equipmentRepository,
     )
     {
     }
@@ -252,6 +259,65 @@ class SetupService
         $this->entityManager->flush();
 
         return $dbUsers;
+    }
+
+    public function setupRoomEquipment()
+    {
+        $brand = $this->brandRepository->findOneBy(['name' => 'Inconnue']);
+        $drutz = $this->userRepository->findOneBy(['email' => 'dimitri.rutz@cpnv.ch']);
+
+        $pastRooms = $this->equipmentRepository->findRoom();
+
+        $rooms = [];
+
+        $rooms[] = (new Equipment())
+            ->setName("Cabine son")
+            ->setDescription("Petite salle insonorisée permettant l'enregistrement de contenu audio sans bruits parasites.")
+            ->setIsRoom(true)
+            ->setEnabled(true)
+            ->setBrand($brand)
+            ->setType((new EquipmentType())->setName("Cabine son")->setSlug("cabine-son"))
+            ->setCreatedBy($drutz)
+            ->setUpdatedBy($drutz)
+            ->addItem((new Item())->setState(1)->setCreatedBy($drutz)->setUpdatedBy($drutz)->setTag("SC01"))
+        ;
+
+        $rooms[] = (new Equipment())
+            ->setName("Fond vert")
+            ->setDescription("Espace avec pour fond un drap vert permettant l'enregistrement d'une vidéo pouvant ensuite être détourée et incrustée avec arrière plan personnalisé.")
+            ->setIsRoom(true)
+            ->setEnabled(true)
+            ->setBrand($brand)
+            ->setType((new EquipmentType())->setName("Fond vert")->setSlug("fond-vert"))
+            ->setCreatedBy($drutz)
+            ->setUpdatedBy($drutz)
+            ->addItem((new Item())->setState(1)->setCreatedBy($drutz)->setUpdatedBy($drutz)->setTag("GS01"))
+        ;
+
+        $rooms[] = (new Equipment())
+            ->setName("Imprimante 3D")
+            ->setDescription("Imprimante permettant l'impression de modèle 3D avec du plastique.")
+            ->setIsRoom(true)
+            ->setEnabled(true)
+            ->setBrand($brand)
+            ->setType((new EquipmentType())->setName("Imprimante 3D")->setSlug("imprimante-3d"))
+            ->setCreatedBy($drutz)
+            ->setUpdatedBy($drutz)
+            ->addItem((new Item())->setState(1)->setCreatedBy($drutz)->setUpdatedBy($drutz)->setTag("3D01"))
+            ->addItem((new Item())->setState(1)->setCreatedBy($drutz)->setUpdatedBy($drutz)->setTag("3D02"))
+        ;
+
+        foreach ($pastRooms as $room) {
+            $this->entityManager->remove($room);
+        }
+
+        $this->entityManager->flush();
+
+        foreach ($rooms as $room) {
+            $this->entityManager->persist($room);
+        }
+
+        $this->entityManager->flush();
     }
 
 }

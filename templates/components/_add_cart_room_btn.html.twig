@@ -1,0 +1,5 @@
+{% if app.user.inCart(room) %}
+    <a href="{{ path('room.toggle', {'id': room.id}) }}" class="btn-gradient btn-big">{{ icon('remove_shopping_cart') }}Retirer du panier</a>
+{% else %}
+    <a href="{{ path('room.toggle', {'id': room.id}) }}" class="btn-gradient btn-big">{{ icon('shopping_cart') }}Ajouter au panier</a>
+{% endif %}

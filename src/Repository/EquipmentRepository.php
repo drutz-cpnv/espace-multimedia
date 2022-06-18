@@ -54,7 +54,8 @@ class EquipmentRepository extends ServiceEntityRepository
             ->select('e', 'c', 'b', 't')
             ->join('e.categories', 'c')
             ->join('e.brand', 'b')
-            ->join('e.type', 't');
+            ->join('e.type', 't')
+            ->andWhere('e.isRoom = false');
 
         if (!$search->getCategories()->isEmpty()) {
             $query = $query->andWhere('c.id in (:categories)')
@@ -83,7 +84,10 @@ class EquipmentRepository extends ServiceEntityRepository
             ->andWhere('e.items > 0');
     }
 
-    public function findRoom()
+    /**
+     * @return Equipment[]
+     */
+    public function findRoom(): array
     {
         return $this->createQueryBuilder('e')
             ->where('e.isRoom = true')

@@ -92,12 +92,12 @@ class Equipment
     private $enabled;
 
     /**
-     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="equipment", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="equipment", orphanRemoval=true, cascade={"persist"})
      */
     private $items;
 
     /**
-     * @ORM\ManyToOne(targetEntity=EquipmentType::class, inversedBy="equipments")
+     * @ORM\ManyToOne(targetEntity=EquipmentType::class, inversedBy="equipments", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
