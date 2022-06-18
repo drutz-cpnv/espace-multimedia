@@ -103,7 +103,7 @@ class OrderRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->where('o.client = :user')
             ->setParameter('user', $user)
-            ->orderBy('o.id', 'ASC')
+            ->orderBy('o.id', 'DESC')
             ->getQuery()
             ->getResult()
             ;

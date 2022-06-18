@@ -5,8 +5,8 @@ import './main'
 import {initValidation} from "./modules/studentsVerifier";
 import {menu} from "./modules/admin-menu";
 
-initValidation()
 
 document.documentElement.addEventListener("turbo:load", evt => {
     menu()
+    initValidation()
 })

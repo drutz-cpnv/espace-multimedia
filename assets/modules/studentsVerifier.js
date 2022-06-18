@@ -1,10 +1,10 @@
+import {strToDom} from "../functions/dom";
+import feather from "feather-icons";
+
 /**
  * @param {Number} userId
  * @param {string} endpoint
  */
-import {strToDom} from "../functions/dom";
-import feather from "feather-icons";
-
 const verify = async (userId, endpoint = "/admin/utilisateurs/verify/") => {
     let response = await fetch(`${endpoint}${userId}`)
     return await response.json()

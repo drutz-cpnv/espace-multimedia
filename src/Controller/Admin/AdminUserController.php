@@ -3,10 +3,13 @@
 namespace App\Controller\Admin;
 
 
+use App\Data\MultipleUserRoleToggle;
 use App\Entity\User;
+use App\Form\AdminType\AdminMultipleUserRoleToggleType;
 use App\Form\AdminType\AdminUserType;
 use App\Repository\UserRepository;
 use App\Services\IntranetAPI;
+use App\Services\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +53,29 @@ class AdminUserController extends AbstractController
             'form' => $form,
             'menu' => 'admin.user',
             'user' => $user
+        ]);
+    }
+
+    #[Route("/roles", name: "admin.user.toggle.role")]
+    public function roleToggler(Request $request, EntityManagerInterface $entityManager, UserService $userService): Response
+    {
+        $data = new MultipleUserRoleToggle();
+        $form = $this->createForm(AdminMultipleUserRoleToggleType::class, $data);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            foreach ($data->getUsers() as $user) {
+                $userService->toggleRole($data->getRole(), $user);
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin.user.index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/user/role_toggle.html.twig', [
+            'form' => $form,
+            'menu' => 'admin.user',
         ]);
     }
 

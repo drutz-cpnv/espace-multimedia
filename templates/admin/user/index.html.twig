@@ -5,6 +5,10 @@
         {% include 'admin/_admin-page_header.html.twig' with {
             icon: 'manage_accounts',
             title: 'Utilisateurs',
+            button: {
+                path: 'admin.user.toggle.role',
+                label: 'Ajouter/retirer plusieurs rôles'
+            }
         } %}
         <div class="content">
             <table class="table js-search-table" style="margin: 20px 0">
